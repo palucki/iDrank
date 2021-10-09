@@ -2,10 +2,10 @@ pragma Singleton
 import QtQuick 2.12
 
 Item {
-//    // Configuration Part
-//    readonly property Item config : Item {
-//        readonly property int splashScreenTimeoutMs: 5000
-//    }
+    // Configuration Part
+    readonly property Item config : Item {
+        readonly property int splashScreenTimeoutMs: 10
+    }
 
     //Background
     readonly property color colorBackground: "#efefef" //#f4c842

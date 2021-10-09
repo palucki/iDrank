@@ -13,18 +13,18 @@ Window {
     title: qsTr("Drinking counter")
 
     Component.onCompleted: {
-//        if(!splashViewTimerId.running) {
+        if(!splashViewTimerId.running) {
             contentFrame.replace("qrc:/views/DashboardView.qml")
-//        }
+        }
     }
 
-//    Timer {
-//        id: splashViewTimerId
-//        interval: Style.config.splashScreenTimeoutMs;
-//        running: true;
-//        repeat: false
-//        onTriggered: contentFrame.replace("qrc:/views/DashboardView.qml")
-//    }
+    Timer {
+        id: splashViewTimerId
+        interval: Style.config.splashScreenTimeoutMs;
+        running: true;
+        repeat: false
+        onTriggered: contentFrame.replace("qrc:/views/DashboardView.qml")
+    }
 
     Connections {
         target: masterController.ui_navigationController

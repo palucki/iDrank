@@ -1,1 +1,5 @@
 binaries
+drinq-ui/build/
+drinq-lib/build/
+drink-tests/build/
+drinq.pro.user
