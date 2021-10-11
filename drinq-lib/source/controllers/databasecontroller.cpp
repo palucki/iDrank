@@ -34,18 +34,23 @@ public:
     }
     DatabaseController* databaseController{nullptr};
     QSqlDatabase database;
+
 private:
     bool initialise()
     {
         database = QSqlDatabase::addDatabase("QSQLITE", "drinq");
-        database.setDatabaseName( "drinq.sqlite" );
+        database.setDatabaseName("drinq.sqlite");
         return database.open();
     }
+
     bool createTables()
     {
-        return createJsonTable( "client" );
-//        return createJsonTable( "client" );
+        return createJsonTable("client") &&
+               createJsonTable("drink") &&
+               createJsonTable("party") &&
+               createJsonTable("beverage");
     }
+
     bool createJsonTable(const QString& tableName) const
     {
         QSqlQuery query(database);
@@ -54,6 +59,7 @@ private:
         if (!query.prepare(sqlStatement)) return false;
         return query.exec();
     }
+
     QString sqliteVersion() const
     {
         QSqlQuery query(database);

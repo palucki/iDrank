@@ -38,7 +38,8 @@ SOURCES += \
     source/models/appointment.cpp \
     source/models/clientsearch.cpp \
     source/models/contact.cpp \
-    source/models/drink.cpp
+    source/models/drink.cpp \
+    source/models/recentactivity.cpp
 
 HEADERS += \
     source/controllers/commandcontroller.h \
@@ -65,7 +66,8 @@ HEADERS += \
     source/models/appointment.h \
     source/models/clientsearch.h \
     source/models/contact.h \
-    source/models/drink.h
+    source/models/drink.h \
+    source/models/recentactivity.h
 
 INCLUDEPATH += source
 

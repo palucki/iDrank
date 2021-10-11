@@ -13,6 +13,7 @@
 #include <models/drink.h>
 #include <models/contact.h>
 #include <models/clientsearch.h>
+#include <models/recentactivity.h>
 #include <controllers/mastercontroller.h>
 #include <controllers/commandcontroller.h>
 #include <framework/command.h>
@@ -51,6 +52,12 @@ int main(int argc, char *argv[])
     qmlRegisterType<drinq::models::ClientSearch>("DrinQ", 1, 0, "ClientSearch");
     qmlRegisterType<drinq::data::DropDown>("DrinQ", 1, 0, "DropDown");
     qmlRegisterType<drinq::data::DropDownValue>("DrinQ", 1, 0, "DropDownValue");
+
+    qmlRegisterType<drinq::models::Party>("DrinQ", 1, 0, "Party");
+    qmlRegisterType<drinq::models::Beverage>("DrinQ", 1, 0, "Beverage");
+    qmlRegisterType<drinq::models::Player>("DrinQ", 1, 0, "Player");
+    qmlRegisterType<drinq::models::Drink>("DrinQ", 1, 0, "Drink");
+    qmlRegisterType<drinq::models::RecentActivity>("DrinQ", 1, 0, "RecentActivity");
 
     drinq::framework::ObjectFactory factory;
     drinq::controllers::MasterController masterController(&app, &factory);
