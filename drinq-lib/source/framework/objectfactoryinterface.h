@@ -7,6 +7,7 @@
 #include <controllers/databasecontrollerinterface.h>
 #include <models/drink.h>
 #include <models/clientsearch.h>
+#include <models/recentactivity.h>
 
 namespace drinq {
 namespace framework {
@@ -21,11 +22,17 @@ public:
     virtual models::ClientSearch* createClientSearch(QObject* parent,
                                                      controllers::DatabaseControllerInterface* databaseController) const = 0;
 
+    virtual models::RecentActivity* createRecentActivity(QObject* parent,
+                                                         controllers::DatabaseControllerInterface* databaseController) const = 0;
+
+
     virtual controllers::CommandControllerInterface* createCommandController(QObject* parent,
                                                                              controllers::DatabaseControllerInterface* databaseController,
                                                                              controllers::NavigationControllerInterface* navigationController,
                                                                              models::Client* newClient,
-                                                                             models::ClientSearch*  clientSearch/*, networking::IWebRequest* rssWebRequest*/) const = 0;
+                                                                             models::ClientSearch*  clientSearch,
+                                                                             models::RecentActivity* recentActivity
+                                                                             /*, networking::IWebRequest* rssWebRequest*/) const = 0;
 
     virtual controllers::DatabaseControllerInterface* createDatabaseController(QObject* parent) const = 0;
 

@@ -2,6 +2,7 @@
 
 #include <models/drink.h>
 #include <models/clientsearch.h>
+#include <models/recentactivity.h>
 #include "databasecontroller.h"
 
 using namespace drinq::models;
@@ -20,8 +21,9 @@ public:
         navigationController = objectFactory->createNavigationController(masterController);
         newClient = objectFactory->createClient(masterController);
         clientSearch = objectFactory->createClientSearch(masterController, databaseController);
+        recentActivity = objectFactory->createRecentActivity(masterController, databaseController);
         commandController = objectFactory->createCommandController(masterController, databaseController, navigationController,
-                                                                   newClient, clientSearch);
+                                                                   newClient, clientSearch, recentActivity);
     }
 
     drinq::framework::ObjectFactoryInterface* objectFactory{nullptr};
@@ -30,6 +32,7 @@ public:
     NavigationControllerInterface* navigationController{nullptr};
     Client* newClient{nullptr};
     ClientSearch* clientSearch{nullptr};
+    RecentActivity* recentActivity{nullptr};
     CommandControllerInterface* commandController{nullptr};
     QString welcomeMessage = "Welcome to the Client Management system!";
 };
@@ -66,6 +69,11 @@ Client* MasterController::newClient()
 drinq::models::ClientSearch *MasterController::clientSearch()
 {
     return implementation->clientSearch;
+}
+
+drinq::models::RecentActivity *MasterController::recentActivity()
+{
+    return implementation->recentActivity;
 }
 
 const QString& MasterController::welcomeMessage() const

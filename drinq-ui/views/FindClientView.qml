@@ -1,7 +1,7 @@
 import QtQuick 2.12
 
-import assets 1.0
 import DrinQ 1.0
+import assets 1.0
 import components 1.0
 
 Item {

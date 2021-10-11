@@ -15,6 +15,7 @@
 namespace drinq {
 namespace models {
 class ClientSearch;
+class RecentActivity;
 }
 }
 
@@ -30,6 +31,7 @@ class DRINQLIB_EXPORT MasterController : public QObject
     Q_PROPERTY(drinq::controllers::DatabaseControllerInterface* ui_databaseController READ databaseController CONSTANT)
     Q_PROPERTY(drinq::models::Client* ui_newClient READ newClient CONSTANT )
     Q_PROPERTY(drinq::models::ClientSearch* ui_clientSearch READ clientSearch CONSTANT )
+    Q_PROPERTY(drinq::models::RecentActivity* ui_recentActivity READ recentActivity CONSTANT )
 public:
     explicit MasterController(QObject *parent = nullptr, drinq::framework::ObjectFactoryInterface* factory = nullptr);
     ~MasterController();
@@ -38,6 +40,7 @@ public:
     DatabaseControllerInterface* databaseController();
     drinq::models::Client* newClient();
     drinq::models::ClientSearch* clientSearch();
+    drinq::models::RecentActivity* recentActivity();
     const QString& welcomeMessage() const;
 
 public slots:

@@ -1,69 +1,58 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 
+import DrinQ 1.0
 import components 1.0
 import assets 1.0
 
 Item {
+    property RecentActivity recentActivity: masterController.ui_recentActivity
     Rectangle {
         anchors.fill: parent
         color: Style.colorBackground
-    }
-    ScrollView {
-        id: scrollView
-        anchors {
-            left: parent.left
-            right: parent.right
-            top: parent.top
-            bottom: commandBar.top
-            margins: Style.sizeScreenMargin
-        }
-        clip: true
-        Column {
-            spacing: Style.sizeScreenMargin
-            width: scrollView.width
-            Panel {
-                headerText: "Ostatnie aktywności"
-                contentComponent:
-                    Column {
-                    spacing: Style.sizeControlSpacing
-//                    StringEditorSingleLine {
-//                        stringDecorator: selectedClient.ui_reference
-//                        anchors {
-//                            left: parent.left
-//                            right: parent.right
-//                        }
-//                    }
-//                    StringEditorSingleLine {
-//                        stringDecorator: selectedClient.ui_name
-//                        anchors {
-//                            left: parent.left
-//                            right: parent.right
-//                        }
-//                    }
-                }
+        Panel {
+            id: searchPanel
+            anchors {
+                left: parent.left
+                right: parent.right
+                top: parent.top
+                margins: Style.sizeScreenMargin
             }
-//            AddressEditor {
-//                address: selectedClient.ui_supplyAddress
-//                headerText: "Supply Address"
-//            }
-//            AddressEditor {
-//                address: selectedClient.ui_billingAddress
-//                headerText: "Billing Address"
-//            }
-//            ContactsEditor {
-//                width: scrollView.width
-//                client: selectedClient
-//                headerText: "Contact Details"
+            headerText: "Recent activity"
+//            contentComponent:
+//                StringEditorSingleLine {
+//                stringDecorator: recentActivity.ui_searchText
+//                anchors {
+//                    left: parent.left
+//                    right: parent.right
+//                }
 //            }
         }
+
+        ListView {
+            id: itemsView
+            anchors {
+                top: searchPanel.bottom
+                left: parent.left
+                right: parent.right
+                bottom: parent.bottom
+                margins: Style.sizeScreenMargin
+            }
+            clip: true
+            model: recentActivity.ui_recentActivity
+            delegate:
+//                    SearchResultDelegate {
+//                        client: modelData
+//                    }
+                Text {
+                    text: "PLACEHOLDER FOR DRINK"
+                }
+        }
+
     }
 
     CommandBar {
-        id: commandBar
-        commandList: masterController.ui_commandController.ui_createClientViewContextCommands
+        commandList: masterController.ui_commandController.ui_dashboardViewContextCommands
     }
-
-
 }
 

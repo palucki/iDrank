@@ -23,9 +23,19 @@ ClientSearch *ObjectFactory::createClientSearch(QObject *parent, controllers::Da
     return new ClientSearch(parent, databaseController);
 }
 
-controllers::CommandControllerInterface* ObjectFactory::createCommandController(QObject *parent, controllers::DatabaseControllerInterface *databaseController, controllers::NavigationControllerInterface *navigationController, Client *newClient, ClientSearch *clientSearch) const
+RecentActivity *ObjectFactory::createRecentActivity(QObject *parent, controllers::DatabaseControllerInterface *databaseController) const
 {
-    return new CommandController(parent, databaseController, newClient, clientSearch, navigationController);
+    return new RecentActivity(parent, databaseController);
+}
+
+controllers::CommandControllerInterface* ObjectFactory::createCommandController(QObject *parent,
+                                                                                controllers::DatabaseControllerInterface *databaseController,
+                                                                                controllers::NavigationControllerInterface *navigationController,
+                                                                                Client *newClient,
+                                                                                ClientSearch *clientSearch,
+                                                                                RecentActivity* recentActivity) const
+{
+    return new CommandController(parent, databaseController, newClient, clientSearch, recentActivity, navigationController);
 }
 
 controllers::DatabaseControllerInterface *ObjectFactory::createDatabaseController(QObject *parent) const

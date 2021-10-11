@@ -46,6 +46,7 @@ private:
     bool createTables()
     {
         return createJsonTable("client") &&
+               createJsonTable("player") &&
                createJsonTable("drink") &&
                createJsonTable("party") &&
                createJsonTable("beverage");
@@ -138,13 +139,36 @@ bool DatabaseController::updateRow(const QString& tableName, const QString& id, 
 
 QJsonArray DatabaseController::find(const QString& tableName, const QString& searchText) const
 {
-    if (tableName.isEmpty()) return {};
-    if (searchText.isEmpty()) return {};
+    if (tableName.isEmpty())
+    {
+        qDebug() << "Error! Table name is empty";
+        return {};
+    }
+
+//    if (searchText.isEmpty())
+//    {
+//        qDebug() << "Error! Search text is empty";
+//        return {};
+//    }
+
     QSqlQuery query(implementation->database);
     QString sqlStatement = "SELECT json FROM " + tableName + " WHERE lower(json) LIKE :searchText";
-    if (!query.prepare(sqlStatement)) return {};
+    if (!query.prepare(sqlStatement))
+    {
+        qDebug() << "Error! Unable to prepare query: " << sqlStatement;
+        return {};
+    }
+
     query.bindValue(":searchText", QVariant("%" + searchText.toLower() + "%"));
-    if (!query.exec()) return {};
+
+    if (!query.exec())
+    {
+        qDebug() << "Error! Unable to execute query: " << sqlStatement;
+        return {};
+    }
+
+    qDebug() << "Executed query: " << query.executedQuery();
+
     QJsonArray returnValue;
     while ( query.next() )
     {
@@ -155,6 +179,7 @@ QJsonArray DatabaseController::find(const QString& tableName, const QString& sea
             returnValue.append(jsonDocument.object());
         }
     }
+
     return returnValue;
 }
 

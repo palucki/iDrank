@@ -15,11 +15,12 @@ class CommandController::Implementation
 {
 public:
     Implementation(CommandController* _commandController, DatabaseControllerInterface*
-                   _databaseController, Client* _newClient, ClientSearch* _clientSearch,
+                   _databaseController, Client* _newClient, ClientSearch* _clientSearch, RecentActivity* _recentActivity,
                    NavigationControllerInterface* _navController)
         : databaseController(_databaseController)
         , newClient(_newClient)
         , clientSearch(_clientSearch)
+        , recentActivity(_recentActivity)
         , navigationController(_navController)
         , commandController(_commandController)
     {
@@ -38,27 +39,34 @@ public:
         Command* editClientDeleteClientCommand = new Command(commandController, QChar( 0xf235 ), "Delete" );
         QObject::connect( editClientDeleteClientCommand, &Command::executed, commandController, &CommandController::onEditClientDeleteExecuted );
         editClientViewContextCommands.append( editClientDeleteClientCommand );
+
+        Command* dashboardLoadCommand = new Command(commandController, QChar( 0xf002 ), "Load" );
+        QObject::connect(dashboardLoadCommand, &Command::executed, commandController, &CommandController::onDashboardLoadExecuted);
+        dashboardViewContextCommands.append(dashboardLoadCommand);
     }
 
     DatabaseControllerInterface* databaseController{nullptr};
     Client* newClient{nullptr};
     ClientSearch* clientSearch{nullptr};
+    RecentActivity* recentActivity{nullptr};
     Client* selectedClient{nullptr};
     NavigationControllerInterface* navigationController{nullptr};
     CommandController* commandController{nullptr};
     QList<Command*> createClientViewContextCommands{};
     QList<Command*> findClientViewContextCommands{};
     QList<Command*> editClientViewContextCommands{};
+    QList<Command*> dashboardViewContextCommands{};
 };
 
 CommandController::CommandController(QObject* parent,
                                      DatabaseControllerInterface* databaseController,
                                      Client* newClient,
                                      ClientSearch* clientSearch,
+                                     RecentActivity* recentActivity,
                                      NavigationControllerInterface* _navigationController)
-    : CommandControllerInterface(parent, databaseController, newClient, clientSearch, _navigationController)
+    : CommandControllerInterface(parent, databaseController, newClient, clientSearch, recentActivity, _navigationController)
 {
-    implementation.reset(new Implementation(this, databaseController, newClient, clientSearch, _navigationController));
+    implementation.reset(new Implementation(this, databaseController, newClient, clientSearch, recentActivity, _navigationController));
 }
 
 CommandController::~CommandController()
@@ -78,6 +86,11 @@ QQmlListProperty<Command> CommandController::ui_findClientViewContextCommands()
 QQmlListProperty<Command> CommandController::ui_editClientViewContextCommands()
 {
     return QQmlListProperty<Command>(this, implementation->editClientViewContextCommands);
+}
+
+QQmlListProperty<Command> CommandController::ui_dashboardViewContextCommands()
+{
+    return QQmlListProperty<Command>(this, implementation->dashboardViewContextCommands);
 }
 
 void CommandController::onCreateClientSaveExecuted()
@@ -120,6 +133,13 @@ void CommandController::onEditClientDeleteExecuted()
     implementation->clientSearch->search();
     emit implementation->navigationController->goDashboardView();
 
+}
+
+void CommandController::onDashboardLoadExecuted()
+{
+    qDebug() << "You executed the Load command!";
+
+    implementation->recentActivity->load();
 }
 
 void CommandController::setSelectedClient(Client *client)

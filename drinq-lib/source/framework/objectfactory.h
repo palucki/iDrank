@@ -15,11 +15,17 @@ public:
     models::Client* createClient(QObject* parent) const override;
     models::ClientSearch* createClientSearch(QObject* parent,
                                              controllers::DatabaseControllerInterface* databaseController) const override;
+
+    models::RecentActivity* createRecentActivity(QObject* parent,
+                                               controllers::DatabaseControllerInterface* databaseController) const override;
+
     controllers::CommandControllerInterface* createCommandController(QObject* parent,
                                                                      controllers::DatabaseControllerInterface* databaseController,
                                                                      controllers::NavigationControllerInterface* navigationController,
                                                                      models::Client* newClient,
-                                                                     models::ClientSearch*  clientSearch/*, networking::IWebRequest* rssWebRequest*/) const override;
+                                                                     models::ClientSearch*  clientSearch,
+                                                                     models::RecentActivity* recentActivity
+                                                                     /*, networking::IWebRequest* rssWebRequest*/) const override;
     controllers::DatabaseControllerInterface* createDatabaseController(QObject* parent) const override;
     controllers::NavigationControllerInterface* createNavigationController(QObject* parent) const override;
 };
