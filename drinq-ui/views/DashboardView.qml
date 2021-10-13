@@ -41,11 +41,8 @@ Item {
             clip: true
             model: recentActivity.ui_recentActivity
             delegate:
-//                    SearchResultDelegate {
-//                        client: modelData
-//                    }
-                Text {
-                    text: "PLACEHOLDER FOR DRINK"
+                RecentActivityItemDelegate {
+                    drink: modelData
                 }
         }
 

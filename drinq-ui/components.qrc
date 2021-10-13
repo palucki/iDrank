@@ -9,6 +9,7 @@
         <file alias="AddressEditor.qml">components/AddressEditor.qml</file>
         <file alias="StringEditorSingleLine.qml">components/StringEditorSingleLine.qml</file>
         <file alias="SearchResultDelegate.qml">components/SearchResultDelegate.qml</file>
+        <file alias="RecentActivityItemDelegate.qml">components/RecentActivityItemDelegate.qml</file>
         <file alias="ContactsEditor.qml">components/ContactsEditor.qml</file>
         <file alias="ContactDelegate.qml">components/ContactDelegate.qml</file>
         <file alias="EnumeratorSelector.qml">components/EnumeratorSelector.qml</file>

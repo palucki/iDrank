@@ -17,3 +17,4 @@ EnumeratorSelectorView 1.0 EnumeratorSelectorView.qml
 StringEditorSingleLine 1.0 StringEditorSingleLine.qml
 
 SearchResultDelegate 1.0 SearchResultDelegate.qml
+RecentActivityItemDelegate 1.0 RecentActivityItemDelegate.qml

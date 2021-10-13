@@ -26,7 +26,7 @@ RecentActivity::RecentActivity(QObject *parent, controllers::DatabaseControllerI
 {
     implementation.reset(new Implementation(this, databaseController));
     implementation->recentDrinks = static_cast<EntityCollection<Drink>*>(
-                addChildCollection(new EntityCollection<Client>(this, "recentDrinks")));
+                addChildCollection(new EntityCollection<Drink>(this, "recentDrinks")));
 
     connect(implementation->recentDrinks, &EntityCollection<Drink>::collectionChanged, this,
             &RecentActivity::recentActivitiesChanged);
