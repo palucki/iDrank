@@ -14,6 +14,7 @@ Window {
 
     Component.onCompleted: {
         if(!splashViewTimerId.running) {
+            console.log("Component load completed")
             contentFrame.replace("qrc:/views/DashboardView.qml")
         }
     }
@@ -23,7 +24,11 @@ Window {
         interval: Style.config.splashScreenTimeoutMs;
         running: true;
         repeat: false
-        onTriggered: contentFrame.replace("qrc:/views/DashboardView.qml")
+        onTriggered: {
+            console.log("Timer completed")
+            contentFrame.replace("qrc:/views/DashboardView.qml")
+        }
+
     }
 
     Connections {

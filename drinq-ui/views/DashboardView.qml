@@ -7,6 +7,11 @@ import assets 1.0
 
 Item {
     property RecentActivity recentActivity: masterController.ui_recentActivity
+
+    Component.onCompleted: {
+        masterController.ui_commandController.onDashboardLoadExecuted()
+    }
+
     Rectangle {
         anchors.fill: parent
         color: Style.colorBackground
