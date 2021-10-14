@@ -56,6 +56,7 @@ Party::Party(QObject *parent) : Entity(parent, "party")
     notes = static_cast<StringDecorator*>(addDataItem(new StringDecorator(this, "notes", "Notes")));
     started = static_cast<DateTimeDecorator*>(addDataItem(new DateTimeDecorator(this, "started", "Started")));
     ended = static_cast<DateTimeDecorator*>(addDataItem(new DateTimeDecorator(this, "ended", "Started")));
+    drinks = static_cast<EntityCollection<Drink>*>(addChildCollection(new EntityCollection<Drink>(this, "drinks")));
 
     setPrimaryKey(id);
 }
@@ -69,47 +70,56 @@ Party::~Party()
 {
 }
 
-Beverage::Beverage(QObject *parent) : Entity(parent, "beverage")
+QQmlListProperty<Drink> Party::ui_drinks()
 {
-    id = static_cast<StringDecorator*>(addDataItem(new StringDecorator(this, "id", "Id")));
-    name = static_cast<StringDecorator*>(addDataItem(new StringDecorator(this, "name", "Name")));
-
-    setPrimaryKey(id);
+    return QQmlListProperty<Drink>(this, drinks->derivedEntities());
 }
 
-Beverage::Beverage(QObject *parent, const QJsonObject &json) : Beverage(parent)
+void Party::addDrink()
 {
-    update(json);
+    drinks->addEntity(new Drink(this));
+    emit drinksChanged();
 }
 
-Beverage::~Beverage()
-{
-}
+//Beverage::Beverage(QObject *parent) : Entity(parent, "beverage")
+//{
+//    id = static_cast<StringDecorator*>(addDataItem(new StringDecorator(this, "id", "Id")));
+//    name = static_cast<StringDecorator*>(addDataItem(new StringDecorator(this, "name", "Name")));
 
-Player::Player(QObject *parent) : Entity(parent, "player")
-{
-    id = static_cast<StringDecorator*>(addDataItem(new StringDecorator(this, "id", "Id")));
-    name = static_cast<StringDecorator*>(addDataItem(new StringDecorator(this, "name", "Name")));
-    photo = static_cast<StringDecorator*>(addDataItem(new StringDecorator(this, "photo", "Photo")));
+//    setPrimaryKey(id);
+//}
 
-    setPrimaryKey(id);
-}
+//Beverage::Beverage(QObject *parent, const QJsonObject &json) : Beverage(parent)
+//{
+//    update(json);
+//}
 
-Player::Player(QObject *parent, const QJsonObject &json) : Player(parent)
-{
-    update(json);
-}
+//Beverage::~Beverage()
+//{
+//}
 
-Player::~Player()
-{
-}
+//Player::Player(QObject *parent) : Entity(parent, "player")
+//{
+//    id = static_cast<StringDecorator*>(addDataItem(new StringDecorator(this, "id", "Id")));
+//    name = static_cast<StringDecorator*>(addDataItem(new StringDecorator(this, "name", "Name")));
+//    photo = static_cast<StringDecorator*>(addDataItem(new StringDecorator(this, "photo", "Photo")));
+
+//    setPrimaryKey(id);
+//}
+
+//Player::Player(QObject *parent, const QJsonObject &json) : Player(parent)
+//{
+//    update(json);
+//}
+
+//Player::~Player()
+//{
+//}
 
 Drink::Drink(QObject *parent) : Entity(parent, "drink")
 {
     id = static_cast<StringDecorator*>(addDataItem(new StringDecorator(this, "id", "Id")));
-    party_id = static_cast<StringDecorator*>(addDataItem(new StringDecorator(this, "party_id", "Party Id")));
-    beverage_id = static_cast<StringDecorator*>(addDataItem(new StringDecorator(this, "beverage_id", "Beverage Id")));
-    player_id = static_cast<StringDecorator*>(addDataItem(new StringDecorator(this, "player_id", "Player Id")));
+    beverage = static_cast<StringDecorator*>(addDataItem(new StringDecorator(this, "beverage", "Beverage")));
     amount_ml = static_cast<IntDecorator*>(addDataItem(new IntDecorator(this, "amount_ml", "Amount")));
     consumed = static_cast<DateTimeDecorator*>(addDataItem(new DateTimeDecorator(this, "consumed", "Consumed")));
 

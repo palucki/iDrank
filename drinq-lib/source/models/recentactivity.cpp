@@ -18,17 +18,17 @@ public:
 
     RecentActivity* recentActivity{nullptr};
     DatabaseControllerInterface* databaseController{nullptr};
-    data::EntityCollection<Drink>* recentDrinks{nullptr};
+    data::EntityCollection<Party>* recentParties{nullptr};
 };
 
 RecentActivity::RecentActivity(QObject *parent, controllers::DatabaseControllerInterface *databaseController)
     : Entity(parent, "RecentActivity")
 {
     implementation.reset(new Implementation(this, databaseController));
-    implementation->recentDrinks = static_cast<EntityCollection<Drink>*>(
-                addChildCollection(new EntityCollection<Drink>(this, "recentDrinks")));
+    implementation->recentParties = static_cast<EntityCollection<Party>*>(
+                addChildCollection(new EntityCollection<Party>(this, "recentParties")));
 
-    connect(implementation->recentDrinks, &EntityCollection<Drink>::collectionChanged, this,
+    connect(implementation->recentParties, &EntityCollection<Party>::collectionChanged, this,
             &RecentActivity::recentActivitiesChanged);
 }
 
@@ -36,17 +36,17 @@ RecentActivity::~RecentActivity()
 {
 }
 
-QQmlListProperty<Drink> RecentActivity::ui_recentActivity()
+QQmlListProperty<Party> RecentActivity::ui_recentActivity()
 {
-    return QQmlListProperty<Drink>(this, implementation->recentDrinks->derivedEntities());
+    return QQmlListProperty<Party>(this, implementation->recentParties->derivedEntities());
 }
 
 void RecentActivity::load()
 {
     qDebug() << "Loading recent activities";
-    auto resultsArray = implementation->databaseController->find("drink", "");
-    implementation->recentDrinks->update(resultsArray);
-    qDebug() << "Found " << implementation->recentDrinks->baseEntities().size() << " matches";
+    auto resultsArray = implementation->databaseController->find("party", "");
+    implementation->recentParties->update(resultsArray);
+    qDebug() << "Found " << implementation->recentParties->baseEntities().size() << " matches";
 }
 
 }

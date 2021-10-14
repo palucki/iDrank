@@ -47,7 +47,7 @@ Item {
             model: recentActivity.ui_recentActivity
             delegate:
                 RecentActivityItemDelegate {
-                    drink: modelData
+                    party: modelData
                 }
         }
 

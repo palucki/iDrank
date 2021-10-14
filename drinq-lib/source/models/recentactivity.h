@@ -16,12 +16,12 @@ namespace models {
 class DRINQLIB_EXPORT RecentActivity : public data::Entity
 {
     Q_OBJECT
-    Q_PROPERTY(QQmlListProperty<drinq::models::Drink> ui_recentActivity READ ui_recentActivity
+    Q_PROPERTY(QQmlListProperty<drinq::models::Party> ui_recentActivity READ ui_recentActivity
                                                                         NOTIFY recentActivitiesChanged )
 public:
     RecentActivity(QObject* parent = nullptr, controllers::DatabaseControllerInterface* databaseController = nullptr);
     ~RecentActivity();
-    QQmlListProperty<Drink> ui_recentActivity();
+    QQmlListProperty<Party> ui_recentActivity();
     void load();
 signals:
     void recentActivitiesChanged();
