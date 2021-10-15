@@ -112,7 +112,7 @@ class DRINQLIB_EXPORT Party : public data::Entity
     Q_OBJECT
     Q_PROPERTY(drinq::data::StringDecorator* ui_title MEMBER title CONSTANT)
     Q_PROPERTY(drinq::data::StringDecorator* ui_notes MEMBER notes CONSTANT)
-    Q_PROPERTY(drinq::data::DateTimeDecorator* ui_started MEMBER ended CONSTANT)
+    Q_PROPERTY(drinq::data::DateTimeDecorator* ui_started MEMBER started CONSTANT)
     Q_PROPERTY(drinq::data::DateTimeDecorator* ui_ended MEMBER ended CONSTANT)
     Q_PROPERTY( QQmlListProperty<drinq::models::Drink> ui_drinks READ ui_drinks NOTIFY drinksChanged )
 
