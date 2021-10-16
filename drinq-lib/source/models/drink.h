@@ -101,7 +101,7 @@ public:
     Drink(QObject* parent, const QJsonObject& json);
     ~Drink();
 
-    data::StringDecorator* id{nullptr};
+    data::StringDecorator* reference{nullptr};
     data::StringDecorator* beverage{nullptr};
     data::IntDecorator* amount_ml{nullptr};
     data::DateTimeDecorator* consumed{nullptr};
@@ -123,7 +123,7 @@ public:
     Party(QObject* parent, const QJsonObject& json);
     ~Party();
 
-    data::StringDecorator* id{nullptr};
+    data::StringDecorator* reference{nullptr};
     data::StringDecorator* title{nullptr};
     data::StringDecorator* notes{nullptr};
     data::DateTimeDecorator* started{nullptr};

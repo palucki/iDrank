@@ -37,6 +37,10 @@ class DRINQLIB_EXPORT CommandControllerInterface : public QObject
                ui_dashboardViewContextCommands READ
                ui_dashboardViewContextCommands CONSTANT)
 
+    Q_PROPERTY(QQmlListProperty<drinq::framework::Command>
+               ui_editPartyViewContextCommands READ
+               ui_editPartyViewContextCommands CONSTANT)
+
 public:
     explicit CommandControllerInterface(QObject* _parent = nullptr,
                                DatabaseControllerInterface* _databaseController = nullptr,
@@ -58,9 +62,11 @@ public:
     virtual QQmlListProperty<framework::Command> ui_findClientViewContextCommands() = 0;
     virtual QQmlListProperty<framework::Command> ui_editClientViewContextCommands() = 0;
     virtual QQmlListProperty<framework::Command> ui_dashboardViewContextCommands() = 0;
+    virtual QQmlListProperty<framework::Command> ui_editPartyViewContextCommands() = 0;
 
 public slots:
     virtual void onCreateClientSaveExecuted() = 0;
+    virtual void onEditPartySaveExecuted() = 0;
     virtual void onFindClientSearchExecuted() = 0;
     virtual void onEditClientSaveExecuted() = 0;
     virtual void onEditClientDeleteExecuted() = 0;

@@ -51,14 +51,14 @@ QQmlListProperty<Contact> Client::ui_contacts()
 
 Party::Party(QObject *parent) : Entity(parent, "party")
 {
-    id = static_cast<StringDecorator*>(addDataItem(new StringDecorator(this, "id", "Id")));
+    reference = static_cast<StringDecorator*>(addDataItem(new StringDecorator(this, "id", "Id")));
     title = static_cast<StringDecorator*>(addDataItem(new StringDecorator(this, "title", "Title")));
     notes = static_cast<StringDecorator*>(addDataItem(new StringDecorator(this, "notes", "Notes")));
     started = static_cast<DateTimeDecorator*>(addDataItem(new DateTimeDecorator(this, "started", "Started")));
     ended = static_cast<DateTimeDecorator*>(addDataItem(new DateTimeDecorator(this, "ended", "Started")));
     drinks = static_cast<EntityCollection<Drink>*>(addChildCollection(new EntityCollection<Drink>(this, "drinks")));
 
-    setPrimaryKey(id);
+    setPrimaryKey(reference);
 }
 
 Party::Party(QObject *parent, const QJsonObject &json) : Party(parent)
@@ -128,12 +128,12 @@ void Party::addDrink()
 
 Drink::Drink(QObject *parent) : Entity(parent, "drink")
 {
-    id = static_cast<StringDecorator*>(addDataItem(new StringDecorator(this, "id", "Id")));
+    reference = static_cast<StringDecorator*>(addDataItem(new StringDecorator(this, "id", "Id")));
     beverage = static_cast<StringDecorator*>(addDataItem(new StringDecorator(this, "beverage", "Beverage")));
     amount_ml = static_cast<IntDecorator*>(addDataItem(new IntDecorator(this, "amount_ml", "Amount")));
     consumed = static_cast<DateTimeDecorator*>(addDataItem(new DateTimeDecorator(this, "consumed", "Consumed")));
 
-    setPrimaryKey(id);
+    setPrimaryKey(reference);
 }
 
 Drink::Drink(QObject *parent, const QJsonObject &json) : Drink(parent)

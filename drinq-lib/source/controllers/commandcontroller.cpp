@@ -43,6 +43,10 @@ public:
         Command* dashboardAddCommand = new Command(commandController, QChar( 0xf055 ), "Add" );
         QObject::connect(dashboardAddCommand, &Command::executed, commandController, &CommandController::onDashboardAddExecuted);
         dashboardViewContextCommands.append(dashboardAddCommand);
+
+        Command* editPartySaveCommand = new Command(commandController, QChar( 0xf0c7 ), "Save" );
+        QObject::connect( editPartySaveCommand, &Command::executed, commandController, &CommandController::onEditPartySaveExecuted );
+        editPartyViewContextCommands.append( editPartySaveCommand );
     }
 
     DatabaseControllerInterface* databaseController{nullptr};
@@ -57,6 +61,7 @@ public:
     QList<Command*> findClientViewContextCommands{};
     QList<Command*> editClientViewContextCommands{};
     QList<Command*> dashboardViewContextCommands{};
+    QList<Command*> editPartyViewContextCommands{};
 };
 
 CommandController::CommandController(QObject* parent,
@@ -93,6 +98,12 @@ QQmlListProperty<Command> CommandController::ui_dashboardViewContextCommands()
 {
     return QQmlListProperty<Command>(this, implementation->dashboardViewContextCommands);
 }
+
+QQmlListProperty<Command> CommandController::ui_editPartyViewContextCommands()
+{
+    return QQmlListProperty<Command>(this, implementation->editPartyViewContextCommands);
+}
+
 
 void CommandController::onCreateClientSaveExecuted()
 {
@@ -146,6 +157,18 @@ void CommandController::onDashboardAddExecuted()
 {
     qDebug() << "You executed the Add command!";
     emit implementation->navigationController->goEditPartyView();
+}
+
+void CommandController::onEditPartySaveExecuted()
+{
+    //TODO: Handle create / update here
+    //TOOO: If create, make sure next save will use other party and not overwrite
+    qDebug() << "You executed the Save (update) command!";
+    implementation->databaseController->createRow(implementation->selectedParty->key(),
+                                                  implementation->selectedParty->id(),
+                                                  implementation->selectedParty->toJson());
+
+    qDebug() << "Party saved!";
 }
 
 void CommandController::setSelectedClient(Client *client)

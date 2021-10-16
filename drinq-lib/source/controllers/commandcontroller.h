@@ -28,6 +28,7 @@ public:
     QQmlListProperty<framework::Command> ui_findClientViewContextCommands() override;
     QQmlListProperty<framework::Command> ui_editClientViewContextCommands() override;
     QQmlListProperty<framework::Command> ui_dashboardViewContextCommands() override;
+    QQmlListProperty<framework::Command> ui_editPartyViewContextCommands() override;
 
 public slots:
     void onCreateClientSaveExecuted() override;
@@ -37,6 +38,8 @@ public slots:
 
     void onDashboardLoadExecuted() override;
     void onDashboardAddExecuted() override;
+
+    void onEditPartySaveExecuted() override;
 
     void setSelectedClient(drinq::models::Client* client) override;
     void setSelectedParty(drinq::models::Party* party) override;
@@ -49,3 +52,4 @@ private:
 }
 }
 #endif // COMMANDCONTROLLER_H
+
