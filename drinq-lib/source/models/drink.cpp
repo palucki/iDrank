@@ -75,14 +75,14 @@ QQmlListProperty<Drink> Party::ui_drinks()
     return QQmlListProperty<Drink>(this, drinks->derivedEntities());
 }
 
-QString Party::ui_amount_consumed()
+int Party::ui_amount_consumed()
 {
     const auto add_amount = [](int sum, drinq::models::Drink* d) {
         return sum + d->amount_ml->value();
     };
 
     const int amount = std::accumulate(drinks->derivedEntities().begin(), drinks->derivedEntities().end(), 0, add_amount);
-    return QString::number(amount);
+    return amount;
 }
 
 void Party::addDrink()

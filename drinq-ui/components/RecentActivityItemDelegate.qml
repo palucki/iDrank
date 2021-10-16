@@ -68,14 +68,13 @@ Item {
                     right: parent.right
                     margins: Style.heightDataControls / 4
                 }
-                text: party.ui_amount_consumed
+                text: amountWithUnit(party.ui_amount_consumed)
                 font.pixelSize: Style.pixelSizeDataControls
                 color: Style.colorPanelFont
                 horizontalAlignment: Text.AlignRight
             }
 
         }
-
 
         Rectangle {
             id: borderBottom
@@ -104,5 +103,21 @@ Item {
                 }
             }
         ]
+    }
+
+    function amountWithUnit(amount) {
+        //amount is always in ml
+        const unit = Style.settings.amountUnit;
+        switch (unit) {
+        case 'l':
+            amount = amount / 1000.0
+            break;
+        case 'ml':
+            break;
+        default:
+            console.log("Incorrect unit in settings")
+        }
+
+        return amount + " " + unit
     }
 }

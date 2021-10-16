@@ -3,6 +3,11 @@ import QtQuick 2.12
 
 Item {
     // Configuration Part
+    readonly property Item settings : Item {
+        readonly property string amountUnit: "ml"
+    }
+
+    // Configuration Part
     readonly property Item config : Item {
         readonly property int splashScreenTimeoutMs: 10
     }
