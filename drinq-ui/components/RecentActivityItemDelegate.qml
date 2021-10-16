@@ -68,7 +68,7 @@ Item {
                     right: parent.right
                     margins: Style.heightDataControls / 4
                 }
-                text: "200 ml (TODO)"
+                text: party.ui_amount_consumed
                 font.pixelSize: Style.pixelSizeDataControls
                 color: Style.colorPanelFont
                 horizontalAlignment: Text.AlignRight

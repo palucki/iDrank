@@ -114,7 +114,9 @@ class DRINQLIB_EXPORT Party : public data::Entity
     Q_PROPERTY(drinq::data::StringDecorator* ui_notes MEMBER notes CONSTANT)
     Q_PROPERTY(drinq::data::DateTimeDecorator* ui_started MEMBER started CONSTANT)
     Q_PROPERTY(drinq::data::DateTimeDecorator* ui_ended MEMBER ended CONSTANT)
-    Q_PROPERTY( QQmlListProperty<drinq::models::Drink> ui_drinks READ ui_drinks NOTIFY drinksChanged )
+    Q_PROPERTY(QQmlListProperty<drinq::models::Drink> ui_drinks READ ui_drinks NOTIFY drinksChanged )
+
+    Q_PROPERTY(QString ui_amount_consumed READ ui_amount_consumed CONSTANT )
 
 public:
     explicit Party(QObject* parent = nullptr);
@@ -129,6 +131,7 @@ public:
     data::EntityCollection<drinq::models::Drink>* drinks{nullptr};
 
     Q_INVOKABLE QQmlListProperty<drinq::models::Drink> ui_drinks();
+    Q_INVOKABLE QString ui_amount_consumed();
 
 public slots:
     void addDrink();
