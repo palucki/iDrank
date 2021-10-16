@@ -40,9 +40,9 @@ public:
         QObject::connect( editClientDeleteClientCommand, &Command::executed, commandController, &CommandController::onEditClientDeleteExecuted );
         editClientViewContextCommands.append( editClientDeleteClientCommand );
 
-        Command* dashboardLoadCommand = new Command(commandController, QChar( 0xf002 ), "Load" );
-        QObject::connect(dashboardLoadCommand, &Command::executed, commandController, &CommandController::onDashboardLoadExecuted);
-        dashboardViewContextCommands.append(dashboardLoadCommand);
+        Command* dashboardAddCommand = new Command(commandController, QChar( 0xf055 ), "Add" );
+        QObject::connect(dashboardAddCommand, &Command::executed, commandController, &CommandController::onDashboardAddExecuted);
+        dashboardViewContextCommands.append(dashboardAddCommand);
     }
 
     DatabaseControllerInterface* databaseController{nullptr};
@@ -50,6 +50,7 @@ public:
     ClientSearch* clientSearch{nullptr};
     RecentActivity* recentActivity{nullptr};
     Client* selectedClient{nullptr};
+    Party* selectedParty{nullptr};
     NavigationControllerInterface* navigationController{nullptr};
     CommandController* commandController{nullptr};
     QList<Command*> createClientViewContextCommands{};
@@ -138,13 +139,23 @@ void CommandController::onEditClientDeleteExecuted()
 void CommandController::onDashboardLoadExecuted()
 {
     qDebug() << "You executed the Load command!";
-
     implementation->recentActivity->load();
+}
+
+void CommandController::onDashboardAddExecuted()
+{
+    qDebug() << "You executed the Add command!";
+    emit implementation->navigationController->goEditPartyView();
 }
 
 void CommandController::setSelectedClient(Client *client)
 {
     implementation->selectedClient = client;
+}
+
+void CommandController::setSelectedParty(Party* party)
+{
+    implementation->selectedParty = party;
 }
 
 }}

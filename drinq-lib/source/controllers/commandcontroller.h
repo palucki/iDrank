@@ -34,8 +34,12 @@ public slots:
     void onFindClientSearchExecuted() override;
     void onEditClientSaveExecuted() override;
     void onEditClientDeleteExecuted() override;
+
     void onDashboardLoadExecuted() override;
+    void onDashboardAddExecuted() override;
+
     void setSelectedClient(drinq::models::Client* client) override;
+    void setSelectedParty(drinq::models::Party* party) override;
 
 private:
     class Implementation;

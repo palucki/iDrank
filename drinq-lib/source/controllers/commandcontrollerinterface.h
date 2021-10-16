@@ -65,7 +65,9 @@ public slots:
     virtual void onEditClientSaveExecuted() = 0;
     virtual void onEditClientDeleteExecuted() = 0;
     virtual void onDashboardLoadExecuted() = 0;
+    virtual void onDashboardAddExecuted() = 0;
     virtual void setSelectedClient(drinq::models::Client* client) = 0;
+    virtual void setSelectedParty(drinq::models::Party* party) = 0;
 
 };
 

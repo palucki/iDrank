@@ -18,6 +18,8 @@ public:
     virtual ~ObjectFactoryInterface(){}
 
     virtual models::Client* createClient(QObject* parent) const = 0;
+    virtual models::Party* createParty(QObject* parent) const = 0;
+    virtual models::Drink* createDrink(QObject* parent) const = 0;
 
     virtual models::ClientSearch* createClientSearch(QObject* parent,
                                                      controllers::DatabaseControllerInterface* databaseController) const = 0;

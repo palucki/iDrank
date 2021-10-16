@@ -18,6 +18,16 @@ Client *ObjectFactory::createClient(QObject *parent) const
     return new Client(parent);
 }
 
+Party *ObjectFactory::createParty(QObject *parent) const
+{
+    return new Party(parent);
+}
+
+Drink *ObjectFactory::createDrink(QObject *parent) const
+{
+    return new Drink(parent);
+}
+
 ClientSearch *ObjectFactory::createClientSearch(QObject *parent, controllers::DatabaseControllerInterface *databaseController) const
 {
     return new ClientSearch(parent, databaseController);

@@ -20,6 +20,7 @@ public:
         databaseController = objectFactory->createDatabaseController(masterController);
         navigationController = objectFactory->createNavigationController(masterController);
         newClient = objectFactory->createClient(masterController);
+        newParty = objectFactory->createParty(masterController);
         clientSearch = objectFactory->createClientSearch(masterController, databaseController);
         recentActivity = objectFactory->createRecentActivity(masterController, databaseController);
         commandController = objectFactory->createCommandController(masterController, databaseController, navigationController,
@@ -31,6 +32,7 @@ public:
     DatabaseControllerInterface* databaseController{nullptr};
     NavigationControllerInterface* navigationController{nullptr};
     Client* newClient{nullptr};
+    Party* newParty{nullptr};
     ClientSearch* clientSearch{nullptr};
     RecentActivity* recentActivity{nullptr};
     CommandControllerInterface* commandController{nullptr};
@@ -64,6 +66,11 @@ DatabaseControllerInterface *MasterController::databaseController()
 Client* MasterController::newClient()
 {
     return implementation->newClient;
+}
+
+Party* MasterController::newParty()
+{
+    return implementation->newParty;
 }
 
 drinq::models::ClientSearch *MasterController::clientSearch()
