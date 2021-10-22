@@ -159,7 +159,6 @@ void CommandController::onDashboardLoadExecuted()
 void CommandController::onDashboardAddExecuted()
 {
     qDebug() << "You executed the Add command!";
-
     qDebug() << "New Party " << implementation->newParty->toJson();
 
     emit implementation->navigationController->goEditPartyView(implementation->newParty);

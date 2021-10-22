@@ -73,10 +73,10 @@ DataDecorator* Entity::addDataItem(DataDecorator* dataDecorator)
 
 void Entity::update(const QJsonObject& jsonObject)
 {
-//    if (jsonObject.contains("id"))
-//    {
-//        implementation->id = jsonObject.value("id").toString();
-//    }
+    if (jsonObject.contains("id"))
+    {
+        implementation->id = jsonObject.value("id").toString();
+    }
 
     // Update data decorators
     for (std::pair<QString, DataDecorator*> dataDecoratorPair : implementation->dataDecorators)
