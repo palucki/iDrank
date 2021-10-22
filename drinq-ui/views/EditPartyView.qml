@@ -58,6 +58,11 @@ Item {
                     }
                 }
             }
+            DrinksEditor {
+                width: scrollView.width
+                party: selectedParty
+                headerText: "Consumed drinks"
+            }
         }
     }
     CommandBar {

@@ -7,6 +7,23 @@ Item {
         readonly property string amountUnit: "ml"
     }
 
+    function amountWithUnit(amount) {
+        //amount is always in ml
+        const unit = settings.amountUnit;
+        switch (unit) {
+        case 'l':
+            amount = amount / 1000.0
+            break;
+        case 'ml':
+            break;
+        default:
+            console.log("Incorrect unit in settings")
+        }
+
+        return amount + " " + unit
+    }
+
+
     // Configuration Part
     readonly property Item config : Item {
         readonly property int splashScreenTimeoutMs: 10

@@ -18,3 +18,6 @@ StringEditorSingleLine 1.0 StringEditorSingleLine.qml
 
 SearchResultDelegate 1.0 SearchResultDelegate.qml
 RecentActivityItemDelegate 1.0 RecentActivityItemDelegate.qml
+
+DrinksEditor 1.0 DrinksEditor.qml
+DrinkDelegate 1.0 DrinkDelegate.qml
