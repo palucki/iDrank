@@ -18,7 +18,7 @@ Item {
                     fill: parent
                     margins: Style.heightDataControls / 4
                 }
-                text: stringDecorator.ui_label
+                text: stringDecorator ? stringDecorator.ui_label : "ERROR"
                 color: Style.colorDataControlsFont
                 font.pixelSize: Style.pixelSizeDataControls
                 verticalAlignment: Qt.AlignVCenter
@@ -39,7 +39,7 @@ Item {
                     fill: parent
                     margins: Style.heightDataControls / 4
                 }
-                text: stringDecorator.ui_value
+                text: stringDecorator ? stringDecorator.ui_value : "ERROR"
                 color: Style.colorDataControlsFont
                 font.pixelSize: Style.pixelSizeDataControls
                 verticalAlignment: Qt.AlignVCenter

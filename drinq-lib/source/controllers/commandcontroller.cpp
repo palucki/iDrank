@@ -179,12 +179,18 @@ void CommandController::onEditPartySaveExecuted()
 
     if(implementation->selectedParty == implementation->newParty)
     {
+        qDebug() << "New";
         implementation->databaseController->createRow(implementation->newParty->key(),
                                                       implementation->newParty->id(),
                                                       implementation->newParty->toJson());
+
+        auto oldParty = implementation->newParty;
+        implementation->newParty = new Party(this);
+        delete oldParty;
     }
     else
     {
+        qDebug() << "Only update";
         implementation->databaseController->updateRow(implementation->selectedParty->key(),
                                                       implementation->selectedParty->id(),
                                                       implementation->selectedParty->toJson());

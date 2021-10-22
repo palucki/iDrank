@@ -8,11 +8,12 @@ import components 1.0
 Item {
 //    property Client newClient: masterController.ui_newClient
     property Party selectedParty
+
     Component.onCompleted:  {
-        if(!selectedParty) {
-            console.log("Party was not set, selecting newparty")
-            selectedParty = masterController.ui_newParty
-        }
+//        if(!selectedParty) {
+//            console.log("Party was not set, selecting newparty")
+//            selectedParty = masterController.ui_newParty
+//        }
 
         masterController.ui_commandController.setSelectedParty(selectedParty)
     }
@@ -42,14 +43,14 @@ Item {
                     Column {
                     spacing: Style.sizeControlSpacing
                     StringEditorSingleLine {
-                        stringDecorator: selectedParty.ui_title
+                        stringDecorator: selectedParty ? selectedParty.ui_title : null
                         anchors {
                             left: parent.left
                             right: parent.right
                         }
                     }
                     StringEditorSingleLine {
-                        stringDecorator: selectedParty.ui_notes
+                        stringDecorator: selectedParty ? selectedParty.ui_notes : null
                         anchors {
                             left: parent.left
                             right: parent.right
