@@ -20,10 +20,11 @@ public:
         databaseController = objectFactory->createDatabaseController(masterController);
         navigationController = objectFactory->createNavigationController(masterController);
         newClient = objectFactory->createClient(masterController);
+        newParty = objectFactory->createParty(masterController);
         clientSearch = objectFactory->createClientSearch(masterController, databaseController);
         recentActivity = objectFactory->createRecentActivity(masterController, databaseController);
         commandController = objectFactory->createCommandController(masterController, databaseController, navigationController,
-                                                                   newClient, clientSearch, recentActivity);
+                                                                   newClient, newParty, clientSearch, recentActivity);
     }
 
     drinq::framework::ObjectFactoryInterface* objectFactory{nullptr};
@@ -31,6 +32,7 @@ public:
     DatabaseControllerInterface* databaseController{nullptr};
     NavigationControllerInterface* navigationController{nullptr};
     Client* newClient{nullptr};
+    Party* newParty{nullptr};
     ClientSearch* clientSearch{nullptr};
     RecentActivity* recentActivity{nullptr};
     CommandControllerInterface* commandController{nullptr};
@@ -66,6 +68,11 @@ Client* MasterController::newClient()
     return implementation->newClient;
 }
 
+Party* MasterController::newParty()
+{
+    return implementation->newParty;
+}
+
 drinq::models::ClientSearch *MasterController::clientSearch()
 {
     return implementation->clientSearch;
@@ -81,9 +88,15 @@ const QString& MasterController::welcomeMessage() const
     return implementation->welcomeMessage;
 }
 
-void MasterController::selectClient(Client *client)
+void MasterController::selectClient(Client* client)
 {
     emit implementation->navigationController->goEditClientView(client);
+}
+
+void MasterController::selectParty(Party* party)
+{
+    qDebug() << "Selecting party " << party->title->value() << " with id " << party->id();
+    emit implementation->navigationController->goEditPartyView(party);
 }
 
 }

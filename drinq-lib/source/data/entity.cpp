@@ -125,10 +125,10 @@ QJsonObject Entity::toJson() const
 
 const QString &Entity::id() const
 {
-    if(implementation->primaryKey != nullptr &&  !implementation->primaryKey->value().isEmpty())
-    {
-        return implementation->primaryKey->value();
-    }
+//    if(implementation->primaryKey != nullptr &&  !implementation->primaryKey->value().isEmpty())
+//    {
+//        return implementation->primaryKey->value();
+//    }
 
     return implementation->id;
 }

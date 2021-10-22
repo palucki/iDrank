@@ -15,5 +15,7 @@
         <file alias="EnumeratorSelector.qml">components/EnumeratorSelector.qml</file>
         <file alias="EnumeratorSelectorView.qml">components/EnumeratorSelectorView.qml</file>
         <file alias="FormButton.qml">components/FormButton.qml</file>
+        <file alias="DrinksEditor.qml">components/DrinksEditor.qml</file>
+        <file alias="DrinkDelegate.qml">components/DrinkDelegate.qml</file>
     </qresource>
 </RCC>

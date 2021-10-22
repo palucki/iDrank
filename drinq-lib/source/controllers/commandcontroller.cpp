@@ -15,10 +15,11 @@ class CommandController::Implementation
 {
 public:
     Implementation(CommandController* _commandController, DatabaseControllerInterface*
-                   _databaseController, Client* _newClient, ClientSearch* _clientSearch, RecentActivity* _recentActivity,
+                   _databaseController, Client* _newClient, Party* _newParty, ClientSearch* _clientSearch, RecentActivity* _recentActivity,
                    NavigationControllerInterface* _navController)
         : databaseController(_databaseController)
         , newClient(_newClient)
+        , newParty(_newParty)
         , clientSearch(_clientSearch)
         , recentActivity(_recentActivity)
         , navigationController(_navController)
@@ -40,33 +41,41 @@ public:
         QObject::connect( editClientDeleteClientCommand, &Command::executed, commandController, &CommandController::onEditClientDeleteExecuted );
         editClientViewContextCommands.append( editClientDeleteClientCommand );
 
-        Command* dashboardLoadCommand = new Command(commandController, QChar( 0xf002 ), "Load" );
-        QObject::connect(dashboardLoadCommand, &Command::executed, commandController, &CommandController::onDashboardLoadExecuted);
-        dashboardViewContextCommands.append(dashboardLoadCommand);
+        Command* dashboardAddCommand = new Command(commandController, QChar( 0xf055 ), "Add" );
+        QObject::connect(dashboardAddCommand, &Command::executed, commandController, &CommandController::onDashboardAddExecuted);
+        dashboardViewContextCommands.append(dashboardAddCommand);
+
+        Command* editPartySaveCommand = new Command(commandController, QChar( 0xf0c7 ), "Save" );
+        QObject::connect( editPartySaveCommand, &Command::executed, commandController, &CommandController::onEditPartySaveExecuted );
+        editPartyViewContextCommands.append( editPartySaveCommand );
     }
 
     DatabaseControllerInterface* databaseController{nullptr};
     Client* newClient{nullptr};
+    Party* newParty{nullptr};
     ClientSearch* clientSearch{nullptr};
     RecentActivity* recentActivity{nullptr};
     Client* selectedClient{nullptr};
+    Party* selectedParty{nullptr};
     NavigationControllerInterface* navigationController{nullptr};
     CommandController* commandController{nullptr};
     QList<Command*> createClientViewContextCommands{};
     QList<Command*> findClientViewContextCommands{};
     QList<Command*> editClientViewContextCommands{};
     QList<Command*> dashboardViewContextCommands{};
+    QList<Command*> editPartyViewContextCommands{};
 };
 
 CommandController::CommandController(QObject* parent,
                                      DatabaseControllerInterface* databaseController,
                                      Client* newClient,
+                                     Party* newParty,
                                      ClientSearch* clientSearch,
                                      RecentActivity* recentActivity,
                                      NavigationControllerInterface* _navigationController)
-    : CommandControllerInterface(parent, databaseController, newClient, clientSearch, recentActivity, _navigationController)
+    : CommandControllerInterface(parent, databaseController, newClient, newParty, clientSearch, recentActivity, _navigationController)
 {
-    implementation.reset(new Implementation(this, databaseController, newClient, clientSearch, recentActivity, _navigationController));
+    implementation.reset(new Implementation(this, databaseController, newClient, newParty, clientSearch, recentActivity, _navigationController));
 }
 
 CommandController::~CommandController()
@@ -92,6 +101,12 @@ QQmlListProperty<Command> CommandController::ui_dashboardViewContextCommands()
 {
     return QQmlListProperty<Command>(this, implementation->dashboardViewContextCommands);
 }
+
+QQmlListProperty<Command> CommandController::ui_editPartyViewContextCommands()
+{
+    return QQmlListProperty<Command>(this, implementation->editPartyViewContextCommands);
+}
+
 
 void CommandController::onCreateClientSaveExecuted()
 {
@@ -138,13 +153,64 @@ void CommandController::onEditClientDeleteExecuted()
 void CommandController::onDashboardLoadExecuted()
 {
     qDebug() << "You executed the Load command!";
-
     implementation->recentActivity->load();
+}
+
+void CommandController::onDashboardAddExecuted()
+{
+    qDebug() << "You executed the Add command!";
+    qDebug() << "New Party " << implementation->newParty->toJson();
+
+    emit implementation->navigationController->goEditPartyView(implementation->newParty);
+}
+
+void CommandController::onEditPartySaveExecuted()
+{
+    //TODO: Handle create / update here
+    //TOOO: If create, make sure next save will use other party and not overwrite
+
+    qDebug() << "selected id: " << implementation->selectedParty->id();
+    qDebug() << "json: " << implementation->selectedParty->toJson();
+
+    qDebug() << "new id: " << implementation->newParty->id();
+    qDebug() << "json: " << implementation->newParty->toJson();
+
+    //bedziemy sprawdzac .value("id") w toJson()
+
+    if(implementation->selectedParty == implementation->newParty)
+    {
+        qDebug() << "New";
+        implementation->databaseController->createRow(implementation->newParty->key(),
+                                                      implementation->newParty->id(),
+                                                      implementation->newParty->toJson());
+
+        auto oldParty = implementation->newParty;
+        implementation->newParty = new Party(this);
+        delete oldParty;
+    }
+    else
+    {
+        qDebug() << "Only update";
+        implementation->databaseController->updateRow(implementation->selectedParty->key(),
+                                                      implementation->selectedParty->id(),
+                                                      implementation->selectedParty->toJson());
+    }
+
+    qDebug() << "You executed the Save (update) command!";
+
+//    implementation->selectedParty = nullptr;
+
+    emit implementation->navigationController->goDashboardView();
 }
 
 void CommandController::setSelectedClient(Client *client)
 {
     implementation->selectedClient = client;
+}
+
+void CommandController::setSelectedParty(Party* party)
+{
+    implementation->selectedParty = party;
 }
 
 }}

@@ -30,6 +30,7 @@ class DRINQLIB_EXPORT MasterController : public QObject
     Q_PROPERTY(drinq::controllers::CommandControllerInterface* ui_commandController READ commandController CONSTANT)
     Q_PROPERTY(drinq::controllers::DatabaseControllerInterface* ui_databaseController READ databaseController CONSTANT)
     Q_PROPERTY(drinq::models::Client* ui_newClient READ newClient CONSTANT )
+    Q_PROPERTY(drinq::models::Party* ui_newParty READ newParty CONSTANT )
     Q_PROPERTY(drinq::models::ClientSearch* ui_clientSearch READ clientSearch CONSTANT )
     Q_PROPERTY(drinq::models::RecentActivity* ui_recentActivity READ recentActivity CONSTANT )
 public:
@@ -39,12 +40,14 @@ public:
     CommandControllerInterface* commandController();
     DatabaseControllerInterface* databaseController();
     drinq::models::Client* newClient();
+    drinq::models::Party* newParty();
     drinq::models::ClientSearch* clientSearch();
     drinq::models::RecentActivity* recentActivity();
     const QString& welcomeMessage() const;
 
 public slots:
     void selectClient(drinq::models::Client* client);
+    void selectParty(drinq::models::Party* party);
 
 private:
     class Implementation;

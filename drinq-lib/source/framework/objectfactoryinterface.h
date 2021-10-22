@@ -18,6 +18,8 @@ public:
     virtual ~ObjectFactoryInterface(){}
 
     virtual models::Client* createClient(QObject* parent) const = 0;
+    virtual models::Party* createParty(QObject* parent) const = 0;
+    virtual models::Drink* createDrink(QObject* parent) const = 0;
 
     virtual models::ClientSearch* createClientSearch(QObject* parent,
                                                      controllers::DatabaseControllerInterface* databaseController) const = 0;
@@ -30,6 +32,7 @@ public:
                                                                              controllers::DatabaseControllerInterface* databaseController,
                                                                              controllers::NavigationControllerInterface* navigationController,
                                                                              models::Client* newClient,
+                                                                             models::Party* newParty,
                                                                              models::ClientSearch*  clientSearch,
                                                                              models::RecentActivity* recentActivity
                                                                              /*, networking::IWebRequest* rssWebRequest*/) const = 0;

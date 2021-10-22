@@ -37,10 +37,15 @@ class DRINQLIB_EXPORT CommandControllerInterface : public QObject
                ui_dashboardViewContextCommands READ
                ui_dashboardViewContextCommands CONSTANT)
 
+    Q_PROPERTY(QQmlListProperty<drinq::framework::Command>
+               ui_editPartyViewContextCommands READ
+               ui_editPartyViewContextCommands CONSTANT)
+
 public:
     explicit CommandControllerInterface(QObject* _parent = nullptr,
                                DatabaseControllerInterface* _databaseController = nullptr,
                                Client* newClient = nullptr,
+                               Party* newParty = nullptr,
                                ClientSearch* clientSearch = nullptr,
                                RecentActivity* recentActivity = nullptr,
                                NavigationControllerInterface* _navigationController = nullptr)
@@ -48,6 +53,7 @@ public:
         {
             Q_UNUSED(_databaseController);
             Q_UNUSED(newClient);
+            Q_UNUSED(newParty);
             Q_UNUSED(clientSearch);
             Q_UNUSED(recentActivity);
             Q_UNUSED(_navigationController);
@@ -58,14 +64,18 @@ public:
     virtual QQmlListProperty<framework::Command> ui_findClientViewContextCommands() = 0;
     virtual QQmlListProperty<framework::Command> ui_editClientViewContextCommands() = 0;
     virtual QQmlListProperty<framework::Command> ui_dashboardViewContextCommands() = 0;
+    virtual QQmlListProperty<framework::Command> ui_editPartyViewContextCommands() = 0;
 
 public slots:
     virtual void onCreateClientSaveExecuted() = 0;
+    virtual void onEditPartySaveExecuted() = 0;
     virtual void onFindClientSearchExecuted() = 0;
     virtual void onEditClientSaveExecuted() = 0;
     virtual void onEditClientDeleteExecuted() = 0;
     virtual void onDashboardLoadExecuted() = 0;
+    virtual void onDashboardAddExecuted() = 0;
     virtual void setSelectedClient(drinq::models::Client* client) = 0;
+    virtual void setSelectedParty(drinq::models::Party* party) = 0;
 
 };
 

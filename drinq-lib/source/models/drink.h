@@ -53,62 +53,46 @@ signals:
 
 //party
 
-class DRINQLIB_EXPORT Party : public data::Entity
-{
-    Q_OBJECT
-    Q_PROPERTY(drinq::data::StringDecorator* ui_title MEMBER title CONSTANT)
-    Q_PROPERTY(drinq::data::StringDecorator* ui_notes MEMBER notes CONSTANT)
-    Q_PROPERTY(drinq::data::DateTimeDecorator* ui_started MEMBER ended CONSTANT)
-    Q_PROPERTY(drinq::data::DateTimeDecorator* ui_ended MEMBER ended CONSTANT)
-public:
-    explicit Party(QObject* parent = nullptr);
-    Party(QObject* parent, const QJsonObject& json);
-    ~Party();
 
-    data::StringDecorator* id{nullptr};
-    data::StringDecorator* title{nullptr};
-    data::StringDecorator* notes{nullptr};
-    data::DateTimeDecorator* started{nullptr};
-    data::DateTimeDecorator* ended{nullptr};
-};
 
 //beverage
 
-class DRINQLIB_EXPORT Beverage : public data::Entity
-{
-    Q_OBJECT
-    Q_PROPERTY(drinq::data::StringDecorator* ui_name MEMBER name CONSTANT)
-public:
-    explicit Beverage(QObject* parent = nullptr);
-    Beverage(QObject* parent, const QJsonObject& json);
-    ~Beverage();
+//class DRINQLIB_EXPORT Beverage : public data::Entity
+//{
+//    Q_OBJECT
+//    Q_PROPERTY(drinq::data::StringDecorator* ui_name MEMBER name CONSTANT)
+//public:
+//    explicit Beverage(QObject* parent = nullptr);
+//    Beverage(QObject* parent, const QJsonObject& json);
+//    ~Beverage();
 
-    data::StringDecorator* id{nullptr};
-    data::StringDecorator* name{nullptr};
-};
+//    data::StringDecorator* id{nullptr};
+//    data::StringDecorator* name{nullptr};
+//};
 
 //player
 
-class DRINQLIB_EXPORT Player : public data::Entity
-{
-    Q_OBJECT
-    Q_PROPERTY(drinq::data::StringDecorator* ui_name MEMBER name CONSTANT)
-    Q_PROPERTY(drinq::data::StringDecorator* ui_photo MEMBER photo CONSTANT)
-public:
-    explicit Player(QObject* parent = nullptr);
-    Player(QObject* parent, const QJsonObject& json);
-    ~Player();
+//class DRINQLIB_EXPORT Player : public data::Entity
+//{
+//    Q_OBJECT
+//    Q_PROPERTY(drinq::data::StringDecorator* ui_name MEMBER name CONSTANT)
+//    Q_PROPERTY(drinq::data::StringDecorator* ui_photo MEMBER photo CONSTANT)
+//public:
+//    explicit Player(QObject* parent = nullptr);
+//    Player(QObject* parent, const QJsonObject& json);
+//    ~Player();
 
-    data::StringDecorator* id{nullptr};
-    data::StringDecorator* name{nullptr};
-    data::StringDecorator* photo{nullptr};
-};
+//    data::StringDecorator* id{nullptr};
+//    data::StringDecorator* name{nullptr};
+//    data::StringDecorator* photo{nullptr};
+//};
 
 //drink
 
 class DRINQLIB_EXPORT Drink : public data::Entity
 {
     Q_OBJECT
+    Q_PROPERTY( drinq::data::StringDecorator* ui_beverage MEMBER beverage CONSTANT )
     Q_PROPERTY( drinq::data::IntDecorator* ui_amount_ml MEMBER amount_ml CONSTANT )
     Q_PROPERTY( drinq::data::DateTimeDecorator* ui_consumed MEMBER consumed CONSTANT )
 
@@ -117,14 +101,44 @@ public:
     Drink(QObject* parent, const QJsonObject& json);
     ~Drink();
 
-    data::StringDecorator* id{nullptr};
-    data::StringDecorator* party_id{nullptr};
-    data::StringDecorator* beverage_id{nullptr};
-    data::StringDecorator* player_id{nullptr};
+    data::StringDecorator* reference{nullptr};
+    data::StringDecorator* beverage{nullptr};
     data::IntDecorator* amount_ml{nullptr};
     data::DateTimeDecorator* consumed{nullptr};
 };
 
+class DRINQLIB_EXPORT Party : public data::Entity
+{
+    Q_OBJECT
+    Q_PROPERTY(drinq::data::StringDecorator* ui_title MEMBER title CONSTANT)
+    Q_PROPERTY(drinq::data::StringDecorator* ui_notes MEMBER notes CONSTANT)
+    Q_PROPERTY(drinq::data::DateTimeDecorator* ui_started MEMBER started CONSTANT)
+    Q_PROPERTY(drinq::data::DateTimeDecorator* ui_ended MEMBER ended CONSTANT)
+    Q_PROPERTY(QQmlListProperty<drinq::models::Drink> ui_drinks READ ui_drinks NOTIFY drinksChanged )
+
+    Q_PROPERTY(int ui_amount_consumed READ ui_amount_consumed CONSTANT )
+
+public:
+    explicit Party(QObject* parent = nullptr);
+    Party(QObject* parent, const QJsonObject& json);
+    ~Party();
+
+    data::StringDecorator* reference{nullptr};
+    data::StringDecorator* title{nullptr};
+    data::StringDecorator* notes{nullptr};
+    data::DateTimeDecorator* started{nullptr};
+    data::DateTimeDecorator* ended{nullptr};
+    data::EntityCollection<drinq::models::Drink>* drinks{nullptr};
+
+    Q_INVOKABLE QQmlListProperty<drinq::models::Drink> ui_drinks();
+    Q_INVOKABLE int ui_amount_consumed();
+
+public slots:
+    void addDrink();
+
+signals:
+    void drinksChanged();
+};
 
 }
 }

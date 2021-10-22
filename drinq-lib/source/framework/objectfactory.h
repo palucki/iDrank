@@ -13,6 +13,8 @@ class DRINQLIB_EXPORT ObjectFactory : public ObjectFactoryInterface
 public:
     virtual ~ObjectFactory() override;
     models::Client* createClient(QObject* parent) const override;
+    models::Party* createParty(QObject* parent) const override;
+    models::Drink* createDrink(QObject* parent) const override;
     models::ClientSearch* createClientSearch(QObject* parent,
                                              controllers::DatabaseControllerInterface* databaseController) const override;
 
@@ -23,6 +25,7 @@ public:
                                                                      controllers::DatabaseControllerInterface* databaseController,
                                                                      controllers::NavigationControllerInterface* navigationController,
                                                                      models::Client* newClient,
+                                                                     models::Party* newParty,
                                                                      models::ClientSearch*  clientSearch,
                                                                      models::RecentActivity* recentActivity
                                                                      /*, networking::IWebRequest* rssWebRequest*/) const override;

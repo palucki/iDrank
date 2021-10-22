@@ -133,7 +133,11 @@ bool DatabaseController::updateRow(const QString& tableName, const QString& id, 
     query.bindValue(":id", QVariant(id));
     query.bindValue(":json",
                     QVariant(QJsonDocument(jsonObject).toJson(QJsonDocument::Compact)));
-    if(!query.exec()) return false;
+    if(!query.exec())
+    {
+        qDebug() << "Query error";
+        return false;
+    }
     return query.numRowsAffected() > 0;
 }
 

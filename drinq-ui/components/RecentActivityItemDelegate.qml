@@ -4,17 +4,17 @@ import assets 1.0
 import DrinQ 1.0
 
 Item {
-    property Drink drink
+    property Party party
     implicitWidth: parent.width
-    implicitHeight: Math.max(activityColumn.implicitHeight/*,
-                             textAddress.implicitHeight*/) + (Style.heightDataControls / 2)
+    implicitHeight: Math.max(leftColumn.implicitHeight,
+                             rightColumn.implicitHeight) + (Style.heightDataControls / 2)
     Rectangle {
         id: background
         width: parent.width
         height: parent.height
         color: Style.colorPanelBackground
         Column {
-            id: activityColumn
+            id: leftColumn
             width: parent / 2
             anchors {
                 left: parent.left
@@ -25,32 +25,57 @@ Item {
             Text {
                 id: textReference
                 anchors.left: parent.left
-                text: drink.ui_amount_ml.ui_label + ": " +
-                      drink.ui_amount_ml.ui_value
+                text: party.ui_title.ui_label + ": " +
+                      party.ui_title.ui_value
                 font.pixelSize: Style.pixelSizeDataControls
                 color: Style.colorPanelFont
             }
-//            Text {
-//                id: textName
-//                anchors.left: parent.left
-//                text: drink.ui_name.ui_label + ": " +
-//                      drink.ui_name.ui_value
-//                font.pixelSize: Style.pixelSizeDataControls
-//                color: Style.colorPanelFont
-//            }
+            Text {
+                id: textName
+                anchors.left: parent.left
+                text: party.ui_notes.ui_label + ": " +
+                      party.ui_notes.ui_value
+                font.pixelSize: Style.pixelSizeDataControls
+                color: Style.colorPanelFont
+            }
         }
-//        Text {
-//            id: textAddress
-//            anchors {
-//                top: parent.top
-//                right: parent.right
-//                margins: Style.heightDataControls / 4
-//            }
-//            text: drink.ui_supplyAddress.ui_fullAddress
-//            font.pixelSize: Style.pixelSizeDataControls
-//            color: Style.colorPanelFont
-//            horizontalAlignment: Text.AlignRight
-//        }
+
+        Column {
+            id: rightColumn
+            width: parent / 2
+            anchors {
+                right: parent.right
+                top: parent.top
+                margins: Style.heightDataControls / 4
+            }
+            spacing: Style.heightDataControls / 2
+
+            Text {
+                id: textAddress
+                anchors {
+                    right: parent.right
+                    margins: Style.heightDataControls / 4
+                }
+                text: party.ui_started.ui_prettyDateString
+                font.pixelSize: Style.pixelSizeDataControls
+                color: Style.colorPanelFont
+                horizontalAlignment: Text.AlignRight
+            }
+
+            Text {
+                id: textAddress2
+                anchors {
+                    right: parent.right
+                    margins: Style.heightDataControls / 4
+                }
+                text: Style.amountWithUnit(party.ui_amount_consumed)
+                font.pixelSize: Style.pixelSizeDataControls
+                color: Style.colorPanelFont
+                horizontalAlignment: Text.AlignRight
+            }
+
+        }
+
         Rectangle {
             id: borderBottom
             anchors {
@@ -61,14 +86,14 @@ Item {
             height: 1
             color: Style.colorPanelFont
         }
-//        MouseArea {
-//            anchors.fill: parent
-//            cursorShape: Qt.PointingHandCursor
-//            hoverEnabled: true
-//            onEntered: background.state = "hover"
-//            onExited: background.state = ""
-//            onClicked: masterController.selectClient(client)
-//        }
+        MouseArea {
+            anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
+            hoverEnabled: true
+            onEntered: background.state = "hover"
+            onExited: background.state = ""
+            onClicked: masterController.selectParty(party)
+        }
         states: [
             State {
                 name: "hover"
