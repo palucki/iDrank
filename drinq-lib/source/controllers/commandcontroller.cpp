@@ -15,10 +15,11 @@ class CommandController::Implementation
 {
 public:
     Implementation(CommandController* _commandController, DatabaseControllerInterface*
-                   _databaseController, Client* _newClient, ClientSearch* _clientSearch, RecentActivity* _recentActivity,
+                   _databaseController, Client* _newClient, Party* _newParty, ClientSearch* _clientSearch, RecentActivity* _recentActivity,
                    NavigationControllerInterface* _navController)
         : databaseController(_databaseController)
         , newClient(_newClient)
+        , newParty(_newParty)
         , clientSearch(_clientSearch)
         , recentActivity(_recentActivity)
         , navigationController(_navController)
@@ -51,6 +52,7 @@ public:
 
     DatabaseControllerInterface* databaseController{nullptr};
     Client* newClient{nullptr};
+    Party* newParty{nullptr};
     ClientSearch* clientSearch{nullptr};
     RecentActivity* recentActivity{nullptr};
     Client* selectedClient{nullptr};
@@ -67,12 +69,13 @@ public:
 CommandController::CommandController(QObject* parent,
                                      DatabaseControllerInterface* databaseController,
                                      Client* newClient,
+                                     Party* newParty,
                                      ClientSearch* clientSearch,
                                      RecentActivity* recentActivity,
                                      NavigationControllerInterface* _navigationController)
-    : CommandControllerInterface(parent, databaseController, newClient, clientSearch, recentActivity, _navigationController)
+    : CommandControllerInterface(parent, databaseController, newClient, newParty, clientSearch, recentActivity, _navigationController)
 {
-    implementation.reset(new Implementation(this, databaseController, newClient, clientSearch, recentActivity, _navigationController));
+    implementation.reset(new Implementation(this, databaseController, newClient, newParty, clientSearch, recentActivity, _navigationController));
 }
 
 CommandController::~CommandController()
@@ -156,19 +159,43 @@ void CommandController::onDashboardLoadExecuted()
 void CommandController::onDashboardAddExecuted()
 {
     qDebug() << "You executed the Add command!";
-    emit implementation->navigationController->goEditPartyView();
+
+    qDebug() << "New Party " << implementation->newParty->toJson();
+
+    emit implementation->navigationController->goEditPartyView(implementation->newParty);
 }
 
 void CommandController::onEditPartySaveExecuted()
 {
     //TODO: Handle create / update here
     //TOOO: If create, make sure next save will use other party and not overwrite
-    qDebug() << "You executed the Save (update) command!";
-    implementation->databaseController->createRow(implementation->selectedParty->key(),
-                                                  implementation->selectedParty->id(),
-                                                  implementation->selectedParty->toJson());
 
-    qDebug() << "Party saved!";
+    qDebug() << "selected id: " << implementation->selectedParty->id();
+    qDebug() << "json: " << implementation->selectedParty->toJson();
+
+    qDebug() << "new id: " << implementation->newParty->id();
+    qDebug() << "json: " << implementation->newParty->toJson();
+
+    //bedziemy sprawdzac .value("id") w toJson()
+
+    if(implementation->selectedParty == implementation->newParty)
+    {
+        implementation->databaseController->createRow(implementation->newParty->key(),
+                                                      implementation->newParty->id(),
+                                                      implementation->newParty->toJson());
+    }
+    else
+    {
+        implementation->databaseController->updateRow(implementation->selectedParty->key(),
+                                                      implementation->selectedParty->id(),
+                                                      implementation->selectedParty->toJson());
+    }
+
+    qDebug() << "You executed the Save (update) command!";
+
+//    implementation->selectedParty = nullptr;
+
+    emit implementation->navigationController->goDashboardView();
 }
 
 void CommandController::setSelectedClient(Client *client)

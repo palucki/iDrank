@@ -19,6 +19,7 @@ public:
     explicit CommandController(QObject* _parent = nullptr,
                                DatabaseControllerInterface* _databaseController = nullptr,
                                Client* newClient = nullptr,
+                               Party* newParty = nullptr,
                                ClientSearch* clientSearch = nullptr,
                                RecentActivity* recentActivity = nullptr,
                                NavigationControllerInterface* _navigationController = nullptr);

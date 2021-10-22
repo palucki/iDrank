@@ -45,6 +45,7 @@ public:
     explicit CommandControllerInterface(QObject* _parent = nullptr,
                                DatabaseControllerInterface* _databaseController = nullptr,
                                Client* newClient = nullptr,
+                               Party* newParty = nullptr,
                                ClientSearch* clientSearch = nullptr,
                                RecentActivity* recentActivity = nullptr,
                                NavigationControllerInterface* _navigationController = nullptr)
@@ -52,6 +53,7 @@ public:
         {
             Q_UNUSED(_databaseController);
             Q_UNUSED(newClient);
+            Q_UNUSED(newParty);
             Q_UNUSED(clientSearch);
             Q_UNUSED(recentActivity);
             Q_UNUSED(_navigationController);

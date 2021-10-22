@@ -24,7 +24,7 @@ public:
         clientSearch = objectFactory->createClientSearch(masterController, databaseController);
         recentActivity = objectFactory->createRecentActivity(masterController, databaseController);
         commandController = objectFactory->createCommandController(masterController, databaseController, navigationController,
-                                                                   newClient, clientSearch, recentActivity);
+                                                                   newClient, newParty, clientSearch, recentActivity);
     }
 
     drinq::framework::ObjectFactoryInterface* objectFactory{nullptr};
@@ -88,9 +88,15 @@ const QString& MasterController::welcomeMessage() const
     return implementation->welcomeMessage;
 }
 
-void MasterController::selectClient(Client *client)
+void MasterController::selectClient(Client* client)
 {
     emit implementation->navigationController->goEditClientView(client);
+}
+
+void MasterController::selectParty(Party* party)
+{
+    qDebug() << "Selecting party " << party->title->value() << " with id " << party->id();
+    emit implementation->navigationController->goEditPartyView(party);
 }
 
 }

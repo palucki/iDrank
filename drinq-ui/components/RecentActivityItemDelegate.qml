@@ -86,14 +86,14 @@ Item {
             height: 1
             color: Style.colorPanelFont
         }
-//        MouseArea {
-//            anchors.fill: parent
-//            cursorShape: Qt.PointingHandCursor
-//            hoverEnabled: true
-//            onEntered: background.state = "hover"
-//            onExited: background.state = ""
-//            onClicked: masterController.selectClient(client)
-//        }
+        MouseArea {
+            anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
+            hoverEnabled: true
+            onEntered: background.state = "hover"
+            onExited: background.state = ""
+            onClicked: masterController.selectParty(party)
+        }
         states: [
             State {
                 name: "hover"

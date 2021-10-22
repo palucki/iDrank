@@ -42,10 +42,11 @@ controllers::CommandControllerInterface* ObjectFactory::createCommandController(
                                                                                 controllers::DatabaseControllerInterface *databaseController,
                                                                                 controllers::NavigationControllerInterface *navigationController,
                                                                                 Client *newClient,
+                                                                                Party* newParty,
                                                                                 ClientSearch *clientSearch,
                                                                                 RecentActivity* recentActivity) const
 {
-    return new CommandController(parent, databaseController, newClient, clientSearch, recentActivity, navigationController);
+    return new CommandController(parent, databaseController, newClient, newParty, clientSearch, recentActivity, navigationController);
 }
 
 controllers::DatabaseControllerInterface *ObjectFactory::createDatabaseController(QObject *parent) const

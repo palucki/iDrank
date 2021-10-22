@@ -17,7 +17,7 @@ public:
     virtual ~NavigationControllerInterface() {}
 
 signals:
-    void goEditPartyView();
+    void goEditPartyView(drinq::models::Party* party);
     void goDashboardView();
     void goEditClientView(drinq::models::Client* client);
     void goFindClientView();

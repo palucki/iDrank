@@ -47,6 +47,7 @@ public:
 
 public slots:
     void selectClient(drinq::models::Client* client);
+    void selectParty(drinq::models::Party* party);
 
 private:
     class Implementation;

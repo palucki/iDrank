@@ -35,7 +35,7 @@ Window {
         target: masterController.ui_navigationController
 
 //        onGoCreateClientView: contentFrame.replace("qrc:/views/CreateClientView.qml")
-        onGoEditPartyView: contentFrame.replace("qrc:/views/EditPartyView.qml")
+        onGoEditPartyView: contentFrame.replace("qrc:/views/EditPartyView.qml", {selectedParty: party})
         onGoDashboardView: contentFrame.replace("qrc:/views/DashboardView.qml")
         onGoEditClientView: contentFrame.replace("qrc:/views/EditClientView.qml", {selectedClient: client})
         onGoFindClientView: contentFrame.replace("qrc:/views/FindClientView.qml")

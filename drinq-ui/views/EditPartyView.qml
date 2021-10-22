@@ -10,6 +10,7 @@ Item {
     property Party selectedParty
     Component.onCompleted:  {
         if(!selectedParty) {
+            console.log("Party was not set, selecting newparty")
             selectedParty = masterController.ui_newParty
         }
 

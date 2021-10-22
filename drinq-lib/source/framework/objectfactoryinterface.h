@@ -32,6 +32,7 @@ public:
                                                                              controllers::DatabaseControllerInterface* databaseController,
                                                                              controllers::NavigationControllerInterface* navigationController,
                                                                              models::Client* newClient,
+                                                                             models::Party* newParty,
                                                                              models::ClientSearch*  clientSearch,
                                                                              models::RecentActivity* recentActivity
                                                                              /*, networking::IWebRequest* rssWebRequest*/) const = 0;
