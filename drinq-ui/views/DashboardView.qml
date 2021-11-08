@@ -15,32 +15,36 @@ Item {
     Rectangle {
         anchors.fill: parent
         color: Style.colorBackground
+    }
+
+    Column {
+//        height: parent.height
+        anchors {
+            left: parent.left
+            right: parent.right
+            top: parent.top
+            bottom: commandBar.top
+//            margins: Style.sizeScreenMargin
+        }
+
         Panel {
             id: searchPanel
             anchors {
                 left: parent.left
                 right: parent.right
-                top: parent.top
                 margins: Style.sizeScreenMargin
             }
             headerText: "Recent activity"
-//            contentComponent:
-//                StringEditorSingleLine {
-//                stringDecorator: recentActivity.ui_searchText
-//                anchors {
-//                    left: parent.left
-//                    right: parent.right
-//                }
-//            }
         }
 
         ListView {
             id: itemsView
+            height: parent.height - commandBar.height
             anchors {
-                top: searchPanel.bottom
+//                top: searchPanel.bottom
                 left: parent.left
                 right: parent.right
-                bottom: parent.bottom
+//                bottom: parent.bottom
                 margins: Style.sizeScreenMargin
             }
             clip: true
@@ -50,11 +54,16 @@ Item {
                     party: modelData
                 }
         }
-
     }
 
+
+
+//    }
+
     CommandBar {
+        id: commandBar
         commandList: masterController.ui_commandController.ui_dashboardViewContextCommands
+//        anchors.bottom: parent.bottom
     }
 }
 
