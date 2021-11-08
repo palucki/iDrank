@@ -69,6 +69,7 @@ public:
 public slots:
     virtual void onCreateClientSaveExecuted() = 0;
     virtual void onEditPartySaveExecuted() = 0;
+    virtual void onEditPartyDeleteExecuted() = 0;
     virtual void onFindClientSearchExecuted() = 0;
     virtual void onEditClientSaveExecuted() = 0;
     virtual void onEditClientDeleteExecuted() = 0;

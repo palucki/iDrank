@@ -92,17 +92,27 @@ signals:
 class DRINQLIB_EXPORT Drink : public data::Entity
 {
     Q_OBJECT
-    Q_PROPERTY( drinq::data::StringDecorator* ui_beverage MEMBER beverage CONSTANT )
-    Q_PROPERTY( drinq::data::IntDecorator* ui_amount_ml MEMBER amount_ml CONSTANT )
-    Q_PROPERTY( drinq::data::DateTimeDecorator* ui_consumed MEMBER consumed CONSTANT )
+    Q_PROPERTY(drinq::data::EnumeratorDecorator* ui_beverage MEMBER beverage CONSTANT )
+    Q_PROPERTY(drinq::data::IntDecorator* ui_amount_ml MEMBER amount_ml CONSTANT )
+    Q_PROPERTY(drinq::data::DateTimeDecorator* ui_consumed MEMBER consumed CONSTANT )
+    Q_PROPERTY(drinq::data::DropDown* ui_beverageDropDown MEMBER dropDown CONSTANT)
 
 public:
+    enum eBeverage {
+        Other = 0,
+        Beer,
+        Vodka,
+        Wine
+    };
+    static std::map<int, QString> beverageMapper;
+
     explicit Drink(QObject* parent = nullptr);
     Drink(QObject* parent, const QJsonObject& json);
     ~Drink();
 
     data::StringDecorator* reference{nullptr};
-    data::StringDecorator* beverage{nullptr};
+    data::EnumeratorDecorator* beverage{nullptr};
+    drinq::data::DropDown* dropDown{nullptr};
     data::IntDecorator* amount_ml{nullptr};
     data::DateTimeDecorator* consumed{nullptr};
 };

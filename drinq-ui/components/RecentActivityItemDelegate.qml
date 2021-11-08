@@ -93,7 +93,12 @@ Item {
             onEntered: background.state = "hover"
             onExited: background.state = ""
             onClicked: masterController.selectParty(party)
+
+            onPressAndHold: {
+                //TODO change to show menu from the left and allow selection
+            }
         }
+
         states: [
             State {
                 name: "hover"

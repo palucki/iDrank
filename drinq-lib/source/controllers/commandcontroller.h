@@ -41,6 +41,7 @@ public slots:
     void onDashboardAddExecuted() override;
 
     void onEditPartySaveExecuted() override;
+    void onEditPartyDeleteExecuted() override;
 
     void setSelectedClient(drinq::models::Client* client) override;
     void setSelectedParty(drinq::models::Party* party) override;

@@ -45,6 +45,10 @@ public:
         QObject::connect(dashboardAddCommand, &Command::executed, commandController, &CommandController::onDashboardAddExecuted);
         dashboardViewContextCommands.append(dashboardAddCommand);
 
+        Command* editPartyDeleteCommand = new Command(commandController, QChar( 0xf235 ), "Delete" );
+        QObject::connect( editPartyDeleteCommand, &Command::executed, commandController, &CommandController::onEditPartyDeleteExecuted );
+        editPartyViewContextCommands.append( editPartyDeleteCommand );
+
         Command* editPartySaveCommand = new Command(commandController, QChar( 0xf0c7 ), "Save" );
         QObject::connect( editPartySaveCommand, &Command::executed, commandController, &CommandController::onEditPartySaveExecuted );
         editPartyViewContextCommands.append( editPartySaveCommand );
@@ -200,6 +204,18 @@ void CommandController::onEditPartySaveExecuted()
 
 //    implementation->selectedParty = nullptr;
 
+    emit implementation->navigationController->goDashboardView();
+}
+
+void CommandController::onEditPartyDeleteExecuted()
+{
+    qDebug() << "You executed the Delete command!";
+    implementation->databaseController->deleteRow(implementation->selectedParty->key(),
+                                                  implementation->selectedParty->id());
+
+    implementation->selectedParty = implementation->newParty;
+
+//    implementation->clientSearch->search();
     emit implementation->navigationController->goDashboardView();
 }
 

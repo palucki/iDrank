@@ -18,19 +18,19 @@ Item {
         id: flow
         width: parent.width
         spacing: Style.sizeScreenMargin
-//        EnumeratorSelector {
-//            id: selectorType
-//            width: Style.widthDataControls
-//            dropDown: contact.ui_contactTypeDropDown
-//            enumeratorDecorator: contact.ui_contactType
-//        }
-        StringEditorSingleLine {
-            id: textAddress
-            width: Style.widthDataControls
-            stringDecorator: drink.ui_beverage
-        }
-        Text {
+        EnumeratorSelector {
             id: selectorType
+            width: Style.widthDataControls
+            dropDown: drink.ui_beverageDropDown
+            enumeratorDecorator: drink.ui_beverage
+        }
+//        StringEditorSingleLine {
+//            id: textAddress
+//            width: Style.widthDataControls
+//            stringDecorator: drink.ui_amount_ml
+//        }
+        Text {
+            id: textAddress
             width: Style.widthDataControls
             text: Style.amountWithUnit(drink.ui_amount_ml.ui_value)
         }

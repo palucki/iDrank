@@ -126,13 +126,22 @@ void Party::addDrink()
 //{
 //}
 
+std::map<int, QString> Drink::beverageMapper = std::map<int, QString>
+{
+      { Drink::eBeverage::Other, "Other" }
+    , { Drink::eBeverage::Beer, "Beer" }
+    , { Drink::eBeverage::Vodka, "Vodka" }
+    , { Drink::eBeverage::Wine, "Wine" }
+};
+
+
 Drink::Drink(QObject *parent) : Entity(parent, "drink")
 {
     reference = static_cast<StringDecorator*>(addDataItem(new StringDecorator(this, "ref", "Ref")));
-    beverage = static_cast<StringDecorator*>(addDataItem(new StringDecorator(this, "beverage", "Beverage")));
+    beverage = static_cast<EnumeratorDecorator*>(addDataItem(new EnumeratorDecorator(this, "beverage", "Beverage", Drink::eBeverage::Beer, beverageMapper)));
     amount_ml = static_cast<IntDecorator*>(addDataItem(new IntDecorator(this, "amount_ml", "Amount")));
     consumed = static_cast<DateTimeDecorator*>(addDataItem(new DateTimeDecorator(this, "consumed", "Consumed")));
-
+    dropDown = new DropDown(this, beverageMapper);
 //    setPrimaryKey(reference);
 }
 
