@@ -15,6 +15,7 @@ FormButton 1.0 FormButton.qml
 EnumeratorSelector 1.0 EnumeratorSelector.qml
 EnumeratorSelectorView 1.0 EnumeratorSelectorView.qml
 StringEditorSingleLine 1.0 StringEditorSingleLine.qml
+NumberEditorSingleLine 1.0 NumberEditorSingleLine.qml
 
 SearchResultDelegate 1.0 SearchResultDelegate.qml
 RecentActivityItemDelegate 1.0 RecentActivityItemDelegate.qml

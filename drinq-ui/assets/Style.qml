@@ -125,6 +125,8 @@ Item {
     readonly property int pixelSizeFormButtonText: 22
     readonly property int sizeFormButtonRadius: 5
 
+    readonly property int unitSpacing: 5
+
     //Other
     readonly property color colorItemBackground: "#fefefe"
     readonly property color colorItemBackgroundHover: "#efefef"

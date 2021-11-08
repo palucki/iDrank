@@ -17,5 +17,6 @@
         <file alias="FormButton.qml">components/FormButton.qml</file>
         <file alias="DrinksEditor.qml">components/DrinksEditor.qml</file>
         <file alias="DrinkDelegate.qml">components/DrinkDelegate.qml</file>
+        <file alias="NumberEditorSingleLine.qml">components/NumberEditorSingleLine.qml</file>
     </qresource>
 </RCC>

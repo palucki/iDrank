@@ -24,15 +24,10 @@ Item {
             dropDown: drink.ui_beverageDropDown
             enumeratorDecorator: drink.ui_beverage
         }
-//        StringEditorSingleLine {
-//            id: textAddress
-//            width: Style.widthDataControls
-//            stringDecorator: drink.ui_amount_ml
-//        }
-        Text {
+        NumberEditorSingleLine {
             id: textAddress
             width: Style.widthDataControls
-            text: Style.amountWithUnit(drink.ui_amount_ml.ui_value)
+            intDecorator: drink.ui_amount_ml
         }
     }
     Rectangle {
