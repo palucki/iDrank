@@ -1,6 +1,7 @@
 #include "enumeratordecorator.h"
 
 #include <QVariant>
+#include <QDebug>
 
 namespace drinq {
 namespace data {
@@ -50,6 +51,7 @@ EnumeratorDecorator& EnumeratorDecorator::setValue(int value)
     if(value != implementation->value) {
         // ...Validation here if required...
         implementation->value = value;
+        qDebug() << "VALUE CHANGED";
         emit valueChanged();
     }
     return *this;

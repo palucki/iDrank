@@ -9,25 +9,24 @@ Item {
     property DropDown dropDown
     property EnumeratorDecorator enumeratorDecorator
     id: enumeratorSelectorRoot
-    height: width > textLabel.width + textAnswer.width ?
-                Style.heightDataControls : Style.heightDataControls * 2
+    height: Style.heightDataControls
     Flow {
         anchors.fill: parent
-        Rectangle {
-            width: Style.widthDataControls
-            height: Style.heightDataControls
-            Text {
-                id: textLabel
-                anchors {
-                    fill: parent
-                    margins: Style.heightDataControls / 4
-                }
-                text: enumeratorDecorator.ui_label
-                color: Style.colorDataControlsFont
-                font.pixelSize: Style.pixelSizeDataControls
-                verticalAlignment: Qt.AlignVCenter
-            }
-        }
+//        Rectangle {
+//            width: Style.widthDataControls
+//            height: Style.heightDataControls
+//            Text {
+//                id: textLabel
+//                anchors {
+//                    fill: parent
+//                    margins: Style.heightDataControls / 4
+//                }
+//                text: enumeratorDecorator.ui_label
+//                color: Style.colorDataControlsFont
+//                font.pixelSize: Style.pixelSizeDataControls
+//                verticalAlignment: Qt.AlignVCenter
+//            }
+//        }
 
         Rectangle {
             id: buttonAnswer
@@ -53,7 +52,7 @@ Item {
                 onClicked:
                     contentFrame.push("qrc:/components/EnumeratorSelectorView.qml",
                                       {dropDown: enumeratorSelectorRoot.dropDown,
-                                          enumeratorDecorator: enumeratorSelectorRoot.enumeratorDecorator})
+                                       enumeratorDecorator: enumeratorSelectorRoot.enumeratorDecorator})
             }
         }
     }

@@ -104,11 +104,15 @@ public:
         Vodka,
         Wine
     };
+    Q_ENUM(eBeverage)
+
     static std::map<int, QString> beverageMapper;
 
     explicit Drink(QObject* parent = nullptr);
     Drink(QObject* parent, const QJsonObject& json);
     ~Drink();
+
+    Q_INVOKABLE int ui_defaultAmount(eBeverage beverageType);
 
     data::StringDecorator* reference{nullptr};
     data::EnumeratorDecorator* beverage{nullptr};

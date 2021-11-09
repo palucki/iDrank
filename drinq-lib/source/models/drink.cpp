@@ -128,6 +128,7 @@ void Party::addDrink()
 
 std::map<int, QString> Drink::beverageMapper = std::map<int, QString>
 {
+    //TODO: add default amount here, always in ml and calculate later!!!
       { Drink::eBeverage::Other, "Other" }
     , { Drink::eBeverage::Beer, "Beer" }
     , { Drink::eBeverage::Vodka, "Vodka" }
@@ -152,6 +153,17 @@ Drink::Drink(QObject *parent, const QJsonObject &json) : Drink(parent)
 
 Drink::~Drink()
 {
+}
+
+int Drink::ui_defaultAmount(eBeverage beverageType)
+{
+    switch(beverageType)
+    {
+        case eBeverage::Other: return 0;
+        case eBeverage::Beer: return 500;
+        case eBeverage::Vodka: return 25;
+        case eBeverage::Wine: return 100;
+    }
 }
 
 }}

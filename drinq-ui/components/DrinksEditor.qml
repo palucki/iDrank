@@ -22,7 +22,10 @@ Panel {
             iconCharacter: "\uf067"
             description: "Add drink"
             onFormButtonClicked: {
-                party.addDrink();
+//                party.addDrink();
+                contentFrame.push("qrc:/components/EnumeratorSelectorView.qml"/*,
+                                  {dropDown: enumeratorSelectorRoot.dropDown,
+                                   enumeratorDecorator: enumeratorSelectorRoot.enumeratorDecorator}*/)
             }
         }
     }

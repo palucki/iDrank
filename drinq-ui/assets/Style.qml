@@ -2,9 +2,13 @@ pragma Singleton
 import QtQuick 2.12
 
 Item {
-    // Configuration Part
+
+    // Settings Part
+
+
+
     readonly property Item settings : Item {
-        readonly property string amountUnit: "ml"
+        readonly property string amountUnit: "ml" // 3 letters max
     }
 
     function amountWithUnit(amount) {

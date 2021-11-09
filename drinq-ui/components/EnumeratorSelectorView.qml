@@ -9,6 +9,7 @@ Item {
     property DropDown dropDown
     property EnumeratorDecorator enumeratorDecorator
     property int selectedValue
+
     ScrollView {
         id: scrollView
         visible: true

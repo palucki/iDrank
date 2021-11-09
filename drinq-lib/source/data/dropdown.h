@@ -19,6 +19,7 @@ public:
     ~DropDown();
 public:
     QQmlListProperty<DropDownValue> ui_values();
+
 public slots:
     QString findDescriptionForDropdownValue(int valueKey) const;
 private:

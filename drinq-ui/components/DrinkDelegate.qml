@@ -8,34 +8,51 @@ Item {
     implicitWidth: flow.implicitWidth
     implicitHeight: flow.implicitHeight + borderBottom.implicitHeight +
                     Style.sizeItemMargin
-    height: width > selectorType.width + textAddress.width +
-            Style.sizeScreenMargin
-            ? selectorType.height + borderBottom.height +
+    height:  selectorType.height + borderBottom.height +
               Style.sizeItemMargin
-            : selectorType.height + textAddress.height +
-              Style.sizeScreenMargin + borderBottom.height + Style.sizeItemMargin
-    Flow {
+
+    Row {
         id: flow
         width: parent.width
         spacing: Style.sizeScreenMargin
         EnumeratorSelector {
             id: selectorType
-            width: Style.widthDataControls
+            width: Style.widthDataControls / 2
             dropDown: drink.ui_beverageDropDown
             enumeratorDecorator: drink.ui_beverage
         }
-        NumberEditorSingleLine {
-            id: textAddress
+
+        Row {
+            id: background
             width: Style.widthDataControls
-            intDecorator: drink.ui_amount_ml
+            height: Style.heightDataControls
+            spacing: Style.unitSpacing
+
+            Text {
+                id: unitText
+                anchors {
+                    verticalCenter: parent.verticalCenter
+                }
+                text: Style.amountWithUnit(drink.ui_amount_ml.ui_value)
+                font.pixelSize: Style.pixelSizeDataControls
+                color: Style.colorDataSelectorFont
+                verticalAlignment: Qt.AlignVCenter
+            }
         }
+
+        Connections {
+            target: drink.ui_beverage
+            onValueChanged: {
+                drink.ui_amount_ml.ui_value = drink.ui_defaultAmount(drink.ui_beverage.ui_value)
+            }
+        }
+
     }
     Rectangle {
         id: borderBottom
         anchors {
             top: flow.bottom
             left: parent.left
-
             right: parent.right
             topMargin: Style.sizeItemMargin
         }
