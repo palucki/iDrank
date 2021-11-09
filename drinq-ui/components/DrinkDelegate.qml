@@ -11,34 +11,57 @@ Item {
     height:  selectorType.height + borderBottom.height +
               Style.sizeItemMargin
 
+    Rectangle {
+        radius: Style.sizeDataControlsRadius
+        color: Style.colorDataSelectorBackground
+        anchors.fill: parent
+        anchors.margins: Style.sizeItemMargin
+        height: Style.heightDataControls
+
+    }
+
     Row {
         id: flow
         width: parent.width
-        spacing: Style.sizeScreenMargin
+        spacing: Style.sizeItemMargin
+
+
+        Text {
+            id: timestampText
+            width: Style.widthDataControls / 6
+            height: Style.heightDataControls
+            anchors {
+                verticalCenter: parent.verticalCenter
+                margins: Style.heightDataControls / 4
+            }
+            text: drink.ui_consumed.ui_prettyTimeString
+            font.pixelSize: Style.pixelSizeDataControls
+            color: Style.colorDataSelectorFont
+            verticalAlignment: Qt.AlignVCenter
+        }
+
+        Text {
+            id: unitText
+            width: Style.widthDataControls / 6
+            height: Style.heightDataControls
+            anchors {
+                verticalCenter: parent.verticalCenter
+                margins: Style.heightDataControls / 4
+            }
+            text: Style.amountWithUnit(drink.ui_amount_ml.ui_value)
+            font.pixelSize: Style.pixelSizeDataControls
+            color: Style.colorDataSelectorFont
+            verticalAlignment: Qt.AlignVCenter
+        }
+
         EnumeratorSelector {
             id: selectorType
             width: Style.widthDataControls / 2
+            height: Style.heightDataControls
             dropDown: drink.ui_beverageDropDown
             enumeratorDecorator: drink.ui_beverage
         }
 
-        Row {
-            id: background
-            width: Style.widthDataControls
-            height: Style.heightDataControls
-            spacing: Style.unitSpacing
-
-            Text {
-                id: unitText
-                anchors {
-                    verticalCenter: parent.verticalCenter
-                }
-                text: Style.amountWithUnit(drink.ui_amount_ml.ui_value)
-                font.pixelSize: Style.pixelSizeDataControls
-                color: Style.colorDataSelectorFont
-                verticalAlignment: Qt.AlignVCenter
-            }
-        }
 
         Connections {
             target: drink.ui_beverage

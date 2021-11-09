@@ -8,8 +8,10 @@ import assets 1.0
 Item {
     property DropDown dropDown
     property EnumeratorDecorator enumeratorDecorator
+
+    property bool withBackground: false
+
     id: enumeratorSelectorRoot
-    height: Style.heightDataControls
     Flow {
         anchors.fill: parent
 //        Rectangle {
@@ -30,8 +32,8 @@ Item {
 
         Rectangle {
             id: buttonAnswer
-            width: Style.widthDataControls
-            height: Style.heightDataControls
+            width: parent.width
+            height: parent.height
             radius: Style.sizeDataControlsRadius
             enabled: dropDown ? dropDown.ui_values.length > 0 : false
             color: Style.colorDataSelectorBackground
