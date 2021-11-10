@@ -15,7 +15,7 @@ Item {
         radius: Style.sizeDataControlsRadius
         color: Style.colorDataSelectorBackground
         anchors.fill: parent
-        anchors.margins: Style.sizeItemMargin
+//        anchors.margins: Style.sizeItemMargin
         height: Style.heightDataControls
 
     }
@@ -25,16 +25,16 @@ Item {
         width: parent.width
         spacing: Style.sizeItemMargin
 
-
         Text {
             id: timestampText
-            width: Style.widthDataControls / 6
+            width: 100 // add in style
             height: Style.heightDataControls
             anchors {
                 verticalCenter: parent.verticalCenter
-                margins: Style.heightDataControls / 4
+//                margins: 200//Style.heightDataControls / 4
             }
             text: drink.ui_consumed.ui_prettyTimeString
+            horizontalAlignment: Text.AlignHCenter //TODO replace with margin left?
             font.pixelSize: Style.pixelSizeDataControls
             color: Style.colorDataSelectorFont
             verticalAlignment: Qt.AlignVCenter
@@ -42,11 +42,11 @@ Item {
 
         Text {
             id: unitText
-            width: Style.widthDataControls / 6
+            width: 50 // add in style
             height: Style.heightDataControls
             anchors {
                 verticalCenter: parent.verticalCenter
-                margins: Style.heightDataControls / 4
+//                margins: Style.heightDataControls / 4
             }
             text: Style.amountWithUnit(drink.ui_amount_ml.ui_value)
             font.pixelSize: Style.pixelSizeDataControls
@@ -71,6 +71,8 @@ Item {
         }
 
     }
+
+
     Rectangle {
         id: borderBottom
         anchors {

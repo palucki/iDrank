@@ -12,7 +12,7 @@ Item {
     property bool withBackground: false
 
     id: enumeratorSelectorRoot
-    Flow {
+    Row {
         anchors.fill: parent
 //        Rectangle {
 //            width: Style.widthDataControls

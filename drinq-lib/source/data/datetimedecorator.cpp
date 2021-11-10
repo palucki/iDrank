@@ -64,7 +64,7 @@ QString DateTimeDecorator::toPrettyTimeString() const
     }
     else
     {
-        return implementation->value.toString( "hh:mm ap" );
+        return implementation->value.toString( "HH:mm" );
     }
 }
 
