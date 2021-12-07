@@ -12,7 +12,7 @@ QT += sql
 
 TARGET = drinq-lib
 TEMPLATE = lib
-CONFIG += c++14
+CONFIG += c++17
 
 DEFINES += DRINQLIB_LIBRARY
 
@@ -23,6 +23,7 @@ DEFINES += DRINQLIB_LIBRARY
 SOURCES += \
     source/controllers/commandcontroller.cpp \
     source/controllers/databasecontroller.cpp \
+    source/controllers/drinkcontroller.cpp \
     source/controllers/mastercontroller.cpp \
     source/data/datadecorator.cpp \
     source/data/dropdown.cpp \
@@ -46,6 +47,7 @@ HEADERS += \
     source/controllers/commandcontrollerinterface.h \
     source/controllers/databasecontroller.h \
     source/controllers/databasecontrollerinterface.h \
+    source/controllers/drinkcontroller.h \
     source/controllers/mastercontroller.h \
     source/controllers/navigationcontroller.h \
     source/controllers/navigationcontrollerinterface.h \

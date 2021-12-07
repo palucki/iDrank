@@ -28,7 +28,6 @@ Window {
             console.log("Timer completed")
             contentFrame.replace("qrc:/views/DashboardView.qml")
         }
-
     }
 
     Connections {

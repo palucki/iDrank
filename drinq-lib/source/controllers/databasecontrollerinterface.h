@@ -22,6 +22,8 @@ public:
     virtual QJsonArray find(const QString& tableName, const QString& searchText) const = 0;
     virtual QJsonObject readRow(const QString& tableName, const QString& id) const = 0;
     virtual bool updateRow(const QString& tableName, const QString& id, const QJsonObject& jsonObject) const = 0;
+
+    virtual QVariant getLastId(const QString& tableName) = 0;
 };
 
 }}

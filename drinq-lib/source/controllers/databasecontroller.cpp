@@ -49,7 +49,17 @@ private:
                createJsonTable("player") &&
                createJsonTable("drink") &&
                createJsonTable("party") &&
-               createJsonTable("beverage");
+               createJsonTable("beverage") &&
+//light
+               createDrinksTable();
+    }
+
+    bool createDrinksTable()
+    {
+        QSqlQuery query(database);
+        QString sqlStatement = "CREATE TABLE IF NOT EXISTS drinks (id INTEGER PRIMARY KEY, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)";
+        if (!query.prepare(sqlStatement)) return false;
+        return query.exec();
     }
 
     bool createJsonTable(const QString& tableName) const
@@ -139,6 +149,23 @@ bool DatabaseController::updateRow(const QString& tableName, const QString& id, 
         return false;
     }
     return query.numRowsAffected() > 0;
+}
+
+QVariant DatabaseController::getLastId(const QString& tableName)
+{
+    if (tableName.isEmpty())
+        return {};
+
+    QSqlQuery query(implementation->database);
+    QString sqlStatement = "SELECT MAX(id) FROM drinks";
+
+    if (!query.prepare(sqlStatement) || !query.exec())
+        return {};
+
+    if (!query.first())
+        return {};
+
+    return query.value(0);
 }
 
 QJsonArray DatabaseController::find(const QString& tableName, const QString& searchText) const

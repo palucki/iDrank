@@ -23,6 +23,8 @@ public:
     QJsonObject readRow(const QString& tableName, const QString& id) const override;
     bool updateRow(const QString& tableName, const QString& id, const QJsonObject& jsonObject) const override;
 
+    QVariant getLastId(const QString& tableName) override;
+
 private:
     class Implementation;
     QScopedPointer<Implementation> implementation;

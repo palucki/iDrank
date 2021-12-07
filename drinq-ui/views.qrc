@@ -8,4 +8,5 @@
         <file alias="FindClientView.qml">views/FindClientView.qml</file>
         <file alias="EditPartyView.qml">views/EditPartyView.qml</file>
     </qresource>
+    <qresource prefix="/"/>
 </RCC>
