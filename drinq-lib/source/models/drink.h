@@ -97,6 +97,11 @@ public:
     Drink2(const QJsonObject& json, QObject* parent = nullptr);
     ~Drink2();
 
+    void setPartyId(unsigned int id) { m_data["party_id"] = id; }
+    void setAmountMl(unsigned int a) { m_data["amount_ml"] = a; }
+    void setTimestamp(QDateTime ts) { m_data["timestamp"] = ts; }
+
+private:
     unsigned int m_party_id{0};
     QDateTime m_timestamp{};
     unsigned int m_amount_ml{0};
@@ -110,7 +115,7 @@ public:
     explicit Party2(QObject* parent = nullptr);
     Party2(QObject* parent, const QJsonObject& json);
     ~Party2();
-
+private:
     QDateTime m_started{};
 };
 

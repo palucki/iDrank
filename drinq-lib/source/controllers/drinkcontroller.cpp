@@ -28,21 +28,26 @@ bool DrinkController::addDrink()
     qDebug() << "Latest party id " << party_id;
 
     drinq::models::Drink2 newDrink;
-    newDrink.m_party_id = party_id;
+    newDrink.setPartyId(party_id);
 
     qDebug() << "Adding drink: " << newDrink.toJson();
-    m_db->create(newDrink);
+    qDebug() << "Result " << m_db->create(newDrink);
 
-
+    newDrink.setAmountMl(2137);
     qDebug() << "Updating drink";
-    m_db->update(newDrink);
+    qDebug() << "Before " << newDrink.toJson();
+    qDebug() << "Result " << m_db->update(newDrink);
+    qDebug() << "After " << newDrink.toJson();
 
     qDebug() << "Reading drink";
     drinq::models::Drink2 readDrink;
-    readDrink.m_id = "2";
-    m_db->get(readDrink);
+    readDrink.setId(newDrink.m_id);
+    qDebug() << "Result " <<  m_db->get(readDrink);
 
-    m_db->remove(readDrink);
+    qDebug() << "Read drink " << readDrink.toJson();
+
+    qDebug() << "Removing drink";
+    qDebug() << "Result " <<  m_db->remove(readDrink);
 
 //    auto result = m_db->createRow("drink", newDrink.toJson());
 

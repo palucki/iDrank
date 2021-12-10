@@ -24,8 +24,18 @@ class DRINQLIB_EXPORT EntityLite : public QObject
 public:
     EntityLite(const QString& tableName, QObject* parent) : QObject(parent), m_tableName(tableName)
     {
-        addField("id", QVariant(m_id));
     };
+
+    void setId(const QString& id)
+    {
+        m_id = id;
+        m_data["id"] = id;
+    }
+
+    void setFieldValue(const QString& key, const QVariant& value)
+    {
+        m_data[key] = value;
+    }
 
     void addField(const QString& key, const QVariant& value)
     {
@@ -65,17 +75,17 @@ public:
 
         for(auto it = m_data.begin(); it != m_data.end(); ++it)
         {
-            obj.insert(it.key(), QJsonValue::fromVariant(QVariant(it.key())));
+            obj.insert(it.key(), QJsonValue::fromVariant(QVariant(it.value())));
         }
 
         return obj;
     }
 
-    QString m_id;
     QString m_tableName;
     QStringList m_fields;
     QStringList m_bindableFields;
     QMap<QString, QVariant> m_data;
+    QString m_id;
 };
 
 class DRINQLIB_EXPORT Entity : public QObject

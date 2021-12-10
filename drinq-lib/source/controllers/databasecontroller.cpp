@@ -122,8 +122,8 @@ bool DatabaseController::createRow(const QString& tableName, const QJsonObject& 
 
     QSqlQuery query(implementation->database);
     QString sqlStatement = QString("INSERT INTO %1 (%2) VALUES (%3)").arg(tableName,
-                                                                                     fieldList.join(","),
-                                                                                     fieldsListForBinding.join(","));
+                                                                          fieldList.join(","),
+                                                                          fieldsListForBinding.join(","));
 
     qDebug() << sqlStatement;
 
@@ -152,8 +152,8 @@ bool DatabaseController::create(data::EntityLite &e)
 {
 
     auto sqlStatement = QString("INSERT INTO %1 (%2) VALUES (%3)").arg(e.m_tableName,
-                                                                       e.m_fields.join(","),
-                                                                       e.m_bindableFields.join(","));
+                                                                                    e.m_fields.join(","),
+                                                                                    e.m_bindableFields.join(","));
     qDebug() << sqlStatement;
     QSqlQuery query(implementation->database);
 //    if (id != 0)
@@ -163,35 +163,24 @@ bool DatabaseController::create(data::EntityLite &e)
 
 //    sqlStatement.append("ORDER BY started DESC");
 
-//    if (!query.prepare(sqlStatement))
-//    {
-//        qDebug() << query.lastError().text();
-//        return {};
-//    }
+    if (!query.prepare(sqlStatement))
+    {
+        qDebug() << "QUERY INCORRECT " << query.lastError().text();
+        return false;
+    }
 
-//    if (id != 0)
-//    {
-//        query.bindValue(":id", QVariant(id));
-//    }
+    for(const auto& f : qAsConst(e.m_fields))
+    {
+        query.bindValue(":"+f, e.m_data[f]);
+    }
 
-    return true;
-}
+    if(!query.exec())
+    {
+        qDebug() << "QUERY ERROR " << query.lastError().text();
+        return false;
+    }
 
-bool DatabaseController::get(data::EntityLite &e)
-{
-    auto sqlStatement = QString("SELECT %1 FROM %2 WHERE id=%3").arg(e.m_fields.join(","),
-                                                                     e.m_tableName,
-                                                                     e.m_id);
-    qDebug() << sqlStatement;
-
-    return true;
-}
-
-bool DatabaseController::remove(data::EntityLite &e)
-{
-    auto sqlStatement = QString("DELETE FROM %1 WHERE id=%2").arg(e.m_tableName,
-                                                                  e.m_id);
-    qDebug() << sqlStatement;
+    e.setId(query.lastInsertId().toString());
 
     return true;
 }
@@ -204,15 +193,77 @@ bool DatabaseController::update(const data::EntityLite &e)
     }
 
     QStringList updatePart;
-    for(const auto& f : e.m_fields)
+    for(const auto& f : qAsConst(e.m_fields))
     {
         updatePart.append(QString("%1=%2").arg(f, ":" + f));
     }
 
-    auto sqlStatement = QString("UPDATE %1 SET %2").arg(e.m_tableName, updatePart.join(","));
-
+    auto sqlStatement = QString("UPDATE %1 SET %2 WHERE id = %3").arg(e.m_tableName, updatePart.join(","), e.m_id);
     qDebug() << sqlStatement;
+
     QSqlQuery query(implementation->database);
+
+    if(!query.prepare(sqlStatement))
+    {
+        qDebug() << "QUERY INCORRECT " << query.lastError().text();
+        return false;
+    }
+
+    for(const auto& f : qAsConst(e.m_fields))
+    {
+        qDebug () << "BINDING " << "field " << f << " to " << e.m_data[f];
+        query.bindValue(":"+f, e.m_data[f]);
+    }
+
+    if(!query.exec())
+    {
+        qDebug() << "QUERY ERROR " << query.lastError().text();
+        return false;
+    }
+
+    return true;
+}
+
+bool DatabaseController::get(data::EntityLite &e)
+{
+    auto sqlStatement = QString("SELECT %1 FROM %2 WHERE id=%3").arg(e.m_fields.join(","),
+                                                                     e.m_tableName,
+                                                                     e.m_id);
+    qDebug() << sqlStatement;
+
+    QSqlQuery query(implementation->database);
+    if(!query.prepare(sqlStatement))
+    {
+        qDebug() << "QUERY INCORRECT " << query.lastError().text();
+        return false;
+    }
+
+    if(!query.exec() || !query.next())
+    {
+        qDebug() << "QUERY ERROR " << query.lastError().text();
+        return false;
+    }
+
+    for(const auto& f : qAsConst(e.m_fields))
+    {
+        e.m_data[f] = query.value(f);
+    }
+
+    return true;
+}
+
+bool DatabaseController::remove(data::EntityLite &e)
+{
+    auto sqlStatement = QString("DELETE FROM %1 WHERE id=%2").arg(e.m_tableName,
+                                                                  e.m_id);
+    qDebug() << sqlStatement;
+
+    QSqlQuery query(implementation->database);
+    if(!query.exec(sqlStatement))
+    {
+        qDebug() << "QUERY ERROR " << query.lastError().text();
+        return false;
+    }
 
     return true;
 }
