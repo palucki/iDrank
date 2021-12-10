@@ -89,6 +89,33 @@ signals:
 
 //drink
 
+class DRINQLIB_EXPORT Drink2 : public data::EntityLite
+{
+    Q_OBJECT
+public:
+    explicit Drink2(QObject* parent = nullptr);
+    Drink2(const QJsonObject& json, QObject* parent = nullptr);
+    ~Drink2();
+
+    unsigned int m_party_id{0};
+    QDateTime m_timestamp{};
+    unsigned int m_amount_ml{0};
+};
+
+class DRINQLIB_EXPORT Party2 : public data::EntityLite
+{
+    Q_OBJECT
+
+public:
+    explicit Party2(QObject* parent = nullptr);
+    Party2(QObject* parent, const QJsonObject& json);
+    ~Party2();
+
+    QDateTime m_started{};
+};
+
+
+
 class DRINQLIB_EXPORT Drink : public data::Entity
 {
     Q_OBJECT

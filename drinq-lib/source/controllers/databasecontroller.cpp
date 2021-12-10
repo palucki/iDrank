@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QSqlDatabase>
 #include <QSqlQuery>
+#include <QSqlError>
 #include <QJsonDocument>
 
 namespace drinq {
@@ -45,21 +46,34 @@ private:
 
     bool createTables()
     {
-        return createJsonTable("client") &&
+        return /*createJsonTable("client") &&
                createJsonTable("player") &&
                createJsonTable("drink") &&
                createJsonTable("party") &&
-               createJsonTable("beverage") &&
-//light
-               createDrinksTable();
+               createJsonTable("beverage") &&*/
+//lite
+               createDrinksTables();
     }
 
-    bool createDrinksTable()
+    bool createDrinksTables()
     {
         QSqlQuery query(database);
-        QString sqlStatement = "CREATE TABLE IF NOT EXISTS drinks (id INTEGER PRIMARY KEY, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)";
-        if (!query.prepare(sqlStatement)) return false;
-        return query.exec();
+
+        QString sqlStatement = "CREATE TABLE IF NOT EXISTS party (id INTEGER PRIMARY KEY AUTOINCREMENT, started DATETIME)";
+        if(!query.exec(sqlStatement))
+        {
+            qDebug() << query.lastError().text();
+            return false;
+        }
+
+        sqlStatement = "CREATE TABLE IF NOT EXISTS drink (id INTEGER PRIMARY KEY AUTOINCREMENT, party_id INTEGER, timestamp DATETIME, amount_ml INTEGER, FOREIGN KEY(party_id) REFERENCES party(id) ON DELETE CASCADE)";
+        if(!query.exec(sqlStatement))
+        {
+            qDebug() << query.lastError().text();
+            return false;
+        }
+
+        return true;
     }
 
     bool createJsonTable(const QString& tableName) const
@@ -90,19 +104,117 @@ DatabaseController::~DatabaseController()
 
 }
 
-bool DatabaseController::createRow(const QString& tableName, const QString& id, const QJsonObject& jsonObject) const
+bool DatabaseController::createRow(const QString& tableName, const QJsonObject& jsonObject) const
 {
-    if (tableName.isEmpty()) return false;
-    if (id.isEmpty()) return false;
-    if (jsonObject.isEmpty()) return false;
+    if (tableName.isEmpty())
+        return false;
+
+    auto fieldList = jsonObject.keys();
+
+    if(fieldList.contains("id"))
+        fieldList.removeAll("id");
+
+    QStringList fieldsListForBinding;
+    for(const auto& field : fieldList)
+    {
+        fieldsListForBinding.append(":" + field);
+    }
+
     QSqlQuery query(implementation->database);
-    QString sqlStatement = "INSERT OR REPLACE INTO " + tableName + "(id, json) VALUES (:id, :json)";
-    if (!query.prepare(sqlStatement)) return false;
-    query.bindValue(":id", QVariant(id));
-    query.bindValue(":json",
-                    QVariant(QJsonDocument(jsonObject).toJson(QJsonDocument::Compact)));
-    if(!query.exec()) return false;
+    QString sqlStatement = QString("INSERT INTO %1 (%2) VALUES (%3)").arg(tableName,
+                                                                                     fieldList.join(","),
+                                                                                     fieldsListForBinding.join(","));
+
+    qDebug() << sqlStatement;
+
+    if (!query.prepare(sqlStatement))
+    {
+        qDebug() << "QUERY INCORRECT " << query.lastError().text();
+        return false;
+    }
+
+    for(const auto& field : fieldList)
+    {
+        qDebug () << "BINDING " << "field " << field << " to " << jsonObject[field].toVariant();
+        query.bindValue(":" + field, jsonObject[field].toVariant());
+    }
+
+    if(!query.exec())
+    {
+        qDebug() << "QUERY ERROR " << query.lastError().text();
+        return false;
+    }
+
     return query.numRowsAffected() > 0;
+}
+
+bool DatabaseController::create(data::EntityLite &e)
+{
+
+    auto sqlStatement = QString("INSERT INTO %1 (%2) VALUES (%3)").arg(e.m_tableName,
+                                                                       e.m_fields.join(","),
+                                                                       e.m_bindableFields.join(","));
+    qDebug() << sqlStatement;
+    QSqlQuery query(implementation->database);
+//    if (id != 0)
+//    {
+//         sqlStatement.append(" WHERE id=:id");
+//    }
+
+//    sqlStatement.append("ORDER BY started DESC");
+
+//    if (!query.prepare(sqlStatement))
+//    {
+//        qDebug() << query.lastError().text();
+//        return {};
+//    }
+
+//    if (id != 0)
+//    {
+//        query.bindValue(":id", QVariant(id));
+//    }
+
+    return true;
+}
+
+bool DatabaseController::get(data::EntityLite &e)
+{
+    auto sqlStatement = QString("SELECT %1 FROM %2 WHERE id=%3").arg(e.m_fields.join(","),
+                                                                     e.m_tableName,
+                                                                     e.m_id);
+    qDebug() << sqlStatement;
+
+    return true;
+}
+
+bool DatabaseController::remove(data::EntityLite &e)
+{
+    auto sqlStatement = QString("DELETE FROM %1 WHERE id=%2").arg(e.m_tableName,
+                                                                  e.m_id);
+    qDebug() << sqlStatement;
+
+    return true;
+}
+
+bool DatabaseController::update(const data::EntityLite &e)
+{
+    if(e.m_bindableFields.size() != e.m_fields.size())
+    {
+        return false;
+    }
+
+    QStringList updatePart;
+    for(const auto& f : e.m_fields)
+    {
+        updatePart.append(QString("%1=%2").arg(f, ":" + f));
+    }
+
+    auto sqlStatement = QString("UPDATE %1 SET %2").arg(e.m_tableName, updatePart.join(","));
+
+    qDebug() << sqlStatement;
+    QSqlQuery query(implementation->database);
+
+    return true;
 }
 
 bool DatabaseController::deleteRow(const QString& tableName, const QString& id) const
@@ -116,18 +228,43 @@ bool DatabaseController::deleteRow(const QString& tableName, const QString& id) 
     if(!query.exec()) return false;
     return query.numRowsAffected() > 0;
 }
+
 QJsonObject DatabaseController::readRow(const QString& tableName, const QString& id) const
 {
-    if (tableName.isEmpty()) return {};
-    if (id.isEmpty()) return {};
+    if (tableName.isEmpty())
+        return {};
+
+
     QSqlQuery query(implementation->database);
-    QString sqlStatement = "SELECT json FROM " + tableName + " WHERE id=:id";
-    if (!query.prepare(sqlStatement)) return {};
-    query.bindValue(":id", QVariant(id));
-    if (!query.exec()) return {};
-    if (!query.first()) return {};
+
+    QString sqlStatement = "SELECT * FROM " + tableName;
+
+    if (!id.isEmpty())
+    {
+         sqlStatement.append(" WHERE id=:id");
+    }
+
+    if (!query.prepare(sqlStatement))
+    {
+        qDebug() << query.lastError().text();
+        return {};
+    }
+
+    if (!id.isEmpty())
+    {
+        query.bindValue(":id", QVariant(id));
+    }
+
+    if (!query.exec() || !query.first())
+    {
+        qDebug() << query.lastError().text();
+        return {};
+    }
+
     auto json = query.value(0).toByteArray();
     auto jsonDocument = QJsonDocument::fromJson(json);
+
+
     if (!jsonDocument.isObject()) return {};
     return jsonDocument.object();
 }
@@ -149,6 +286,42 @@ bool DatabaseController::updateRow(const QString& tableName, const QString& id, 
         return false;
     }
     return query.numRowsAffected() > 0;
+}
+
+QJsonObject DatabaseController::readParty(unsigned int id)
+{
+    QSqlQuery query(implementation->database);
+    QString sqlStatement = "SELECT id, started FROM party ";
+
+    if (id != 0)
+    {
+         sqlStatement.append(" WHERE id=:id");
+    }
+
+    sqlStatement.append("ORDER BY started DESC");
+
+    if (!query.prepare(sqlStatement))
+    {
+        qDebug() << query.lastError().text();
+        return {};
+    }
+
+    if (id != 0)
+    {
+        query.bindValue(":id", QVariant(id));
+    }
+
+    if (!query.exec() || !query.first())
+    {
+        qDebug() << query.lastError().text();
+        return {};
+    }
+
+    QJsonObject result;
+    result.insert("id", QJsonValue::fromVariant(query.value(0)));
+    result.insert("started", QJsonValue::fromVariant(query.value(1)));
+
+    return result;
 }
 
 QVariant DatabaseController::getLastId(const QString& tableName)

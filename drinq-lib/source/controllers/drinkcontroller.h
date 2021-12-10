@@ -17,6 +17,7 @@ public:
 
 public slots:
     bool addDrink();
+    unsigned int getLastPartyId();
     bool resetCounter();
 
 signals:

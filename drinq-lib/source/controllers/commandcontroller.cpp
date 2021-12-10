@@ -116,7 +116,7 @@ void CommandController::onCreateClientSaveExecuted()
 {
     qDebug() << "You executed the Save command!";
     implementation->databaseController->createRow(implementation->newClient->key(),
-                                                  implementation->newClient->id(),
+//                                                  implementation->newClient->id(),
                                                   implementation->newClient->toJson());
     qDebug() << "New client saved.";
 
@@ -185,7 +185,7 @@ void CommandController::onEditPartySaveExecuted()
     {
         qDebug() << "New";
         implementation->databaseController->createRow(implementation->newParty->key(),
-                                                      implementation->newParty->id(),
+//                                                      implementation->newParty->id(),
                                                       implementation->newParty->toJson());
 
         auto oldParty = implementation->newParty;

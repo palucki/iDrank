@@ -159,11 +159,43 @@ int Drink::ui_defaultAmount(eBeverage beverageType)
 {
     switch(beverageType)
     {
-        case eBeverage::Other: return 0;
         case eBeverage::Beer: return 500;
         case eBeverage::Vodka: return 25;
         case eBeverage::Wine: return 100;
+        case eBeverage::Other: return 0;
+        default: return 0;
     }
+}
+
+Drink2::Drink2(QObject* parent) : EntityLite("drink", parent), m_timestamp(QDateTime::currentDateTime())
+{
+    addField("party_id", m_party_id);
+    addField("timestamp", m_timestamp);
+    addField("amount_ml", m_amount_ml);
+}
+
+Drink2::Drink2(const QJsonObject &json, QObject* parent) : Drink2(parent)
+{
+    update(json);
+}
+
+Drink2::~Drink2()
+{
+}
+
+Party2::Party2(QObject *parent) : EntityLite("party", parent), m_started(QDateTime::currentDateTime())
+{
+    addField("started", m_started);
+}
+
+Party2::Party2(QObject *parent, const QJsonObject &json) : Party2(parent)
+{
+   update(json);
+}
+
+Party2::~Party2()
+{
+
 }
 
 }}
