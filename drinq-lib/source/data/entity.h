@@ -26,7 +26,7 @@ public:
     {
     };
 
-    void setId(const QString& id)
+    void setId(const QVariant& id)
     {
         m_id = id;
         m_data["id"] = id;
@@ -73,9 +73,11 @@ public:
     {
         QJsonObject obj;
 
-        for(auto it = m_data.begin(); it != m_data.end(); ++it)
+        obj.insert("id", m_id.toJsonValue());
+
+        for(const auto& f : m_fields)
         {
-            obj.insert(it.key(), QJsonValue::fromVariant(QVariant(it.value())));
+            obj.insert(f, m_data[f].toJsonValue());
         }
 
         return obj;
@@ -85,7 +87,7 @@ public:
     QStringList m_fields;
     QStringList m_bindableFields;
     QMap<QString, QVariant> m_data;
-    QString m_id;
+    QVariant m_id;
 };
 
 class DRINQLIB_EXPORT Entity : public QObject

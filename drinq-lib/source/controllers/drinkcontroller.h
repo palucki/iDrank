@@ -2,6 +2,7 @@
 #define DRINKCONTROLLER_H
 
 #include <QObject>
+#include <QVariant>
 #include <drinq-lib_global.h>
 
 namespace drinq::controllers {
@@ -17,13 +18,14 @@ public:
 
 public slots:
     bool addDrink();
-    bool resetCounter();
+    void setPartyId(const QVariant& partyId);
 
 signals:
 
 
 private:
     drinq::controllers::DatabaseControllerInterface* m_db;
+    QVariant m_currentPartyId;
 };
 
 #endif // DRINKCONTROLLER_H

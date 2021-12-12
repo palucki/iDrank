@@ -139,7 +139,7 @@ public:
     void setName(const QString& name) { m_data["name"] = name; }
     void setStarted(QDateTime ts) { m_data["started"] = ts; }
     void setEnded(QDateTime ts) { m_data["ended"] = ts; }
-private:
+public:
     QString m_name{};
     QDateTime m_started{};
     QDateTime m_ended{};

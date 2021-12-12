@@ -5,6 +5,7 @@
 
 #include "controllers/databasecontroller.h"
 #include "controllers/drinkcontroller.h"
+#include "controllers/partycontroller.h"
 
 int main(int argc, char *argv[])
 {
@@ -17,12 +18,15 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     qmlRegisterType<DrinkController>("DrinQ", 1, 0, "DrinkController");
+    qmlRegisterType<DrinkController>("DrinQ", 1, 0, "PartyController");
     drinq::controllers::DatabaseController db;
     DrinkController drinkController(&app, &db);
+    PartyController partyController(&app, &db);
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("drinkController", &drinkController);
-    const QUrl url(QStringLiteral("qrc:/main.qml"));
+    engine.rootContext()->setContextProperty("partyController", &partyController);
+    const QUrl url(QStringLiteral("qrc:/MasterView.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {
         if (!obj && url == objUrl)

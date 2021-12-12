@@ -23,11 +23,10 @@ DrinkController::~DrinkController()
 
 bool DrinkController::addDrink()
 {
-    auto partyId =  m_db->getLastId("party");
-    qDebug() << "Latest party id " << partyId;
+    qDebug() << "Latest party id " << m_currentPartyId;
 
     drinq::models::Drink2 newDrink;
-    newDrink.setPartyId(partyId);
+    newDrink.setPartyId(m_currentPartyId);
 
     qDebug() << "Adding drink: " << newDrink.toJson();
     qDebug() << "Result " << m_db->create(newDrink);
@@ -55,14 +54,8 @@ bool DrinkController::addDrink()
     return true;
 }
 
-bool DrinkController::resetCounter()
+void DrinkController::setPartyId(const QVariant &partyId)
 {
-    qDebug() << "Creating new party";
-
-    drinq::models::Party2 newParty;
-    m_db->create(newParty);
-
-    qDebug() << "Resetting counter";
-
-    return true;
+    m_currentPartyId = partyId;
 }
+

@@ -200,7 +200,7 @@ bool DatabaseController::update(const data::EntityLite &e)
         updatePart.append(QString("%1=%2").arg(f, ":" + f));
     }
 
-    auto sqlStatement = QString("UPDATE %1 SET %2 WHERE id = %3").arg(e.m_tableName, updatePart.join(","), e.m_id);
+    auto sqlStatement = QString("UPDATE %1 SET %2 WHERE id = %3").arg(e.m_tableName, updatePart.join(","), e.m_id.toString());
     qDebug() << sqlStatement;
 
     QSqlQuery query(implementation->database);
@@ -230,7 +230,7 @@ bool DatabaseController::get(data::EntityLite &e)
 {
     auto sqlStatement = QString("SELECT %1 FROM %2 WHERE id=%3").arg(e.m_fields.join(","),
                                                                      e.m_tableName,
-                                                                     e.m_id);
+                                                                     e.m_id.toString());
     qDebug() << sqlStatement;
 
     QSqlQuery query(implementation->database);
@@ -251,13 +251,14 @@ bool DatabaseController::get(data::EntityLite &e)
         e.m_data[f] = query.value(f);
     }
 
+
     return true;
 }
 
 bool DatabaseController::remove(data::EntityLite &e)
 {
     auto sqlStatement = QString("DELETE FROM %1 WHERE id=%2").arg(e.m_tableName,
-                                                                  e.m_id);
+                                                                  e.m_id.toString());
     qDebug() << sqlStatement;
 
     QSqlQuery query(implementation->database);

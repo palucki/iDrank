@@ -23,7 +23,7 @@ INCLUDEPATH += source \
 LIBS += -L$$PWD/../binaries/$$DESTINATION_PATH -ldrinq-lib
 
 SOURCES += \
-        main.cpp
+    main.cpp
 
 RESOURCES += qml.qrc
 
@@ -37,3 +37,4 @@ QML_DESIGNER_IMPORT_PATH =
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
