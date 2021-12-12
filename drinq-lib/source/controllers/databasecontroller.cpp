@@ -59,18 +59,20 @@ private:
     {
         QSqlQuery query(database);
 
-        QString sqlStatement = "CREATE TABLE IF NOT EXISTS party (id INTEGER PRIMARY KEY AUTOINCREMENT, started DATETIME)";
-        if(!query.exec(sqlStatement))
-        {
-            qDebug() << query.lastError().text();
-            return false;
-        }
+        QStringList queries {
+            "CREATE TABLE IF NOT EXISTS party (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, started DATETIME, ended DATETIME)",
+            "CREATE TABLE IF NOT EXISTS drink_type (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, default_amount_ml INTEGER)",
+            "CREATE TABLE IF NOT EXISTS drink (id INTEGER PRIMARY KEY AUTOINCREMENT, drink_type_id INTEGER, party_id INTEGER, timestamp DATETIME, amount_ml INTEGER, FOREIGN KEY(drink_type_id) REFERENCES drink_type(id) ON DELETE CASCADE, FOREIGN KEY(party_id) REFERENCES party(id) ON DELETE CASCADE)",
+        };
 
-        sqlStatement = "CREATE TABLE IF NOT EXISTS drink (id INTEGER PRIMARY KEY AUTOINCREMENT, party_id INTEGER, timestamp DATETIME, amount_ml INTEGER, FOREIGN KEY(party_id) REFERENCES party(id) ON DELETE CASCADE)";
-        if(!query.exec(sqlStatement))
+        for(const auto& sql : queries)
         {
-            qDebug() << query.lastError().text();
-            return false;
+            if(!query.exec(sql))
+            {
+                qDebug() << sql;
+                qDebug() << query.lastError().text();
+                return false;
+            }
         }
 
         return true;
@@ -381,7 +383,7 @@ QVariant DatabaseController::getLastId(const QString& tableName)
         return {};
 
     QSqlQuery query(implementation->database);
-    QString sqlStatement = "SELECT MAX(id) FROM drinks";
+    auto sqlStatement = QString("SELECT MAX(id) FROM %1").arg(tableName);
 
     if (!query.prepare(sqlStatement) || !query.exec())
         return {};

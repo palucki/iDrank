@@ -97,15 +97,35 @@ public:
     Drink2(const QJsonObject& json, QObject* parent = nullptr);
     ~Drink2();
 
-    void setPartyId(unsigned int id) { m_data["party_id"] = id; }
+    void setDrinkTypeId(const QVariant& id) { m_data["drink_type_id"] = id; }
+    void setPartyId(const QVariant& id) { m_data["party_id"] = id; }
     void setAmountMl(unsigned int a) { m_data["amount_ml"] = a; }
     void setTimestamp(QDateTime ts) { m_data["timestamp"] = ts; }
 
 private:
-    unsigned int m_party_id{0};
+    QString m_drink_type_id{};
+    QString m_party_id{};
     QDateTime m_timestamp{};
     unsigned int m_amount_ml{0};
 };
+
+class DRINQLIB_EXPORT DrinkType : public data::EntityLite
+{
+    Q_OBJECT
+
+public:
+    explicit DrinkType(QObject* parent = nullptr);
+    DrinkType(const QJsonObject& json, QObject* parent = nullptr);
+    ~DrinkType();
+
+    void setName(const QString& name) { m_data["name"] = name; }
+    void setDefaultAmountMl(unsigned int a) { m_data["default_amount_ml"] = a; }
+
+private:
+    QString m_name{};
+    unsigned int m_default_amount_ml{0};
+};
+
 
 class DRINQLIB_EXPORT Party2 : public data::EntityLite
 {
@@ -113,10 +133,16 @@ class DRINQLIB_EXPORT Party2 : public data::EntityLite
 
 public:
     explicit Party2(QObject* parent = nullptr);
-    Party2(QObject* parent, const QJsonObject& json);
+    Party2(const QJsonObject& json, QObject* parent = nullptr);
     ~Party2();
+
+    void setName(const QString& name) { m_data["name"] = name; }
+    void setStarted(QDateTime ts) { m_data["started"] = ts; }
+    void setEnded(QDateTime ts) { m_data["ended"] = ts; }
 private:
+    QString m_name{};
     QDateTime m_started{};
+    QDateTime m_ended{};
 };
 
 

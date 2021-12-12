@@ -23,12 +23,11 @@ DrinkController::~DrinkController()
 
 bool DrinkController::addDrink()
 {
-    unsigned long party_id = getLastPartyId();
-
-    qDebug() << "Latest party id " << party_id;
+    auto partyId =  m_db->getLastId("party");
+    qDebug() << "Latest party id " << partyId;
 
     drinq::models::Drink2 newDrink;
-    newDrink.setPartyId(party_id);
+    newDrink.setPartyId(partyId);
 
     qDebug() << "Adding drink: " << newDrink.toJson();
     qDebug() << "Result " << m_db->create(newDrink);
@@ -56,29 +55,12 @@ bool DrinkController::addDrink()
     return true;
 }
 
-unsigned int DrinkController::getLastPartyId()
-{
-    auto party = m_db->readParty();
-
-    if(!party.isEmpty())
-    {
-        drinq::models::Party2 dbParty(this, party);
-        return dbParty.m_id.toInt();
-    }
-
-    drinq::models::Party2 new_party(this);
-    m_db->createRow("party", new_party.toJson());
-    party = m_db->readParty();
-
-    return party["id"].toVariant().toUInt();
-}
-
 bool DrinkController::resetCounter()
 {
     qDebug() << "Creating new party";
 
     drinq::models::Party2 newParty;
-    m_db->createRow("party", newParty.toJson());
+    m_db->create(newParty);
 
     qDebug() << "Resetting counter";
 

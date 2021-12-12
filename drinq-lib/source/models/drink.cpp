@@ -169,6 +169,7 @@ int Drink::ui_defaultAmount(eBeverage beverageType)
 
 Drink2::Drink2(QObject* parent) : EntityLite("drink", parent), m_timestamp(QDateTime::currentDateTime())
 {
+    addField("drink_type_id", m_drink_type_id);
     addField("party_id", m_party_id);
     addField("timestamp", m_timestamp);
     addField("amount_ml", m_amount_ml);
@@ -185,15 +186,33 @@ Drink2::~Drink2()
 
 Party2::Party2(QObject *parent) : EntityLite("party", parent), m_started(QDateTime::currentDateTime())
 {
+    addField("name", m_name);
     addField("started", m_started);
+    addField("ended", m_ended);
 }
 
-Party2::Party2(QObject *parent, const QJsonObject &json) : Party2(parent)
+Party2::Party2(const QJsonObject &json, QObject *parent) : Party2(parent)
 {
    update(json);
 }
 
 Party2::~Party2()
+{
+
+}
+
+DrinkType::DrinkType(QObject *parent) : EntityLite("drink_type", parent)
+{
+    addField("name", m_name);
+    addField("default_amount_ml", m_default_amount_ml);
+}
+
+DrinkType::DrinkType(const QJsonObject &json, QObject *parent) : DrinkType(parent)
+{
+    update(json);
+}
+
+DrinkType::~DrinkType()
 {
 
 }
