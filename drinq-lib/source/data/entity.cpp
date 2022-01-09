@@ -5,8 +5,6 @@
 
 #include <data/stringdecorator.h>
 
-using namespace drinq::controllers;
-
 namespace drinq {
 namespace data {
 

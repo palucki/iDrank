@@ -9,6 +9,9 @@
 namespace drinq {
 namespace controllers {
 
+// Introduce this pattern to separate drink from database
+//https://martinfowler.com/eaaCatalog/dataMapper.html
+
 
 class DatabaseController::Implementation
 {
@@ -251,7 +254,6 @@ bool DatabaseController::get(data::EntityLite &e)
         e.m_data[f] = query.value(f);
     }
 
-
     return true;
 }
 
@@ -269,6 +271,49 @@ bool DatabaseController::remove(data::EntityLite &e)
     }
 
     return true;
+}
+
+QList<data::EntityLite> DatabaseController::getAll(const data::EntityLite& e)
+{
+    auto sqlStatement = QString("SELECT %1 FROM %2").arg(e.m_fields.join(","), e.m_tableName);
+    qDebug() << sqlStatement;
+
+    QSqlQuery query(implementation->database);
+    if(!query.prepare(sqlStatement))
+    {
+        qDebug() << "QUERY INCORRECT " << query.lastError().text();
+        return {};
+    }
+
+    if(!query.exec())
+    {
+        qDebug() << "QUERY ERROR " << query.lastError().text();
+        return {};
+    }
+
+    QList<data::EntityLite> results;
+
+    while(query.next())
+    {
+        data::EntityLite added(e.m_tableName, nullptr);
+        added.m_fields = e.m_fields;
+        added.m_bindableFields = e.m_bindableFields;
+        for(const auto& f : qAsConst(e.m_fields))
+        {
+            added.m_data[f] = query.value(f);
+        }
+
+        qDebug() << "JSON in db controller " << added.toJson();
+
+        results.append(added);
+    }
+
+    for(const auto& r : results)
+    {
+        qDebug() << r.toJson();
+    }
+
+    return results;
 }
 
 bool DatabaseController::deleteRow(const QString& tableName, const QString& id) const
@@ -387,7 +432,10 @@ QVariant DatabaseController::getLastId(const QString& tableName)
     auto sqlStatement = QString("SELECT MAX(id) FROM %1").arg(tableName);
 
     if (!query.prepare(sqlStatement) || !query.exec())
+    {
+        qDebug() << query.lastError().text();
         return {};
+    }
 
     if (!query.first())
         return {};

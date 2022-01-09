@@ -112,16 +112,19 @@ private:
 class DRINQLIB_EXPORT DrinkType : public data::EntityLite
 {
     Q_OBJECT
-
+    Q_PROPERTY(QString ui_name MEMBER m_name CONSTANT)
+    Q_PROPERTY(unsigned int ui_default_amount_ml MEMBER m_default_amount_ml CONSTANT)
 public:
     explicit DrinkType(QObject* parent = nullptr);
     DrinkType(const QJsonObject& json, QObject* parent = nullptr);
     ~DrinkType();
 
-    void setName(const QString& name) { m_data["name"] = name; }
-    void setDefaultAmountMl(unsigned int a) { m_data["default_amount_ml"] = a; }
+    void setName(const QString& name) { m_data["name"] = name; m_name = name;}
+    void setDefaultAmountMl(unsigned int a) { m_data["default_amount_ml"] = a; m_default_amount_ml = a; }
 
-private:
+    void update(const QJsonObject& src) override;
+
+public:
     QString m_name{};
     unsigned int m_default_amount_ml{0};
 };

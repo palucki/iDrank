@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>MasterView.qml</file>
         <file>DashboardView.qml</file>
+        <file>DrinkPropertiesView.qml</file>
     </qresource>
 </RCC>

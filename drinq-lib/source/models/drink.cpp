@@ -1,4 +1,5 @@
 #include "drink.h"
+#include <QDebug>
 
 using namespace drinq::data;
 
@@ -209,12 +210,19 @@ DrinkType::DrinkType(QObject *parent) : EntityLite("drink_type", parent)
 
 DrinkType::DrinkType(const QJsonObject &json, QObject *parent) : DrinkType(parent)
 {
+    qDebug() << "JSON " << json;
     update(json);
 }
 
 DrinkType::~DrinkType()
 {
+}
 
+void DrinkType::update(const QJsonObject &src)
+{
+    EntityLite::update(src);
+    setName(m_data["name"].toString());
+    setDefaultAmountMl(m_data["default_amount_ml"].toInt());
 }
 
 }}

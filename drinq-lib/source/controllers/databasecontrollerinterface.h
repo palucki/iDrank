@@ -36,6 +36,8 @@ public:
     virtual bool update(const data::EntityLite& e) = 0;
     virtual bool get(data::EntityLite &e) = 0;
     virtual bool remove(data::EntityLite &e) = 0;
+
+    virtual QList<data::EntityLite> getAll(const data::EntityLite& e) = 0;
 };
 
 }}

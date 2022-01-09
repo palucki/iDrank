@@ -7,11 +7,10 @@
 #include <QString>
 #include <QObject>
 #include <QScopedPointer>
+#include <QDebug>
 #include <drinq-lib_global.h>
 #include <data/datadecorator.h>
 #include <data/entitycollection.h>
-#include <controllers/databasecontrollerinterface.h>
-
 
 namespace drinq {
 namespace data {
@@ -24,7 +23,30 @@ class DRINQLIB_EXPORT EntityLite : public QObject
 public:
     EntityLite(const QString& tableName, QObject* parent) : QObject(parent), m_tableName(tableName)
     {
-    };
+    }
+
+    EntityLite(const EntityLite& e) : EntityLite(e.m_tableName, e.parent())
+    {
+        qDebug() << "Copy ctor";
+        m_fields = e.m_fields;
+        m_bindableFields = e.m_bindableFields;
+        m_data = e.m_data;
+//        update(e.toJson());
+    }
+
+    EntityLite& operator=(const EntityLite& e)
+    {
+        qDebug() << "SHOULDNT BE HERE Assignment operator";
+        if(this == &e)
+        {
+            return *this;
+        }
+
+//        EntityLite tmp(e);
+//        std::swap(*this, tmp);
+
+        return *this;
+    }
 
     void setId(const QVariant& id)
     {
@@ -57,7 +79,7 @@ public:
         m_data[key] = value;
     }
 
-    void update(const QJsonObject& src)
+    virtual void update(const QJsonObject& src)
     {
         for(auto it = m_data.begin(); it != m_data.end(); ++it)
         {
@@ -69,7 +91,7 @@ public:
         }
     }
 
-    QJsonObject toJson()
+    QJsonObject toJson() const
     {
         QJsonObject obj;
 

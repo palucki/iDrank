@@ -2,12 +2,31 @@ import QtQuick 2.12
 import QtQuick.Controls 2.5
 import QtQuick.Controls.Material 2.12
 
+import QtQml 2.12
+import QtQuick.Layouts 1.12
+
 Item {
     property int shotsTaken: 0
 
     Rectangle {
         anchors.fill: parent
         color: "skyblue"
+
+        Popup {
+            id: popup
+            anchors.centerIn: parent
+            height:parent.height
+            width: parent.width
+            contentItem: Text {
+                    text: "Content"
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: popup.close()
+                    }
+            }
+        }
+
+
         Column {
             anchors.centerIn: parent
             spacing: 30
@@ -92,6 +111,7 @@ Item {
                     Material.background: Material.LightGreen
                     onClicked: {
                         console.log("Select drink type")
+                        contentFrame.push("qrc:DrinkPropertiesView.qml")
                     }
                 }
             }

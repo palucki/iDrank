@@ -35,6 +35,8 @@ public:
     bool get(data::EntityLite &e) override;
     bool remove(data::EntityLite &e) override;
 
+    QList<data::EntityLite> getAll(const data::EntityLite& e) override;
+
 private:
     class Implementation;
     QScopedPointer<Implementation> implementation;
