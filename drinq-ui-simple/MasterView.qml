@@ -31,13 +31,16 @@ ApplicationWindow {
         RowLayout {
             anchors.fill: parent
             ToolButton {
-                text: qsTr("‹")
+                text: qsTr("<")
                 //               onClicked: stack.pop()
             }
-            Label {
+            TextInput  {
                 id: centerLabel
                 text: "Title"
-                elide: Label.ElideRight
+                maximumLength: 30
+                color: "white"
+                font.pointSize: 14
+//                elide: Label.ElideRight
                 horizontalAlignment: Qt.AlignHCenter
                 verticalAlignment: Qt.AlignVCenter
                 Layout.fillWidth: true

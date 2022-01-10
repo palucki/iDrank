@@ -9,7 +9,7 @@
 
 namespace drinq::controllers {
 class DatabaseControllerInterface;
-}
+
 
 class DRINQLIB_EXPORT DrinkController : public QObject
 {
@@ -26,14 +26,22 @@ public slots:
     void setPartyId(const QVariant& partyId);
 
     void addDrinkType();
+    void setCurrentDrinkProperties(int index, unsigned int amount_ml);
 
 signals:
     void drinkTypesChanged();
+
+    //connected to party controller to update drinks count
+    void drinkAdded();
 
 private:
     drinq::controllers::DatabaseControllerInterface* m_db;
     QVariant m_currentPartyId;
     QList<drinq::models::DrinkType*> m_drinkTypes;
+    int m_currentDrinkTypeIndex = 0;
+    unsigned int m_currentDrinkAmountMl = 0;
 };
+
+}
 
 #endif // DRINKCONTROLLER_H

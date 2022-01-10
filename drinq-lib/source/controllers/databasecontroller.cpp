@@ -273,9 +273,15 @@ bool DatabaseController::remove(data::EntityLite &e)
     return true;
 }
 
-QList<data::EntityLite> DatabaseController::getAll(const data::EntityLite& e)
+QList<data::EntityLite> DatabaseController::getAll(const data::EntityLite& e, const QString& where)
 {
     auto sqlStatement = QString("SELECT %1 FROM %2").arg(e.m_fields.join(","), e.m_tableName);
+
+    if(!where.isEmpty())
+    {
+        sqlStatement.append(" " + where);
+    }
+
     qDebug() << sqlStatement;
 
     QSqlQuery query(implementation->database);
@@ -314,6 +320,33 @@ QList<data::EntityLite> DatabaseController::getAll(const data::EntityLite& e)
     }
 
     return results;
+}
+
+int DatabaseController::count(const data::EntityLite &e, const QString &where)
+{
+    auto sqlStatement = QString("SELECT COUNT(*) FROM %1").arg(e.m_tableName);
+
+    if(!where.isEmpty())
+    {
+        sqlStatement.append(" " + where);
+    }
+
+    qDebug() << sqlStatement;
+
+    QSqlQuery query(implementation->database);
+    if(!query.prepare(sqlStatement))
+    {
+        qDebug() << "QUERY INCORRECT " << query.lastError().text();
+        return {};
+    }
+
+    if(!query.exec() || !query.next())
+    {
+        qDebug() << "QUERY ERROR " << query.lastError().text();
+        return {};
+    }
+
+    return query.value(0).toInt();
 }
 
 bool DatabaseController::deleteRow(const QString& tableName, const QString& id) const

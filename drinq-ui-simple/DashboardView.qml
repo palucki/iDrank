@@ -6,8 +6,6 @@ import QtQml 2.12
 import QtQuick.Layouts 1.12
 
 Item {
-    property int shotsTaken: 0
-
     Rectangle {
         anchors.fill: parent
         color: "skyblue"
@@ -18,11 +16,14 @@ Item {
             height:parent.height
             width: parent.width
             contentItem: Text {
-                    text: "Content"
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: popup.close()
-                    }
+                text: "Content"
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: popup.close()
+                }
+            }
+            onOpened: {
+                console.log("Selecting another toast")
             }
         }
 
@@ -31,24 +32,35 @@ Item {
             anchors.centerIn: parent
             spacing: 30
 
-            Column {
-                spacing: 10
+            Rectangle {
+                height: 150
+                width: 200
                 anchors.horizontalCenter: parent.horizontalCenter
-                Text {
+                Column {
+                    spacing: 10
                     anchors.horizontalCenter: parent.horizontalCenter
-                    text: "Currently after:"
+
+                    Text {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text: "Currently after:"
+                    }
+
+                    Text {
+                        id: shotsCounter
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text: partyController.ui_drinks_count
+                        font.pointSize: 50
+                    }
+
+                    Text {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text: "shots"
+                    }
                 }
 
-                Text {
-                    id: shotsCounter
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    text: shotsTaken
-                    font.pointSize: 50
-                }
-
-                Text {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    text: "shots"
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: console.log("Opening statistics view")
                 }
             }
 
@@ -63,16 +75,18 @@ Item {
 
                 //                icon: ""
                 onClicked: {
-                    shotsTaken = shotsTaken + 1
-                    toolbar.labelText = shotsTaken
+                    //show toast Text
+                    popup.open()
+
+                    //get from drinkController
                     drinkController.addDrink()
                 }
             }
 
             Row {
                 anchors.horizontalCenter: parent.horizontalCenter
-//                width: parent.width
-//                height: 60
+                //                width: parent.width
+                //                height: 60
                 spacing: 60
 
                 RoundButton {
@@ -84,15 +98,15 @@ Item {
                     font.pointSize: 10
                     Material.background: Material.Purple
                     onClicked: {
-//                        toolbar.labelText = shotsTaken
-//                        drinkController.resetCounter()
+                        //                        toolbar.labelText = shotsTaken
+                        //                        drinkController.resetCounter()
                         if(partyController.isPartyStarted()) {
                             partyController.endParty()
                             text = "Start party"
                             addButton.enabled = false
                         }
                         else {
-                            shotsTaken = 0
+//                            shotsTaken = 0
                             partyController.startParty()
                             drinkController.setPartyId(partyController.currentPartyId())
                             text = "End party"

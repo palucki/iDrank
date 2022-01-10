@@ -9,6 +9,8 @@
 
 #include <QDebug>
 
+namespace drinq::controllers {
+
 DrinkController::DrinkController(QObject *parent, drinq::controllers::DatabaseControllerInterface *db)
     : QObject(parent), m_db(db)
 {
@@ -73,6 +75,8 @@ bool DrinkController::addDrink()
 
 //    qDebug() << "RESULT " << result;
 
+    emit drinkAdded();
+
     return true;
 }
 
@@ -87,3 +91,12 @@ void DrinkController::addDrinkType()
     emit drinkTypesChanged();
 }
 
+void DrinkController::setCurrentDrinkProperties(int index, unsigned int amount_ml)
+{
+    m_currentDrinkTypeIndex = index;
+    m_currentDrinkAmountMl = amount_ml;
+
+    qDebug() << "index " << index << " amount " << amount_ml;
+}
+
+}

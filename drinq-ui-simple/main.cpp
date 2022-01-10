@@ -17,12 +17,12 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
-    qmlRegisterType<DrinkController>("DrinQ", 1, 0, "DrinkController");
-    qmlRegisterType<DrinkController>("DrinQ", 1, 0, "PartyController");
+    qmlRegisterType<drinq::controllers::DrinkController>("DrinQ", 1, 0, "DrinkController");
+    qmlRegisterType<PartyController>("DrinQ", 1, 0, "PartyController");
     qmlRegisterType<drinq::models::DrinkType>("DrinQ", 1, 0, "DrinkType");
     drinq::controllers::DatabaseController db;
-    DrinkController drinkController(&app, &db);
-    PartyController partyController(&app, &db);
+    drinq::controllers::DrinkController drinkController(&app, &db);
+    PartyController partyController(&app, &db, &drinkController);
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("drinkController", &drinkController);

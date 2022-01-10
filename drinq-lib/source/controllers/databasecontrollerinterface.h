@@ -37,7 +37,9 @@ public:
     virtual bool get(data::EntityLite &e) = 0;
     virtual bool remove(data::EntityLite &e) = 0;
 
-    virtual QList<data::EntityLite> getAll(const data::EntityLite& e) = 0;
+    virtual QList<data::EntityLite> getAll(const data::EntityLite& e, const QString& where = {}) = 0;
+
+    virtual int count(const data::EntityLite& e, const QString& where = {}) = 0;
 };
 
 }}
