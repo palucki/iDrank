@@ -84,10 +84,12 @@ public:
         for(auto it = m_data.begin(); it != m_data.end(); ++it)
         {
             const auto key = it.key();
+            qDebug() << "Key " << key << " val " << src[key];
             if(src.contains(key))
             {
                 it.value() = src[key];
             }
+            qDebug() << "Val modified " << it.value();
         }
     }
 

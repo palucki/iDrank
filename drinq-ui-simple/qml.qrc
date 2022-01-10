@@ -3,5 +3,6 @@
         <file>MasterView.qml</file>
         <file>DashboardView.qml</file>
         <file>DrinkPropertiesView.qml</file>
+        <file>PartyStatisticsView.qml</file>
     </qresource>
 </RCC>

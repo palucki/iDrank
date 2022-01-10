@@ -60,7 +60,10 @@ Item {
 
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: console.log("Opening statistics view")
+                    onClicked: {
+                        console.log("Opening statistics view")
+                        contentFrame.push("qrc:PartyStatisticsView.qml")
+                    }
                 }
             }
 
@@ -78,8 +81,7 @@ Item {
                     //show toast Text
                     popup.open()
 
-                    //get from drinkController
-                    drinkController.addDrink()
+                    partyController.addDrink()
                 }
             }
 
@@ -108,7 +110,7 @@ Item {
                         else {
 //                            shotsTaken = 0
                             partyController.startParty()
-                            drinkController.setPartyId(partyController.currentPartyId())
+//                            drinkController.setPartyId(partyController.currentPartyId())
                             text = "End party"
                             addButton.enabled = true
                         }

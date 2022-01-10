@@ -22,21 +22,15 @@ public:
     Q_INVOKABLE QQmlListProperty<drinq::models::DrinkType> ui_drinkTypes();
 
 public slots:
-    bool addDrink();
-    void setPartyId(const QVariant& partyId);
-
     void addDrinkType();
     void setCurrentDrinkProperties(int index, unsigned int amount_ml);
 
 signals:
     void drinkTypesChanged();
 
-    //connected to party controller to update drinks count
-    void drinkAdded();
-
-private:
+public:
     drinq::controllers::DatabaseControllerInterface* m_db;
-    QVariant m_currentPartyId;
+//    QVariant m_currentPartyId;
     QList<drinq::models::DrinkType*> m_drinkTypes;
     int m_currentDrinkTypeIndex = 0;
     unsigned int m_currentDrinkAmountMl = 0;

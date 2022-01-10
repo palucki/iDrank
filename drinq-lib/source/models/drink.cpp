@@ -185,6 +185,14 @@ Drink2::~Drink2()
 {
 }
 
+void Drink2::update(const QJsonObject &src)
+{
+    setDrinkTypeId(src["drink_type_id"]);
+    setPartyId(src["party_id"]);
+    setAmountMl(src["amount_ml"].toInt());
+    setTimestamp(QDateTime::fromString(src["timestamp"].toString(), Qt::ISODate));
+}
+
 Party2::Party2(QObject *parent) : EntityLite("party", parent), m_started(QDateTime::currentDateTime())
 {
     addField("name", m_name);
@@ -200,6 +208,13 @@ Party2::Party2(const QJsonObject &json, QObject *parent) : Party2(parent)
 Party2::~Party2()
 {
 
+}
+
+void Party2::update(const QJsonObject &src)
+{
+    setName(m_data["name"].toString());
+    setStarted(QDateTime::fromString(src["started"].toString(), Qt::ISODate));
+    setEnded(QDateTime::fromString(src["ended"].toString(), Qt::ISODate));
 }
 
 DrinkType::DrinkType(QObject *parent) : EntityLite("drink_type", parent)
@@ -220,7 +235,6 @@ DrinkType::~DrinkType()
 
 void DrinkType::update(const QJsonObject &src)
 {
-    EntityLite::update(src);
     setName(m_data["name"].toString());
     setDefaultAmountMl(m_data["default_amount_ml"].toInt());
 }

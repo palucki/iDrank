@@ -20,6 +20,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<drinq::controllers::DrinkController>("DrinQ", 1, 0, "DrinkController");
     qmlRegisterType<PartyController>("DrinQ", 1, 0, "PartyController");
     qmlRegisterType<drinq::models::DrinkType>("DrinQ", 1, 0, "DrinkType");
+    qmlRegisterType<drinq::models::Drink2>("DrinQ", 1, 0, "Drink2");
     drinq::controllers::DatabaseController db;
     drinq::controllers::DrinkController drinkController(&app, &db);
     PartyController partyController(&app, &db, &drinkController);
