@@ -31,10 +31,18 @@ ApplicationWindow {
     }
 
     StackView {
+        property var pagesTitles : ["Test"]
+
         id: contentFrame
         anchors.fill: parent
         clip: true
         initialItem: "qrc:DashboardView.qml"
+        onCurrentItemChanged: {
+            console.log("contents changed")
+//            toolbar.labelText = contentFrame.pagesTitles.at(-1) //means: last item
+            toolbar.labelText = contentFrame.pagesTitles[contentFrame.pagesTitles.length - 1] //means: last item
+        }
+
         //        onDepthChanged: {
         //            if(depth > 1) {
         //                leftButton.enabled = true
@@ -59,7 +67,11 @@ ApplicationWindow {
                 id: leftButton
                 text: contentFrame.depth > 1 ? "<" : ""
                 enabled: contentFrame.depth > 1
-                onClicked: contentFrame.pop()
+                onClicked: {
+                    contentFrame.pagesTitles.pop()
+                    toolbar.labelText = contentFrame.pagesTitles[contentFrame.pagesTitles.length - 1]
+                    contentFrame.pop()
+                }
                 //               onClicked: stack.pop()
             }
             Label  {
@@ -75,9 +87,11 @@ ApplicationWindow {
             }
             ToolButton {
                 id: rightButton
-                text: qsTr("☰")
+                text:  contentFrame.depth > 1 ? "" : qsTr("☰")
+                enabled: contentFrame.depth == 1
                 onClicked: {
-                    contentFrame.push("qrc:PartiesView.qml")
+                    contentFrame.pagesTitles.push(contentFrame.depth + " Parties")
+                    contentFrame.push("qrc:PartiesView.qml")                    
                 }
             }
         }

@@ -44,6 +44,7 @@ Item {
                     anchors.fill: parent
                     onClicked: {
                         console.log("Opening statistics view")
+                        contentFrame.pagesTitles.push(contentFrame.depth + " Statistics")
                         contentFrame.push("qrc:PartyStatisticsView.qml")
                     }
                 }
@@ -109,6 +110,7 @@ Item {
                     Material.background: Material.LightGreen
                     onClicked: {
                         console.log("Select drink type")
+                        contentFrame.pagesTitles.push(contentFrame.depth + " Drink properties")
                         contentFrame.push("qrc:DrinkPropertiesView.qml")
                     }
                 }
