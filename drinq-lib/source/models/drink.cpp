@@ -212,7 +212,7 @@ Party2::~Party2()
 
 void Party2::update(const QJsonObject &src)
 {
-    setName(m_data["name"].toString());
+    setName(src["name"].toString());
     setStarted(QDateTime::fromString(src["started"].toString(), Qt::ISODate));
     setEnded(QDateTime::fromString(src["ended"].toString(), Qt::ISODate));
 }
@@ -235,8 +235,8 @@ DrinkType::~DrinkType()
 
 void DrinkType::update(const QJsonObject &src)
 {
-    setName(m_data["name"].toString());
-    setDefaultAmountMl(m_data["default_amount_ml"].toInt());
+    setName(src["name"].toString());
+    setDefaultAmountMl(src["default_amount_ml"].toInt());
 }
 
 }}
