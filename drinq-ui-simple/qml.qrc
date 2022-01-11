@@ -4,5 +4,6 @@
         <file>DashboardView.qml</file>
         <file>DrinkPropertiesView.qml</file>
         <file>PartyStatisticsView.qml</file>
+        <file>PartiesView.qml</file>
     </qresource>
 </RCC>
