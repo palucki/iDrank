@@ -13,12 +13,37 @@ ApplicationWindow {
     visible: true
     title: qsTr("iDrunk")
 
+    Popup {
+        id: masterPopup
+        anchors.centerIn: parent
+        height:parent.height
+        width: parent.width
+        contentItem: Text {
+            text: "Content"
+            MouseArea {
+                anchors.fill: parent
+                onClicked: masterPopup.close()
+            }
+        }
+        onOpened: {
+            console.log("Selecting another toast")
+        }
+    }
 
     StackView {
         id: contentFrame
         anchors.fill: parent
         clip: true
         initialItem: "qrc:DashboardView.qml"
+//        onDepthChanged: {
+//            if(depth > 1) {
+//                leftButton.enabled = true
+//                leftButton.text = "<"
+//            } else {
+//                leftButton.enabled = true
+//                leftButton.text = "<"
+//            }
+//        }
     }
 
     //    Material.theme: Material.Dark
@@ -31,7 +56,10 @@ ApplicationWindow {
         RowLayout {
             anchors.fill: parent
             ToolButton {
-                text: qsTr("<")
+                id: leftButton
+                text: contentFrame.depth > 1 ? "<" : ""
+                enabled: contentFrame.depth > 1
+                onClicked: contentFrame.pop()
                 //               onClicked: stack.pop()
             }
             TextInput  {
@@ -46,7 +74,8 @@ ApplicationWindow {
                 Layout.fillWidth: true
             }
             ToolButton {
-                text: qsTr("⋮")
+                id: rightButton
+                text: qsTr("☰")
                 //               onClicked: menu.open()
             }
         }

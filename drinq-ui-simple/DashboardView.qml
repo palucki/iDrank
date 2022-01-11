@@ -10,24 +10,6 @@ Item {
         anchors.fill: parent
         color: "skyblue"
 
-        Popup {
-            id: popup
-            anchors.centerIn: parent
-            height:parent.height
-            width: parent.width
-            contentItem: Text {
-                text: "Content"
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: popup.close()
-                }
-            }
-            onOpened: {
-                console.log("Selecting another toast")
-            }
-        }
-
-
         Column {
             anchors.centerIn: parent
             spacing: 30
@@ -78,8 +60,8 @@ Item {
 
                 //                icon: ""
                 onClicked: {
-                    //show toast Text
-                    popup.open()
+                    //show toast Text, replace with View, to be able to show back button
+                    masterPopup.open()
 
                     partyController.addDrink()
                 }

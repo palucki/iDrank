@@ -155,8 +155,6 @@ public:
     QDateTime m_ended{};
 };
 
-
-
 class DRINQLIB_EXPORT Drink : public data::Entity
 {
     Q_OBJECT
