@@ -7,6 +7,8 @@
 
 #include "models/drink.h"
 
+class QSettings;
+
 namespace drinq::controllers {
 class DatabaseControllerInterface;
 
@@ -15,8 +17,11 @@ class DRINQLIB_EXPORT DrinkController : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QQmlListProperty<drinq::models::DrinkType> ui_drinkTypes READ ui_drinkTypes NOTIFY drinkTypesChanged )
+    Q_PROPERTY(int ui_currentDrinkTypeIndex MEMBER m_currentDrinkTypeIndex NOTIFY currentDrinkTypeIndexChanged)
+    Q_PROPERTY(int ui_currentDrinkAmountMl MEMBER m_currentDrinkAmountMl NOTIFY currentDrinkAmountMlChanged)
+
 public:
-    explicit DrinkController(QObject *parent = nullptr, drinq::controllers::DatabaseControllerInterface* db = nullptr);
+    explicit DrinkController(QObject *parent = nullptr, drinq::controllers::DatabaseControllerInterface* db = nullptr, QSettings* settings = nullptr);
     virtual ~DrinkController();
 
     Q_INVOKABLE QQmlListProperty<drinq::models::DrinkType> ui_drinkTypes();
@@ -27,13 +32,16 @@ public slots:
 
 signals:
     void drinkTypesChanged();
+    void currentDrinkTypeIndexChanged();
+    void currentDrinkAmountMlChanged();
 
 public:
     drinq::controllers::DatabaseControllerInterface* m_db;
 //    QVariant m_currentPartyId;
     QList<drinq::models::DrinkType*> m_drinkTypes;
     int m_currentDrinkTypeIndex = 0;
-    unsigned int m_currentDrinkAmountMl = 0;
+    unsigned int m_currentDrinkAmountMl = 50;
+    QSettings* m_settings;
 };
 
 }

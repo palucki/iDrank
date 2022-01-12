@@ -2,6 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QQuickStyle>
 #include <QQmlContext>
+#include <QSettings>
 
 #include "controllers/databasecontroller.h"
 #include "controllers/drinkcontroller.h"
@@ -13,6 +14,10 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
 
+    QCoreApplication::setOrganizationName("Apps");
+    QCoreApplication::setOrganizationDomain("palucki.github.io");
+    QCoreApplication::setApplicationName("iDrank");
+
     QQuickStyle::setStyle("Material");
 
     QGuiApplication app(argc, argv);
@@ -21,8 +26,10 @@ int main(int argc, char *argv[])
     qmlRegisterType<PartyController>("DrinQ", 1, 0, "PartyController");
     qmlRegisterType<drinq::models::DrinkType>("DrinQ", 1, 0, "DrinkType");
     qmlRegisterType<drinq::models::Drink2>("DrinQ", 1, 0, "Drink2");
+
+    QSettings settings; //HKEY_CURRENT_USER\SOFTWARE\Apps\iDrank
     drinq::controllers::DatabaseController db;
-    drinq::controllers::DrinkController drinkController(&app, &db);
+    drinq::controllers::DrinkController drinkController(&app, &db, &settings);
     PartyController partyController(&app, &db, &drinkController);
 
     QQmlApplicationEngine engine;

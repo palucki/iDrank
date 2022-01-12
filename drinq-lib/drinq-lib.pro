@@ -8,7 +8,7 @@ RCC_DIR = $$PWD/build/$$DESTINATION_PATH/.qrc
 UI_DIR = $$PWD/build/$$DESTINATION_PATH/.ui
 
 QT -= gui
-QT += sql
+QT += core sql
 
 TARGET = drinq-lib
 TEMPLATE = lib

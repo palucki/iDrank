@@ -6,7 +6,11 @@ import QtQml 2.12
 import QtQuick.Layouts 1.12
 
 Item {
-    property int shotsTaken: 0
+    Component.onCompleted : {
+        console.log("Setting values from settings")
+        drinkTypesList.currentIndex = drinkController.ui_currentDrinkTypeIndex
+        amountInput.value = drinkController.ui_currentDrinkAmountMl
+    }
 
     Rectangle {
         anchors.fill: parent
@@ -78,8 +82,8 @@ Item {
             }
 
             SpinBox {
-                anchors.horizontalCenter: parent.horizontalCenter
                 id: amountInput
+                anchors.horizontalCenter: parent.horizontalCenter
                 width: 200
                 height: 50
                 stepSize: 10

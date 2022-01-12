@@ -7,12 +7,16 @@
 //TODO enable this
 //#include "external/sqlite_orm.h"
 
+#include <QSettings>
 #include <QDebug>
 
 namespace drinq::controllers {
 
-DrinkController::DrinkController(QObject *parent, drinq::controllers::DatabaseControllerInterface *db)
-    : QObject(parent), m_db(db)
+const QString DRINK_TYPE_KEY = "drink_type_id";
+const QString DRINK_AMOUNT_KEY = "drink_amount_ml";
+
+DrinkController::DrinkController(QObject *parent, drinq::controllers::DatabaseControllerInterface *db, QSettings* settings)
+    : QObject(parent), m_db(db), m_settings(settings)
 {
 //    auto lastId = m_db->getLastId("drink");
 //    if(lastId.isNull())
@@ -34,9 +38,20 @@ DrinkController::DrinkController(QObject *parent, drinq::controllers::DatabaseCo
         m_drinkTypes.append(new drinq::models::DrinkType(dt.toJson(), this));
     }
 
-    if(!drink_types.isEmpty())
+    if(m_settings->contains(DRINK_TYPE_KEY) && m_settings->contains(DRINK_AMOUNT_KEY))
     {
-        setCurrentDrinkProperties(0, m_drinkTypes.first()->m_default_amount_ml);
+        setCurrentDrinkProperties(m_settings->value(DRINK_TYPE_KEY).toInt(), m_settings->value(DRINK_AMOUNT_KEY).toInt());
+    }
+    else
+    {
+        if(!drink_types.isEmpty())
+        {
+            setCurrentDrinkProperties(0, m_drinkTypes.first()->m_default_amount_ml);
+        }
+        else
+        {
+            qDebug() << "No drink types defined";
+        }
     }
 }
 
@@ -93,6 +108,9 @@ void DrinkController::setCurrentDrinkProperties(int index, unsigned int amount_m
     m_currentDrinkAmountMl = amount_ml;
 
     qDebug() << "index " << index << " amount " << amount_ml;
+
+    m_settings->setValue("drink_type_id", m_currentDrinkTypeIndex);
+    m_settings->setValue("drink_amount_ml", m_currentDrinkAmountMl);
 }
 
 }
