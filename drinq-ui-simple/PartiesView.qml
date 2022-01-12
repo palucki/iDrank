@@ -70,7 +70,7 @@ Item {
                     Material.background: Material.Purple
                     onClicked: {
                         console.log("Cancel")
-                        contentFrame.pop()
+                        navigationController.goBack()
                     }
                 }
 
@@ -85,7 +85,7 @@ Item {
                     onClicked: {
                         console.log("Ok")
 //                        drinkController.setCurrentDrinkProperties(drinkTypesList.currentIndex, amountInput.value)
-                        contentFrame.pop()
+                        navigationController.goBack()
 //                        drinkController.setDrinkProperties(type, amount)
                     }
                 }

@@ -30,6 +30,17 @@ ApplicationWindow {
         }
     }
 
+    Item {
+        id: navigationController
+        signal goBack
+        onGoBack: {
+            console.log("Go back")
+            contentFrame.pagesTitles.pop()
+            toolbar.labelText = contentFrame.pagesTitles[contentFrame.pagesTitles.length - 1]
+            contentFrame.pop()
+        }
+    }
+
     StackView {
         property var pagesTitles : ["Test"]
 
@@ -67,12 +78,7 @@ ApplicationWindow {
                 id: leftButton
                 text: contentFrame.depth > 1 ? "<" : ""
                 enabled: contentFrame.depth > 1
-                onClicked: {
-                    contentFrame.pagesTitles.pop()
-                    toolbar.labelText = contentFrame.pagesTitles[contentFrame.pagesTitles.length - 1]
-                    contentFrame.pop()
-                }
-                //               onClicked: stack.pop()
+                onClicked: navigationController.goBack()
             }
             Label  {
                 id: centerLabel
