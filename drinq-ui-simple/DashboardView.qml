@@ -42,6 +42,7 @@ Item {
 
                 MouseArea {
                     anchors.fill: parent
+                    enabled: partyController.isPartyStarted()
                     onClicked: {
                         console.log("Opening statistics view")
                         contentFrame.pagesTitles.push(contentFrame.depth + " Statistics")
