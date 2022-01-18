@@ -60,7 +60,7 @@ Item {
 
                 MouseArea {
                     anchors.fill: parent
-                    enabled: partyController.ui_party_started
+                    enabled: partyController.ui_party_started && partyController.ui_drinks_count > 0
                     onClicked: {
                         console.log("Opening statistics view")
                         contentFrame.pagesTitles.push(contentFrame.depth + " Statistics")
