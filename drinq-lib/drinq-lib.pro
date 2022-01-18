@@ -25,6 +25,7 @@ SOURCES += \
     source/controllers/databasecontroller.cpp \
     source/controllers/drinkcontroller.cpp \
     source/controllers/mastercontroller.cpp \
+    source/controllers/mastercontroller2.cpp \
     source/controllers/partycontroller.cpp \
     source/data/datadecorator.cpp \
     source/data/dropdown.cpp \
@@ -50,6 +51,7 @@ HEADERS += \
     source/controllers/databasecontrollerinterface.h \
     source/controllers/drinkcontroller.h \
     source/controllers/mastercontroller.h \
+    source/controllers/mastercontroller2.h \
     source/controllers/navigationcontroller.h \
     source/controllers/navigationcontrollerinterface.h \
     source/controllers/partycontroller.h \

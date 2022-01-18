@@ -138,6 +138,9 @@ public:
 class DRINQLIB_EXPORT Party2 : public data::EntityLite
 {
     Q_OBJECT
+    Q_PROPERTY(QString ui_name MEMBER m_name CONSTANT)
+    Q_PROPERTY(QDateTime ui_started MEMBER m_started CONSTANT)
+    Q_PROPERTY(QDateTime ui_ended MEMBER m_ended CONSTANT)
 
 public:
     explicit Party2(QObject* parent = nullptr);

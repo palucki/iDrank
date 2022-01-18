@@ -23,16 +23,16 @@ Item {
 
                 clip: true
 
-                model: partyController.ui_drinks
+                model: masterController.ui_parties
 
-                delegate: drinkTypeDelegate
+                delegate: partyPreviewDelegate
                 spacing: 5
 
                 focus: true
             }
 
             Component {
-                id: drinkTypeDelegate
+                id: partyPreviewDelegate
 
                 Rectangle {
                     width: partiesList.width
@@ -44,7 +44,7 @@ Item {
                     Text {
                         anchors.centerIn: parent
                         font.pixelSize: 10
-                        text: "#" + index + " " + modelData.ui_amount_ml + " (" + modelData.ui_timestamp + ")"
+                        text: "#" + index + " " + modelData.ui_name + " (start:" + modelData.ui_started + ")"
                     }
 
                     MouseArea {
