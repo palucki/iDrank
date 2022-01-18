@@ -13,23 +13,6 @@ ApplicationWindow {
     visible: true
     title: qsTr("iDrunk")
 
-    Popup {
-        id: masterPopup
-        anchors.centerIn: parent
-        height:parent.height
-        width: parent.width
-        contentItem: Text {
-            text: "Content"
-            MouseArea {
-                anchors.fill: parent
-                onClicked: masterPopup.close()
-            }
-        }
-        onOpened: {
-            console.log("Selecting another toast")
-        }
-    }
-
     Item {
         id: navigationController
         signal goBack

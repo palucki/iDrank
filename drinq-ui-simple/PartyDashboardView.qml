@@ -10,6 +10,24 @@ Item {
         anchors.fill: parent
         color: "skyblue"
 
+
+        Popup {
+            id: partyDashboardPopupId
+            anchors.centerIn: parent
+            height: 150
+            width: 300
+            contentItem: Text {
+                text: "Piłka, bramka, gol."
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: partyDashboardPopupId.close()
+                }
+            }
+            onOpened: {
+                console.log("Selecting another toast")
+            }
+        }
+
         Column {
             anchors.centerIn: parent
             spacing: 30
@@ -63,7 +81,7 @@ Item {
                 //                icon: ""
                 onClicked: {
                     //show toast Text, replace with View, to be able to show back button
-                    masterPopup.open()
+                    partyDashboardPopupId.open()
                     partyController.addDrink()
                 }
             }
