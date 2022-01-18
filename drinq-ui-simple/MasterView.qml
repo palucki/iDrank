@@ -47,7 +47,7 @@ ApplicationWindow {
         id: contentFrame
         anchors.fill: parent
         clip: true
-        initialItem: "qrc:DashboardView.qml"
+        initialItem: partyController.ui_party_started ? "qrc:PartyDashboardView.qml" : "qrc:DashboardView.qml"
         onCurrentItemChanged: {
             console.log("contents changed")
 //            toolbar.labelText = contentFrame.pagesTitles.at(-1) //means: last item

@@ -42,7 +42,7 @@ Item {
 
                 MouseArea {
                     anchors.fill: parent
-                    enabled: partyController.isPartyStarted()
+                    enabled: partyController.ui_party_started
                     onClicked: {
                         console.log("Opening statistics view")
                         contentFrame.pagesTitles.push(contentFrame.depth + " Statistics")
@@ -57,14 +57,13 @@ Item {
                 height: 200
                 width: 200
                 text: "Add"
-                enabled: partyController.isPartyStarted()
+                enabled: partyController.ui_party_started
                 Material.background: Material.Orange
 
                 //                icon: ""
                 onClicked: {
                     //show toast Text, replace with View, to be able to show back button
                     masterPopup.open()
-
                     partyController.addDrink()
                 }
             }
@@ -80,23 +79,21 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     height: 100
                     width: 100
-                    text: partyController.isPartyStarted() ? "End party" : "Start party"
+                    text: partyController.ui_party_started ? "End party" : "Start party"
                     font.pointSize: 10
                     Material.background: Material.Purple
                     onClicked: {
                         //                        toolbar.labelText = shotsTaken
                         //                        drinkController.resetCounter()
-                        if(partyController.isPartyStarted()) {
+                        if(partyController.ui_party_started) {
+                            console.log("PartyDashboardView::endParty()")
                             partyController.endParty()
-                            text = "Start party"
-                            addButton.enabled = false
+                            contentFrame.replace("qrc:DashboardView.qml")
                         }
                         else {
 //                            shotsTaken = 0
                             partyController.startParty()
 //                            drinkController.setPartyId(partyController.currentPartyId())
-                            text = "End party"
-                            addButton.enabled = true
                         }
                     }
                 }

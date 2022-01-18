@@ -23,6 +23,7 @@ PartyController::PartyController(QObject *parent, drinq::controllers::DatabaseCo
 
     if(isPartyStarted())
     {
+        m_party_started = true;
         auto drinks = m_db->getAll(drinq::models::Drink2{this}, "WHERE party_id = " + lastId.toString());
 
         qDebug() << "Found " << drinks.size() << " drinks";
@@ -50,6 +51,7 @@ QQmlListProperty<drinq::models::Drink2> PartyController::ui_drinks()
 
 bool PartyController::isPartyStarted()
 {
+//    return m_party_started;
     return m_current_party->m_data["ended"].toDateTime().isNull();
 //TODO: fix after propoer update() methods are added for all classes deriving from enetity
 //    return m_current_party->m_ended.isNull();
@@ -63,6 +65,9 @@ void PartyController::startParty()
     m_current_party = std::make_unique<drinq::models::Party2>();
     setDrinksCount(0);
     m_db->create(*m_current_party);
+
+    m_party_started = isPartyStarted();
+    emit ui_party_startedChanged();
 }
 
 void PartyController::endParty()
@@ -73,6 +78,9 @@ void PartyController::endParty()
     m_current_party->setEnded(QDateTime::currentDateTime());
     setDrinksCount(0);
     m_db->update(*m_current_party);
+
+    m_party_started = isPartyStarted();
+    emit ui_party_startedChanged();
 }
 
 void PartyController::setPartyName(const QString &name)
