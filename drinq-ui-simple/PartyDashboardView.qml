@@ -12,11 +12,17 @@ Item {
 
 
         Popup {
+            function show(text) {
+                textItem.text = text
+                partyDashboardPopupId.open()
+            }
+
             id: partyDashboardPopupId
             anchors.centerIn: parent
             height: 150
             width: 300
             contentItem: Text {
+                id: textItem
                 text: "Piłka, bramka, gol."
                 MouseArea {
                     anchors.fill: parent
@@ -80,8 +86,7 @@ Item {
 
                 //                icon: ""
                 onClicked: {
-                    //show toast Text, replace with View, to be able to show back button
-                    partyDashboardPopupId.open()
+                    partyDashboardPopupId.show(toastProvider.randomToast().ui_text)
                     partyController.addDrink()
                 }
             }

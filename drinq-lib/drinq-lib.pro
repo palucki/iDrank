@@ -36,6 +36,8 @@ SOURCES += \
     source/data/stringdecorator.cpp \
     source/data/datetimedecorator.cpp \
     source/framework/command.cpp \
+    source/framework/toast.cpp \
+    source/framework/databasetoastprovider.cpp \
     source/framework/objectfactory.cpp \
     source/models/address.cpp \
     source/models/appointment.cpp \
@@ -66,6 +68,9 @@ HEADERS += \
     source/data/datetimedecorator.h \
     source/drinq-lib_global.h \
     source/framework/command.h \
+    source/framework/toast.h \
+    source/framework/toastproviderinterface.h \
+    source/framework/databasetoastprovider.h \
     source/framework/objectfactory.h \
     source/framework/objectfactoryinterface.h \
     source/models/address.h \
