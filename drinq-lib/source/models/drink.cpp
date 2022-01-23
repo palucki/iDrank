@@ -187,6 +187,7 @@ Drink2::~Drink2()
 
 void Drink2::update(const QJsonObject &src)
 {
+    setId(src["id"].toVariant());
     setDrinkTypeId(src["drink_type_id"]);
     setPartyId(src["party_id"]);
     setAmountMl(src["amount_ml"].toInt());

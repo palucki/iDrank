@@ -111,12 +111,40 @@ void PartyController::addDrink()
     newDrink->setDrinkTypeId(m_drinkController->m_currentDrinkTypeIndex);
     newDrink->setAmountMl(m_drinkController->m_currentDrinkAmountMl);
 
-    qDebug() << "Adding drink: " << newDrink->toJson();
-    qDebug() << "Result " << m_db->create(*newDrink);
-    qDebug() << "PartyController -> drink added";
-    m_drinks.append(newDrink);
+    if(m_db->create(*newDrink))
+    {
+        m_drinks.append(newDrink);
+        emit ui_drinksChanged();
+        setDrinksCount(m_current_drinks_count + 1);
+        qDebug() << "PartyController -> drink added";
+    }
+    else
+    {
+        qDebug() << "PartyController -> drink not added !";
+    }
+}
 
-    emit ui_drinksChanged();
+void PartyController::deleteDrink(const QVariant &id)
+{
+    const auto it = std::find_if(m_drinks.cbegin(), m_drinks.cend(), [id](drinq::models::Drink2* d){
+        return d->m_id == id;
+    });
 
-    setDrinksCount(m_current_drinks_count + 1);
+    if(it == m_drinks.cend())
+    {
+        qDebug() << "Unable to find and remove drink with id " << id;
+        return;
+    }
+
+    auto* drink_ptr = *it;
+
+    qDebug() << "Sanity check drink ptr id " << drink_ptr->m_id;
+    qDebug() << "Sanity check last dirnk id " << m_drinks.back()->m_id;
+
+    if(m_db->remove(*drink_ptr))
+    {
+        m_drinks.removeAll(drink_ptr);
+        emit ui_drinksChanged();
+        setDrinksCount(m_current_drinks_count - 1);
+    }
 }

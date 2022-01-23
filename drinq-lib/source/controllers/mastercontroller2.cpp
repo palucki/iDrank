@@ -32,7 +32,7 @@ public:
     QList<drinq::models::Party2*> m_parties;
 };
 
-MasterController2::MasterController2(QObject *parent, DatabaseControllerInterface *dbController)
+MasterController2::MasterController2(QObject *parent, DatabaseControllerInterface *dbController) : QObject(parent)
 {
     implementation.reset(new Implementation(this, dbController));
 }

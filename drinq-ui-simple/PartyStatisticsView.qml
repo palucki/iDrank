@@ -44,14 +44,24 @@ Item {
                     border.color: Qt.lighter(color, 1.1)
 
                     Text {
-                        anchors.centerIn: parent
+                        anchors.left: parent.left
                         font.pixelSize: 10
                         text: "#" + index + " " + modelData.ui_amount_ml + " (" + modelData.ui_timestamp + ")"
                     }
 
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: drinksList.currentIndex = index
+                    //to hightliht
+//                    MouseArea {
+//                        anchors.fill: parent
+//                        onClicked: drinksList.currentIndex = index
+//                    }
+
+                    Button {
+                        anchors.right: parent.right
+                        text: "X"
+                        onClicked: {
+                            console.log("DELETE drink")
+                            partyController.deleteDrink(modelData.ui_id)
+                        }
                     }
                 }
             }

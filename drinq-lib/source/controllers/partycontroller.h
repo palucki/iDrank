@@ -38,6 +38,7 @@ public slots:
     void setDrinksCount(int count);
 
     void addDrink();
+    void deleteDrink(const QVariant& id);
 
 signals:
     void ui_drinks_countChanged(int count);

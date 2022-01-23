@@ -23,6 +23,7 @@ class DRINQLIB_EXPORT EntityLite : public QObject
 public:
     EntityLite(const QString& tableName, QObject* parent) : QObject(parent), m_tableName(tableName)
     {
+        addField("id", m_id);
     }
 
     EntityLite(const EntityLite& e) : EntityLite(e.m_tableName, e.parent())
