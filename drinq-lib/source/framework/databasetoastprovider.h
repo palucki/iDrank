@@ -18,6 +18,7 @@ public:
 private:
     drinq::controllers::DatabaseControllerInterface& m_db;
 
-    QStringList m_toasts;
+    const QStringList m_toasts;
+    QStringList m_unusedToasts;
 };
 

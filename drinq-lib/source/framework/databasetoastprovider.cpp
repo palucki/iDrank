@@ -7,7 +7,8 @@
 
 DatabaseToastProvider::DatabaseToastProvider(drinq::controllers::DatabaseControllerInterface& db)
     : m_db(db),
-      m_toasts{"Piłka, bramka, gol", "Co by nam się!", "Pije Kuba do Jakuba"}
+      m_toasts{"Piłka, bramka, gol", "Co by nam się!", "Pije Kuba do Jakuba"},
+      m_unusedToasts(m_toasts)
 {
 
 }
@@ -19,8 +20,15 @@ DatabaseToastProvider::~DatabaseToastProvider()
 
 Toast* DatabaseToastProvider::randomToast()
 {
-    auto index = QRandomGenerator::global()->bounded(m_toasts.size());
-    QString text = m_toasts[index];
+    if(m_unusedToasts.isEmpty())
+    {
+        qDebug() << "No more toasts, resetting";
+        m_unusedToasts = m_toasts;
+    }
+
+    auto index = QRandomGenerator::global()->bounded(m_unusedToasts.size());
+    QString text = m_unusedToasts[index];
+    m_unusedToasts.removeAt(index);
 
     return new Toast(text, this);
 }
