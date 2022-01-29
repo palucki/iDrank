@@ -25,7 +25,7 @@ ApplicationWindow {
     }
 
     StackView {
-        property var pagesTitles : ["Test"]
+        property var pagesTitles : partyController.ui_party_started ? [partyController.ui_party_title] : [""]
 
         id: contentFrame
         anchors.fill: parent

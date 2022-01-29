@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
+        <file>CustomDialog.qml</file>
         <file>MasterView.qml</file>
         <file>DashboardView.qml</file>
         <file>DrinkPropertiesView.qml</file>

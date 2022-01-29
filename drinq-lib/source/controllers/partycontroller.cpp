@@ -21,12 +21,15 @@ PartyController::PartyController(QObject *parent, drinq::controllers::DatabaseCo
 
     qDebug() << "Latest party " << m_current_party->toJson();
 
+    m_current_party->update(m_current_party->toJson());
+
     if(isPartyStarted())
     {
         m_party_started = true;
+        m_party_title = m_current_party->m_name;
         auto drinks = m_db->getAll(drinq::models::Drink2{this}, "WHERE party_id = " + lastId.toString());
 
-        qDebug() << "Found " << drinks.size() << " drinks";
+        qDebug() << "Found " << drinks.size() << " drinks and title " << m_party_title;
 
         for(const auto& d : drinks)
         {
@@ -57,13 +60,14 @@ bool PartyController::isPartyStarted()
 //    return m_current_party->m_ended.isNull();
 }
 
-void PartyController::startParty()
+void PartyController::startParty(const QString& name)
 {
     m_drinks.clear();
     emit ui_drinksChanged();
 
     m_current_party = std::make_unique<drinq::models::Party2>();
     setDrinksCount(0);
+    setPartyName(name);
     m_db->create(*m_current_party);
 
     m_party_started = isPartyStarted();
@@ -85,8 +89,10 @@ void PartyController::endParty()
 
 void PartyController::setPartyName(const QString &name)
 {
+    qDebug() << "Party controller set party name -> " << name;
     m_current_party->setName(name);
-    m_db->update(*m_current_party);
+
+    emit ui_party_titleChanged();
 }
 
 QVariant PartyController::currentPartyId()

@@ -46,6 +46,7 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("partyController", &partyController);
     engine.rootContext()->setContextProperty("masterController", &masterController);
     engine.rootContext()->setContextProperty("toastProvider", &toastProvider);
+    engine.addImportPath("qrc:/");
     const QUrl url(QStringLiteral("qrc:/MasterView.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {
