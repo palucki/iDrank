@@ -16,7 +16,7 @@ Item {
             anchors.centerIn: parent
             spacing: 30
 
-            CustomDialog {
+            TextFieldDialog {
                 id: dialog
                 dialogTitle: "Starting new party..."
                 dialogPlaceholderText: "Give it a title"

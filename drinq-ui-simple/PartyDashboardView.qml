@@ -5,33 +5,15 @@ import QtQuick.Controls.Material 2.12
 import QtQml 2.12
 import QtQuick.Layouts 1.12
 
+import "qrc:/"
+
 Item {
     Rectangle {
         anchors.fill: parent
         color: "skyblue"
 
-
-        Popup {
-            function show(text) {
-                textItem.text = text
-                partyDashboardPopupId.open()
-            }
-
-            id: partyDashboardPopupId
-            anchors.centerIn: parent
-            height: 150
-            width: 300
-            contentItem: Text {
-                id: textItem
-                text: "Piłka, bramka, gol."
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: partyDashboardPopupId.close()
-                }
-            }
-            onOpened: {
-                console.log("Selecting another toast")
-            }
+        LabelDialog {
+            id: dialog
         }
 
         Column {
@@ -86,7 +68,7 @@ Item {
 
                 //                icon: ""
                 onClicked: {
-                    partyDashboardPopupId.show(toastProvider.randomToast().ui_text)
+                    dialog.openDialog(toastProvider.randomToast().ui_text)
                     partyController.addDrink()
                 }
             }
@@ -114,9 +96,9 @@ Item {
                             contentFrame.replace("qrc:DashboardView.qml")
                         }
                         else {
-//                            shotsTaken = 0
+                            //                            shotsTaken = 0
                             partyController.startParty()
-//                            drinkController.setPartyId(partyController.currentPartyId())
+                            //                            drinkController.setPartyId(partyController.currentPartyId())
                         }
                     }
                 }

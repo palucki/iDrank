@@ -11,13 +11,13 @@ Dialog {
     property alias dialogText: newFolderInput.text
     property bool allowEmpty : false
 
-
     function openDialog() {
         newFolderInput.text = ""
         dialog.open()
     }
 
     id: dialog
+    modal: true
     anchors.centerIn: parent
     height: 250
     width: 300
@@ -29,7 +29,6 @@ Dialog {
             id: newFolderInput
             width: parent.width * 0.75
             focus: true
-            //                        onFocusChanged: console.log("Focus changed " + focus)
         }
     }
 }

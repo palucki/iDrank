@@ -1,11 +1,12 @@
 <RCC>
     <qresource prefix="/">
-        <file>CustomDialog.qml</file>
+        <file>TextFieldDialog.qml</file>
         <file>MasterView.qml</file>
         <file>DashboardView.qml</file>
         <file>DrinkPropertiesView.qml</file>
         <file>PartyStatisticsView.qml</file>
         <file>PartiesView.qml</file>
         <file>PartyDashboardView.qml</file>
+        <file>LabelDialog.qml</file>
     </qresource>
 </RCC>
