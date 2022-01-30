@@ -275,12 +275,14 @@ bool DatabaseController::remove(data::EntityLite &e)
 
 QList<data::EntityLite> DatabaseController::getAll(const data::EntityLite& e, const QString& where)
 {
-    auto sqlStatement = QString("SELECT %1 FROM %2").arg(e.m_fields.join(","), e.m_tableName);
+    auto sqlStatement = QString("SELECT %1 FROM %2 ").arg(e.m_fields.join(","), e.m_tableName);
 
     if(!where.isEmpty())
     {
         sqlStatement.append(" " + where);
     }
+
+    sqlStatement.append(" ORDER BY id DESC");
 
     qDebug() << sqlStatement;
 

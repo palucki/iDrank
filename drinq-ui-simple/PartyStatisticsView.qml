@@ -46,7 +46,7 @@ Item {
                     Text {
                         anchors.left: parent.left
                         font.pixelSize: 10
-                        text: "#" + index + " " + modelData.ui_amount_ml + " (" + modelData.ui_timestamp + ")"
+                        text: modelData.ui_amount_ml + " (" + modelData.ui_timestamp + ")"
                     }
 
                     //to hightliht
