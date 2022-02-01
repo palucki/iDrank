@@ -120,6 +120,10 @@ void PartyController::addDrink()
     if(m_db->create(*newDrink))
     {
         m_drinks.append(newDrink);
+        std::sort(m_drinks.begin(), m_drinks.end(), [](drinq::models::Drink2* lhs, drinq::models::Drink2* rhs){
+            return rhs->m_timestamp < lhs->m_timestamp;
+        });
+
         emit ui_drinksChanged();
         setDrinksCount(m_current_drinks_count + 1);
         qDebug() << "PartyController -> drink added";

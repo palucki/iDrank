@@ -108,7 +108,7 @@ public:
 
     void update(const QJsonObject& src) override;
 
-private:
+public:
     QVariant m_drink_type_id{};
     QVariant m_party_id{};
     QDateTime m_timestamp{};

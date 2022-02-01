@@ -35,9 +35,6 @@ void CustomChart::setColor(const QColor &color)
 
 void CustomChart::paint(QPainter* painter)
 {
-//    static QCustomPlot plot();
-    plot.render(painter);
-
     QPen pen(m_color, 2);
     painter->setPen(pen);
     painter->setRenderHints(QPainter::Antialiasing, true);
