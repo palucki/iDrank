@@ -52,7 +52,7 @@ Item {
                     onClicked: {
                         console.log("Opening statistics view")
                         contentFrame.pagesTitles.push(contentFrame.depth + " Statistics")
-                        contentFrame.push("qrc:PartyStatisticsView.qml")
+                        contentFrame.push("qrc:PartySummaryView.qml")
                     }
                 }
             }

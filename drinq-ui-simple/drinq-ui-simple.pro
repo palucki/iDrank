@@ -9,6 +9,8 @@ UI_DIR = $$PWD/build/$$DESTINATION_PATH/.ui
 
 QT += qml quick quickcontrols2
 
+#greaterThan(QT_MAJOR_VERSION, 4) QT += widgets printsupport
+
 TEMPLATE = app
 
 CONFIG += c++17
@@ -23,12 +25,15 @@ INCLUDEPATH += source \
 LIBS += -L$$PWD/../binaries/$$DESTINATION_PATH -ldrinq-lib
 
 SOURCES += \
+    components/customchart.cpp \
     main.cpp
+
+HEADERS += components/customchart.h
 
 RESOURCES += qml.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
-QML_IMPORT_PATH = $$PWD
+QML_IMPORT_PATH += $$PWD
 
 # Additional import path used to resolve QML modules just for Qt Quick Designer
 QML_DESIGNER_IMPORT_PATH =
