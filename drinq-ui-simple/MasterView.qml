@@ -25,12 +25,12 @@ ApplicationWindow {
     }
 
     StackView {
-        property var pagesTitles : partyController.ui_party_started ? [partyController.ui_party_title] : [""]
+        property var pagesTitles : masterController.ui_party_started ? [masterController.ui_party_title] : [""]
 
         id: contentFrame
         anchors.fill: parent
         clip: true
-        initialItem: partyController.ui_party_started ? "qrc:PartyDashboardView.qml" : "qrc:DashboardView.qml"
+        initialItem: masterController.ui_party_started ? "qrc:PartyDashboardView.qml" : "qrc:DashboardView.qml"
         onCurrentItemChanged: {
             console.log("contents changed")
 //            toolbar.labelText = contentFrame.pagesTitles.at(-1) //means: last item

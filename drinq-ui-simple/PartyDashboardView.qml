@@ -48,7 +48,7 @@ Item {
 
                 MouseArea {
                     anchors.fill: parent
-                    enabled: partyController.ui_party_started && partyController.ui_drinks_count > 0
+                    enabled: masterController.ui_party_started && partyController.ui_drinks_count > 0
                     onClicked: {
                         console.log("Opening statistics view")
                         contentFrame.pagesTitles.push(contentFrame.depth + " Statistics")
@@ -63,7 +63,7 @@ Item {
                 height: 200
                 width: 200
                 text: "Add"
-                enabled: partyController.ui_party_started
+                enabled: masterController.ui_party_started
                 Material.background: Material.Orange
 
                 //                icon: ""
@@ -84,20 +84,20 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     height: 100
                     width: 100
-                    text: partyController.ui_party_started ? "End party" : "Start party"
+                    text: masterController.ui_party_started ? "End party" : "Start party"
                     font.pointSize: 10
                     Material.background: Material.Purple
                     onClicked: {
                         //                        toolbar.labelText = shotsTaken
                         //                        drinkController.resetCounter()
-                        if(partyController.ui_party_started) {
+                        if(masterController.ui_party_started) {
                             console.log("PartyDashboardView::endParty()")
-                            partyController.endParty()
+                            masterController.endParty()
                             contentFrame.replace("qrc:DashboardView.qml")
                         }
                         else {
                             //                            shotsTaken = 0
-                            partyController.startParty()
+                            masterController.startParty()
                             //                            drinkController.setPartyId(partyController.currentPartyId())
                         }
                     }

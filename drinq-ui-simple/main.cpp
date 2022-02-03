@@ -39,9 +39,9 @@ int main(int argc, char *argv[])
 
     QSettings settings; //HKEY_CURRENT_USER\SOFTWARE\Apps\iDrank
     drinq::controllers::DatabaseController db;
-    drinq::controllers::MasterController2 masterController(&app, &db);
     drinq::controllers::DrinkController drinkController(&app, &db, &settings);
     PartyController partyController(&app, &db, &drinkController);
+    drinq::controllers::MasterController2 masterController(&app, &db, &partyController);
     DatabaseToastProvider toastProvider(db);
 
     QQmlApplicationEngine engine;

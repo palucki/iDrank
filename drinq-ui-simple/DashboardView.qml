@@ -23,7 +23,7 @@ Item {
 
                 onAccepted: {
                     console.log("Party name " + dialogText)
-                    partyController.startParty(dialogText)
+                    masterController.startParty(dialogText)
                     pagesTitles[0] = dialogText
                     contentFrame.replace("qrc:PartyDashboardView.qml")
                 }
