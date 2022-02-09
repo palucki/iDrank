@@ -48,7 +48,7 @@ private:
 
     DatabaseControllerInterface* databaseController{nullptr};
     QList<drinq::models::Party2*> m_parties;
-    std::unique_ptr<drinq::models::Party2> m_current_party;
+    drinq::models::Party2* m_current_party;
     PartyController* partyController{nullptr};
 };
 

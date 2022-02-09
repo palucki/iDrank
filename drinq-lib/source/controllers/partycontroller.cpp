@@ -39,6 +39,11 @@ void PartyController::setPartyId(QVariant id)
     {
         m_drinks.append(new drinq::models::Drink2(d.toJson(), this));
     }
+
+    std::sort(m_drinks.begin(), m_drinks.end(), [](drinq::models::Drink2* lhs, drinq::models::Drink2* rhs){
+        return rhs->m_timestamp < lhs->m_timestamp;
+    });
+
      setDrinksCount(drinks.count());
 }
 

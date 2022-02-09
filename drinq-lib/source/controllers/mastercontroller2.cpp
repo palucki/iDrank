@@ -29,8 +29,12 @@ MasterController2::MasterController2(QObject *parent,
         m_parties.append(new drinq::models::Party2(p.toJson(), this));
     }
 
+    std::sort(m_parties.begin(), m_parties.end(), [](drinq::models::Party2* lhs, drinq::models::Party2* rhs){
+        return rhs->m_started < lhs->m_started;
+    });
+
     auto lastId = databaseController->getLastId("party");
-    m_current_party = std::make_unique<drinq::models::Party2>();
+    m_current_party = new drinq::models::Party2(this);
     m_current_party->setId(lastId);
     partyController->setPartyId(lastId);
     databaseController->get(*m_current_party);
@@ -52,12 +56,12 @@ MasterController2::~MasterController2()
 
 QQmlListProperty<Party2> MasterController2::ui_parties()
 {
+    qDebug() << "Getting parties size: " << m_parties.size();
     return QQmlListProperty<drinq::models::Party2>(this, m_parties);
 }
 
 void MasterController2::setPartyName(const QString &name)
 {
-    qDebug() << "Party controller set party name -> " << name;
     m_current_party->setName(name);
 
     emit ui_party_titleChanged();
@@ -70,15 +74,28 @@ bool MasterController2::isPartyStarted()
 
 void MasterController2::startParty(const QString& name)
 {
+    qDebug() << "Starting party " << name;
+
     partyController->startParty();
 
-    m_current_party = std::make_unique<drinq::models::Party2>();
+    m_current_party = new drinq::models::Party2(this);
     setPartyName(name);
-    databaseController->create(*m_current_party);
+    if(databaseController->create(*m_current_party))
+    {
+        m_parties.append(m_current_party);
+        std::sort(m_parties.begin(), m_parties.end(), [](drinq::models::Party2* lhs, drinq::models::Party2* rhs){
+            return rhs->m_started < lhs->m_started;
+        });
+    }
+    else
+    {
+        qDebug() << "Error! Unable to create party";
+    }
 
     partyController->setPartyId(m_current_party->m_id);
     m_party_started = isPartyStarted();
     emit ui_party_startedChanged();
+    emit ui_partiesChanged();
 }
 
 void MasterController2::endParty()
@@ -90,6 +107,7 @@ void MasterController2::endParty()
 
     m_party_started = isPartyStarted();
     emit ui_party_startedChanged();
+    emit ui_partiesChanged();
 }
 
 }
