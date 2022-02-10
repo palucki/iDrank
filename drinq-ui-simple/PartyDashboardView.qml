@@ -62,7 +62,7 @@ Item {
                 anchors.horizontalCenter: parent.horizontalCenter
                 height: 200
                 width: 200
-                text: "Add"
+                //                text: "Add"
                 enabled: masterController.ui_party_started
                 Material.background: Material.Orange
 
@@ -70,6 +70,25 @@ Item {
                 onClicked: {
                     dialog.openDialog(toastProvider.randomToast().ui_text)
                     partyController.addDrink()
+                }
+
+                Column {
+                    anchors.centerIn: parent
+                    Text {
+                        text: "Add"
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        font.pointSize: 20
+                    }
+
+                    Text {
+                        text: drinkController.ui_currentDrinkType
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
+
+                    Text {
+                        text: drinkController.ui_currentDrinkAmountMl + "ml"
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
                 }
             }
 

@@ -46,7 +46,7 @@ Item {
                     Text {
                         anchors.left: parent.left
                         font.pixelSize: 10
-                        text: modelData.ui_amount_ml + " " + unit + " (" + modelData.ui_timestamp + ")"
+                        text: drinkController.type(modelData.ui_drink_type_id) + " " + modelData.ui_amount_ml + " " + unit + " (" + modelData.ui_timestamp + ")"
                     }
 
                     //to hightliht

@@ -95,6 +95,7 @@ class DRINQLIB_EXPORT Drink2 : public data::EntityLite
     Q_PROPERTY(QDateTime ui_timestamp MEMBER m_timestamp CONSTANT)
     Q_PROPERTY(unsigned int ui_amount_ml MEMBER m_amount_ml CONSTANT)
     Q_PROPERTY(QVariant ui_id MEMBER m_id CONSTANT)
+    Q_PROPERTY(QVariant ui_drink_type_id MEMBER m_drink_type_id CONSTANT)
 
 public:
     explicit Drink2(QObject* parent = nullptr);

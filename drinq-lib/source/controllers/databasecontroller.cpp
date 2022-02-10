@@ -311,15 +311,15 @@ QList<data::EntityLite> DatabaseController::getAll(const data::EntityLite& e, co
             added.m_data[f] = query.value(f);
         }
 
-        qDebug() << "JSON in db controller " << added.toJson();
+//        qDebug() << "JSON in db controller " << added.toJson();
 
         results.append(added);
     }
 
-    for(const auto& r : results)
-    {
-        qDebug() << r.toJson();
-    }
+//    for(const auto& r : results)
+//    {
+//        qDebug() << r.toJson();
+//    }
 
     return results;
 }

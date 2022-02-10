@@ -60,26 +60,25 @@ Item {
                 }
             }
 
-            Rectangle {
-                width: drinkTypesList.width
-                height: 40
+//            Rectangle {
+//                width: drinkTypesList.width
+//                height: 40
 
-                color: "orange"
-                border.color: Qt.lighter(color, 1.1)
+//                color: "orange"
+//                border.color: Qt.lighter(color, 1.1)
 
-                Text {
-                    anchors.centerIn: parent
-                    font.pixelSize: 10
-                    text: "(+) Add new"
-                }
+//                Text {
+//                    anchors.centerIn: parent
+//                    font.pixelSize: 10
+//                    text: "(+) Add new"
+//                }
 
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked:
-//                        drinkTypesList.currentIndex = index
-                        console.log("Adding new drink type")
-                }
-            }
+//                MouseArea {
+//                    anchors.fill: parent
+//                    onClicked:
+//                        console.log("Adding new drink type")
+//                }
+//            }
 
             SpinBox {
                 id: amountInput
@@ -90,6 +89,7 @@ Item {
                 value: 50
                 from: 0
                 to: 1000
+                editable: true
             }
 
             Row {

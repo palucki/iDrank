@@ -37,6 +37,7 @@ void PartyController::setPartyId(QVariant id)
 
     for(const auto& d : drinks)
     {
+        qDebug() << d.toJson();
         m_drinks.append(new drinq::models::Drink2(d.toJson(), this));
     }
 
@@ -68,7 +69,7 @@ void PartyController::addDrink()
 
     auto newDrink = new drinq::models::Drink2{this};
     newDrink->setPartyId(m_currentPartyId);
-    newDrink->setDrinkTypeId(m_drinkController->m_currentDrinkTypeIndex);
+    newDrink->setDrinkTypeId(m_drinkController->m_currentDrinkTypeId);
     newDrink->setAmountMl(m_drinkController->m_currentDrinkAmountMl);
 
     if(m_db->create(*newDrink))

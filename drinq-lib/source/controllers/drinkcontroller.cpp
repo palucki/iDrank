@@ -30,11 +30,11 @@ DrinkController::DrinkController(QObject *parent, drinq::controllers::DatabaseCo
 
     auto drink_types = m_db->getAll(drinq::models::DrinkType{this});
 
-    qDebug() << "Found " << drink_types.size() << " drink types";
+//    qDebug() << "Found " << drink_types.size() << " drink types";
 
     for(const auto& dt : drink_types)
     {
-//        qDebug() << drink_type.m_name << " default amount: " << drink_type.m_default_amount_ml;
+//        qDebug() <<" TEST id "  << dt.m_id << " " << dt.toJson();
         m_drinkTypes.append(new drinq::models::DrinkType(dt.toJson(), this));
     }
 
@@ -63,6 +63,21 @@ DrinkController::~DrinkController()
 QQmlListProperty<drinq::models::DrinkType> DrinkController::ui_drinkTypes()
 {
     return QQmlListProperty<drinq::models::DrinkType>(this, m_drinkTypes);
+}
+
+QString DrinkController::type(QVariant id)
+{
+    qDebug() << "Type for " << id.toString();
+
+    if(const auto it = std::find_if(m_drinkTypes.begin(), m_drinkTypes.end(), [id](drinq::models::DrinkType* dt){
+//        qDebug() << "Comparing id with obj id " << id.toString() << " " << dt->m_id.toString() << "(" << dt->m_name << ")";
+        return dt->m_id == id;
+    }); it != m_drinkTypes.end())
+    {
+        return (*it)->m_name;
+    }
+
+    return "Unknown";
 }
 
 //bool DrinkController::addDrink()
@@ -107,10 +122,23 @@ void DrinkController::setCurrentDrinkProperties(int index, unsigned int amount_m
     m_currentDrinkTypeIndex = index;
     m_currentDrinkAmountMl = amount_ml;
 
+    if(index >= m_drinkTypes.size())
+    {
+        qDebug() << "Incorrect index supplied";
+        exit(1);
+    }
+
+    m_currentDrinkType = m_drinkTypes[index]->m_name;
+    m_currentDrinkTypeId = m_drinkTypes[index]->m_id;
+
     qDebug() << "index " << index << " amount " << amount_ml;
 
-    m_settings->setValue("drink_type_id", m_currentDrinkTypeIndex);
-    m_settings->setValue("drink_amount_ml", m_currentDrinkAmountMl);
+    m_settings->setValue(DRINK_TYPE_KEY, m_currentDrinkTypeId);
+    m_settings->setValue(DRINK_AMOUNT_KEY, m_currentDrinkAmountMl);
+
+    emit currentDrinkAmountMlChanged();
+    emit currentDrinkTypeIndexChanged();
+    emit currentDrinkTypeChanged();
 }
 
 }
