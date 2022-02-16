@@ -9,5 +9,6 @@
         <file>PartyDashboardView.qml</file>
         <file>LabelDialog.qml</file>
         <file>PartyStatisticsView.qml</file>
+        <file alias="football.png">assets/football.png</file>
     </qresource>
 </RCC>
