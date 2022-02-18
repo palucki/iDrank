@@ -10,10 +10,10 @@ class EnumeratorDecorator::Implementation
 {
 public:
     Implementation(EnumeratorDecorator* _EnumeratorDecorator, int _value, const DescriptionMapper& dm )
-        : EnumeratorDecorator(_EnumeratorDecorator), value(_value), descriptionMapper(dm)
+        : enumeratorDecorator(_EnumeratorDecorator), value(_value), descriptionMapper(dm)
     {}
 
-    EnumeratorDecorator* EnumeratorDecorator{nullptr};
+    EnumeratorDecorator* enumeratorDecorator{nullptr};
     int value;
     DescriptionMapper descriptionMapper;
 };

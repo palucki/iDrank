@@ -34,19 +34,26 @@ MasterController2::MasterController2(QObject *parent,
     });
 
     auto lastId = databaseController->getLastId("party");
-    m_current_party = new drinq::models::Party2(this);
-    m_current_party->setId(lastId);
-    partyController->setPartyId(lastId);
-    databaseController->get(*m_current_party);
-
-    qDebug() << "Latest party " << m_current_party->toJson();
-
-    m_current_party->update(m_current_party->toJson());
-
-    if(isPartyStarted())
+    if(lastId.isNull())
     {
-        m_party_started = true;
-        m_party_title = m_current_party->m_name;
+        qDebug() << "No parties yet";
+    }
+    else
+    {
+        m_current_party = new drinq::models::Party2(this);
+        m_current_party->setId(lastId);
+        partyController->setPartyId(lastId);
+        databaseController->get(*m_current_party);
+
+        qDebug() << "Latest party " << m_current_party->toJson();
+
+        m_current_party->update(m_current_party->toJson());
+
+        if(isPartyStarted())
+        {
+            m_party_started = true;
+            m_party_title = m_current_party->m_name;
+        }
     }
 }
 

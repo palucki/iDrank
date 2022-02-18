@@ -9,10 +9,10 @@ class IntDecorator::Implementation
 {
 public:
     Implementation(IntDecorator* _IntDecorator, int _value)
-        : IntDecorator(_IntDecorator), value(_value)
+        : intDecorator(_IntDecorator), value(_value)
     {}
 
-    IntDecorator* IntDecorator{nullptr};
+    IntDecorator* intDecorator{nullptr};
     int value;
 };
 
