@@ -18,19 +18,14 @@ const QString DRINK_AMOUNT_KEY = "drink_amount_ml";
 DrinkController::DrinkController(QObject *parent, drinq::controllers::DatabaseControllerInterface *db, QSettings* settings)
     : QObject(parent), m_db(db), m_settings(settings)
 {
-//    auto lastId = m_db->getLastId("drink");
-//    if(lastId.isNull())
-//    {
-//        qDebug() << "NO drinks";
-//    }
-//    else
-//    {
-//        qDebug() << "Last drink id " << lastId;
-//    }
-
     auto drink_types = m_db->getAll(drinq::models::DrinkType{this});
 
-//    qDebug() << "Found " << drink_types.size() << " drink types";
+    if(drink_types.isEmpty())
+    {
+        createDrinkTypes();
+    }
+
+    drink_types = m_db->getAll(drinq::models::DrinkType{this});
 
     for(const auto& dt : drink_types)
     {
@@ -139,6 +134,31 @@ void DrinkController::setCurrentDrinkProperties(int index, unsigned int amount_m
     emit currentDrinkAmountMlChanged();
     emit currentDrinkTypeIndexChanged();
     emit currentDrinkTypeChanged();
+}
+
+void DrinkController::createDrinkTypes()
+{
+    QVector<QPair<QString, unsigned int>> drink_types = {
+        {"wine", 150},
+        {"beer", 500},
+        {"vodka", 25},
+        {"vodka", 50}
+    };
+
+    for(auto dt : drink_types)
+    {
+        drinq::models::DrinkType newDrink;
+        newDrink.setName(dt.first);
+        newDrink.setDefaultAmountMl(dt.second);
+        if(m_db->create(newDrink))
+        {
+            qDebug() << "Created drink type " << dt.first << " with default amount " << dt.second;
+        }
+        else
+        {
+            qDebug() << "Creation of drink type " << dt.first << " failed";
+        }
+    }
 }
 
 }

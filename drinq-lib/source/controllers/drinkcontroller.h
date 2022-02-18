@@ -38,6 +38,9 @@ signals:
     void currentDrinkAmountMlChanged();
     void currentDrinkTypeChanged();
 
+private:
+    void createDrinkTypes();
+
 public:
     drinq::controllers::DatabaseControllerInterface* m_db;
 //    QVariant m_currentPartyId;
@@ -47,6 +50,7 @@ public:
     QString m_currentDrinkType;
     unsigned int m_currentDrinkAmountMl = 50;
     QSettings* m_settings;
+
 };
 
 }
