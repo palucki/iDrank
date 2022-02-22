@@ -1,0 +1,39 @@
+this is my notepad ;) 
+
+kjk
+
+
+bluetooth 
+
+https://dev.to/ugjka/switch-between-hsp-hfp-and-a2dp-from-system-tray-g6b
+https://unix.stackexchange.com/questions/407447/how-to-force-a2dp-sink-when-wireless-bluetooth-headset-is-connected
+
+http://bernaerts.dyndns.org/linux/74-ubuntu/220-ubuntu-resume-usb-hid/
+
+
+
+sudo groupadd -r kvm
+# Then ensure /lib/udev/rules.d/50-udev-default.rules contains something like:
+# KERNEL=="kvm", GROUP="kvm", MODE="0660"
+# and then run:
+sudo gpasswd -a $USER kvm
+
+
+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
+
+
+Make install: Copy App Files to /home/piotr/workspace/build-drinq-Android_Qt_5_15_2_Clang_Multi_Abi-Release/drinq-ui-simple/android-build
+
+
+Dodawanie libek:
+1) qmake projektu nadrzednego (libki internalne)
+android: LIBS += -L$$PWD/../binaries/$$DESTINATION_PATH -ldrinq-lib_$${QT_ARCH}
+else: LIBS += -L$$PWD/../binaries/$$DESTINATION_PATH -ldrinq-lib
+
+2) mozna dodac przez qmake (nie udalo mi sie) a mozna przez edytor projektu w build android APK dodatkowe libki.
+Skutkuje to czyms takim w qmake projektu nadrzednego
+
+ANDROID_EXTRA_LIBS = /home/piotr/workspace/iDrank/drinq-ui-simple/../binaries/linux/mobile/armeabi-v7a/release/libdrinq-lib_armeabi-v7a.so /home/piotr/workspace/iDrank/drinq-ui-simple/../binaries/linux/mobile/x86_64/release/libdrinq-lib_x86_64.so /home/piotr/workspace/iDrank/drinq-ui-simple/../binaries/linux/mobile/x86/release/libdrinq-lib_x86.so /home/piotr/workspace/iDrank/drinq-ui-simple/../binaries/linux/mobile/arm64-v8a/release/libdrinq-lib_arm64-v8a.so /home/piotr/workspace/iDrank/drinq-ui-simple/../../../Qt/5.15.2/android/lib/libQt5Sql_x86_64.so /home/piotr/workspace/iDrank/drinq-ui-simple/../../../Qt/5.15.2/android/lib/libQt5Sql_x86.so /home/piotr/workspace/iDrank/drinq-ui-simple/../../../Qt/5.15.2/android/lib/libQt5Sql_armeabi-v7a.so /home/piotr/workspace/iDrank/drinq-ui-simple/../../../Qt/5.15.2/android/lib/libQt5Sql_arm64-v8a.so $$PWD/../../../Qt/5.15.2/android/plugins/sqldrivers/libplugins_sqldrivers_qsqlite_x86_64.so $$PWD/../../../Qt/5.15.2/android/plugins/sqldrivers/libplugins_sqldrivers_qsqlite_x86.so $$PWD/../../../Qt/5.15.2/android/plugins/sqldrivers/libplugins_sqldrivers_qsqlite_armeabi-v7a.so $$PWD/../../../Qt/5.15.2/android/plugins/sqldrivers/libplugins_sqldrivers_qsqlite_arm64-v8a.so
+
+
+to sprawi, że te libki zostaną skopiowane do odpowiednich katalogow w binaries/android_build itp.

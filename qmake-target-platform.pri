@@ -16,15 +16,15 @@ linux {
     CONFIG += PLATFORM_LINUX
     message(PLATFORM_LINUX)
     # Make QMAKE_TARGET arch available for Linux
-    !contains(QT_ARCH, x86_64){
-        QMAKE_TARGET.arch = x86
-    } else {
-        QMAKE_TARGET.arch = x86_64
-        }
-        linux-g++{
-            CONFIG += COMPILER_GCC
-            message(COMPILER_GCC)
-        }
+#    !contains(QT_ARCH, x86_64){
+#        QMAKE_TARGET.arch = x86
+#    } else {
+#        QMAKE_TARGET.arch = x86_64
+#    }
+    linux-g++{
+        CONFIG += COMPILER_GCC
+        message(COMPILER_GCC)
+    }
 }
 
 macx {

@@ -7,7 +7,8 @@ import QtQuick.Layouts 1.12
 
 Item {
     Component.onCompleted : {
-        console.log("Setting values from settings")
+        console.log("Setting values from settings. Drink type " + drinkController.ui_currentDrinkTypeIndex
+                    + " amount " + drinkController.ui_currentDrinkAmountMl)
         drinkTypesList.currentIndex = drinkController.ui_currentDrinkTypeIndex
         amountInput.value = drinkController.ui_currentDrinkAmountMl
     }
@@ -86,7 +87,6 @@ Item {
                 width: 200
                 height: 50
                 stepSize: 10
-                value: 50
                 from: 0
                 to: 1000
                 editable: true

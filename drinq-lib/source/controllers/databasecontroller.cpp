@@ -5,6 +5,8 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QJsonDocument>
+#include <QStandardPaths>
+#include <QDir>
 
 namespace drinq {
 namespace controllers {
@@ -42,8 +44,18 @@ public:
 private:
     bool initialise()
     {
-        database = QSqlDatabase::addDatabase("QSQLITE", "drinq");
-        database.setDatabaseName("drinq.sqlite");
+        //ou don't need to create your database programmatically. You could create an empty database with all your tables and relationships and store it as a resource in your app. Then you would copy this resource to a writable location if it didn't exist yet.
+        //That's what I suggested. It would be like a template database.
+
+
+        QDir app_data;
+        app_data.mkpath(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
+        QString dbPath = QDir(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)).filePath("iDrank.db");
+
+        qDebug() << "Database in path " << dbPath;
+
+        database = QSqlDatabase::addDatabase("QSQLITE");
+        database.setDatabaseName(dbPath);
         return database.open();
     }
 

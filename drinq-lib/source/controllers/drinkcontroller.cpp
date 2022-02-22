@@ -23,13 +23,12 @@ DrinkController::DrinkController(QObject *parent, drinq::controllers::DatabaseCo
     if(drink_types.isEmpty())
     {
         createDrinkTypes();
+        drink_types = m_db->getAll(drinq::models::DrinkType{this});
     }
 
-    drink_types = m_db->getAll(drinq::models::DrinkType{this});
 
     for(const auto& dt : drink_types)
     {
-//        qDebug() <<" TEST id "  << dt.m_id << " " << dt.toJson();
         m_drinkTypes.append(new drinq::models::DrinkType(dt.toJson(), this));
     }
 
@@ -48,6 +47,7 @@ DrinkController::DrinkController(QObject *parent, drinq::controllers::DatabaseCo
             qDebug() << "No drink types defined";
         }
     }
+    emit drinkTypesChanged();
 }
 
 DrinkController::~DrinkController()
@@ -120,7 +120,7 @@ void DrinkController::setCurrentDrinkProperties(int index, unsigned int amount_m
     if(index >= m_drinkTypes.size())
     {
         qDebug() << "Incorrect index supplied";
-        exit(1);
+        index = 0;
     }
 
     m_currentDrinkType = m_drinkTypes[index]->m_name;
@@ -128,7 +128,7 @@ void DrinkController::setCurrentDrinkProperties(int index, unsigned int amount_m
 
     qDebug() << "index " << index << " amount " << amount_ml;
 
-    m_settings->setValue(DRINK_TYPE_KEY, m_currentDrinkTypeId);
+    m_settings->setValue(DRINK_TYPE_KEY, m_currentDrinkTypeIndex);
     m_settings->setValue(DRINK_AMOUNT_KEY, m_currentDrinkAmountMl);
 
     emit currentDrinkAmountMlChanged();
