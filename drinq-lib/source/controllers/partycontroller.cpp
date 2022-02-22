@@ -7,9 +7,28 @@
 
 #include <QDebug>
 
+//#include <QtCharts/QXYSeries>
+//#include <QtCharts/QAbstractAxis>
+//#include <QtCharts/QXYSeries>
+//#include <QtCharts/QAreaSeries>
+//#include <QtCharts/QAbstractSeries>
+
+#include <QtCharts/QXYSeries>
+#include <QtCharts/QAreaSeries>
+
+
+QT_CHARTS_USE_NAMESPACE
+
+Q_DECLARE_METATYPE(QAbstractSeries *)
+Q_DECLARE_METATYPE(QAbstractAxis *)
+
 PartyController::PartyController(QObject *parent, drinq::controllers::DatabaseControllerInterface *db, drinq::controllers::DrinkController *drinksController)
     : QObject(parent), m_db(db), m_drinkController(drinksController)
 {
+    qRegisterMetaType<QAbstractSeries*>();
+    qRegisterMetaType<QAbstractAxis*>();
+
+
 }
 
 PartyController::~PartyController()
@@ -18,7 +37,12 @@ PartyController::~PartyController()
 
 QQmlListProperty<drinq::models::Drink2> PartyController::ui_drinks()
 {
-     return QQmlListProperty<drinq::models::Drink2>(this, m_drinks);
+    return QQmlListProperty<drinq::models::Drink2>(this, m_drinks);
+}
+
+unsigned int PartyController::ui_plot_max_value()
+{
+    return 100;
 }
 
 void PartyController::startParty()
@@ -112,4 +136,48 @@ void PartyController::deleteDrink(const QVariant &id)
         emit ui_drinksChanged();
         setDrinksCount(m_current_drinks_count - 1);
     }
+}
+
+void PartyController::update(QAbstractSeries* series)
+{
+    if (series) {
+        QXYSeries *xySeries = static_cast<QXYSeries *>(series);
+//        m_index++;
+//        if (m_index > m_data.count() - 1)
+//            m_index = 0;
+
+        qreal current_sum = 0.0;
+        QVector<QPointF> drink_points;
+        for(auto rit = m_drinks.rbegin(); rit != m_drinks.rend(); ++rit)
+        {
+            current_sum += (*rit)->m_amount_ml;
+            drink_points.append({static_cast<qreal>((*rit)->m_timestamp.toMSecsSinceEpoch()),
+                                 static_cast<qreal>(current_sum)});
+        }
+
+//        QVector<QPointF> points {
+//            {20000, 10},
+//            {10, 20},
+//            {20, 40},
+//            {30, 50},
+//            {40, 90}
+//        };
+//            = m_data.at(m_index);
+        // Use replace instead of clear + append, it's optimized for performance
+        xySeries->replace(drink_points);
+    }
+}
+
+QDateTime PartyController::plot_min()
+{
+    //reversed order
+    //handle cases like no results, 1 result, multiple results, add some space from left and right, start with full hour etc.
+    return m_drinks.last()->m_timestamp;
+}
+
+QDateTime PartyController::plot_max()
+{
+    //reversed order
+    //handle cases like no results, 1 result, multiple results, add some space from left and right, start with full hour etc.
+    return m_drinks.first()->m_timestamp;
 }

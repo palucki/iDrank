@@ -15,12 +15,21 @@ class DrinkController;
 namespace drinq::models {
 class Party2;
 }
+//plotting
+
+
+#include <QtCharts/QAbstractSeries>
+QT_CHARTS_USE_NAMESPACE
 
 class DRINQLIB_EXPORT PartyController : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(int ui_drinks_count MEMBER m_current_drinks_count NOTIFY ui_drinks_countChanged)
     Q_PROPERTY(QQmlListProperty<drinq::models::Drink2> ui_drinks READ ui_drinks NOTIFY ui_drinksChanged )
+
+    //for plotting the drinks consumption
+    Q_PROPERTY(unsigned int ui_plot_max_value READ ui_plot_max_value NOTIFY ui_plot_max_valueChanged)
+
 public:
     explicit PartyController(QObject *parent = nullptr,
                              drinq::controllers::DatabaseControllerInterface* db = nullptr,
@@ -28,6 +37,7 @@ public:
     virtual ~PartyController();
 
     Q_INVOKABLE QQmlListProperty<drinq::models::Drink2> ui_drinks();
+    Q_INVOKABLE unsigned int ui_plot_max_value();
 
 public slots:
     void startParty();
@@ -37,9 +47,15 @@ public slots:
     void addDrink();
     void deleteDrink(const QVariant& id);
 
+    //plotting
+    void update(QAbstractSeries *series);
+    QDateTime plot_min();
+    QDateTime plot_max();
+
 signals:
     void ui_drinks_countChanged(int count);
     void ui_drinksChanged();
+    void ui_plot_max_valueChanged();
 
 private:
     void setDrinksCount(int count);
