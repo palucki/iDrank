@@ -1,15 +1,3 @@
-this is my notepad ;) 
-
-kjk
-
-
-bluetooth 
-
-https://dev.to/ugjka/switch-between-hsp-hfp-and-a2dp-from-system-tray-g6b
-https://unix.stackexchange.com/questions/407447/how-to-force-a2dp-sink-when-wireless-bluetooth-headset-is-connected
-
-http://bernaerts.dyndns.org/linux/74-ubuntu/220-ubuntu-resume-usb-hid/
-
 
 
 sudo groupadd -r kvm
@@ -19,7 +7,6 @@ sudo groupadd -r kvm
 sudo gpasswd -a $USER kvm
 
 
-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
 
 
 Make install: Copy App Files to /home/piotr/workspace/build-drinq-Android_Qt_5_15_2_Clang_Multi_Abi-Release/drinq-ui-simple/android-build

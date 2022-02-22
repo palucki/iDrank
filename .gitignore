@@ -1,5 +1,6 @@
 binaries
 drinq-ui/build/
+drinq-ui-simple/build/
 drinq-lib/build/
 drink-tests/build/
 drinq.pro.user

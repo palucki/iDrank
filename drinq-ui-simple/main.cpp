@@ -3,6 +3,7 @@
 #include <QQuickStyle>
 #include <QQmlContext>
 #include <QSettings>
+#include <QApplication>
 
 #include "controllers/mastercontroller2.h"
 #include "controllers/databasecontroller.h"
@@ -25,7 +26,7 @@ int main(int argc, char *argv[])
 
     QQuickStyle::setStyle("Material");
 
-    QGuiApplication app(argc, argv);
+    QApplication app(argc, argv);
 
     qmlRegisterType<drinq::controllers::DrinkController>("DrinQ", 1, 0, "DrinkController");
     qmlRegisterType<PartyController>("DrinQ", 1, 0, "PartyController");
