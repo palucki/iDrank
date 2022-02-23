@@ -10,7 +10,7 @@ RCC_DIR = $$PWD/build/$$DESTINATION_PATH/.qrc
 UI_DIR = $$PWD/build/$$DESTINATION_PATH/.ui
 
 QT -= gui
-QT += core sql
+QT += core sql charts
 
 TARGET = drinq-lib
 TEMPLATE = lib

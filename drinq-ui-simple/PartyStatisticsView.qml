@@ -69,73 +69,12 @@ import DrinQ 1.0
 
 
 Item {
-    property string unit : "ml"
-
-    Component.onCompleted: {
-        partyController.update(chartView.series(0))
-    }
 
     Rectangle {
         anchors.fill: parent
         color: "palegreen"
 
-        Column {
-            anchors.fill: parent
-            spacing: 30
 
-            //            CustomChart {
-            //                id: customChart
-            //                width: 100; height: 100
-            //                name: "A simple pie chart"
-            //                color: "red"
-            //            }
-
-            ChartView {
-                height: 500
-                width: 500
-                id: chartView
-                title: "Line"
-//                anchors.fill: parent
-                antialiasing: true
-
-                ValueAxis {
-                    id: axisY1
-                    min: 0
-                    max: 1000 /*partyController.ui_plot_max_value() + 10*/
-                }
-
-                DateTimeAxis{
-                    id: axisX
-                    min: partyController.plot_min()
-                    max: partyController.plot_max()
-                    labelsAngle: 270
-                    format: "ddd hh:mm"
-                }
-
-
-                LineSeries {
-                    name: "LineSeries"
-                    axisX: axisX
-                    axisY: axisY1
-                    //                    XYPoint { x: 0; y: 0 }
-                    //                    XYPoint { x: 1.1; y: 2.1 }
-                    //                    XYPoint { x: 1.9; y: 3.3 }
-//                    XYPoint { x: 2.1; y: 2.1 }
-//                    XYPoint { x: 2.9; y: 4.9 }
-                    //                    XYPoint { x: 3.4; y: 3.0 }
-                    //                    XYPoint { x: 4.1; y: 3.3 }
-                }
-            }
-
-            Button {
-                height: 40
-                width: 100
-                text: "Update"
-                onClicked: {
-                    partyController.update(chartView.series(0))
-                }
-            }
-        }
     }
 }
 

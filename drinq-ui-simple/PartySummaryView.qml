@@ -4,17 +4,59 @@ import QtQuick.Controls.Material 2.12
 
 import QtQml 2.12
 import QtQuick.Layouts 1.12
+import QtCharts 2.12
 
 Item {
     property string unit : "ml"
+
+    Component.onCompleted: {
+        partyController.update(chartView.series(0))
+    }
+
+    Connections {
+        target: partyController
+        function onUi_drinksChanged() {
+            partyController.update(chartView.series(0))
+        }
+    }
 
     Rectangle {
         anchors.fill: parent
         color: "yellow"
 
         Column {
-            anchors.centerIn: parent
+            anchors.horizontalCenter: parent.horizontalCenter
             spacing: 30
+
+            ChartView {
+                height: 400
+                width: 400
+                id: chartView
+                antialiasing: true
+
+                ValueAxis {
+                    id: axisY1
+                    min: 0
+                    max: 1000 /*partyController.ui_plot_max_value() + 10*/
+                }
+
+                DateTimeAxis{
+                    id: axisX
+                    min: partyController.plot_min()
+                    max: partyController.plot_max()
+                    labelsAngle: 270
+                    format: "ddd hh:mm"
+                }
+
+                AreaSeries {
+                    name: "Consumption (" + unit + ")"
+                    axisX: axisX
+                    axisY: axisY1
+                    upperSeries: /*consumption*/ LineSeries {
+                        id: consumption
+                    }
+                }
+            }
 
             ListView {
                 //                    anchors.fill: parent
@@ -50,10 +92,10 @@ Item {
                     }
 
                     //to hightliht
-//                    MouseArea {
-//                        anchors.fill: parent
-//                        onClicked: drinksList.currentIndex = index
-//                    }
+                    //                    MouseArea {
+                    //                        anchors.fill: parent
+                    //                        onClicked: drinksList.currentIndex = index
+                    //                    }
 
                     Button {
                         anchors.right: parent.right
@@ -66,40 +108,50 @@ Item {
                 }
             }
 
-            Row {
-                anchors.horizontalCenter: parent.horizontalCenter
-                //                width: parent.width
-                //                height: 60
-                spacing: 60
 
-                RoundButton {
-                    id: partyButton
-                    anchors.verticalCenter: parent.verticalCenter
-                    height: 100
-                    width: 100
-                    text: "Cancel"
-                    font.pointSize: 10
-                    Material.background: Material.Purple
-                    onClicked: {
-                        console.log("Cancel")
-                        navigationController.goBack()
-                    }
-                }
+        }
 
-                RoundButton {
-                    id: typeButton
-                    anchors.verticalCenter: parent.verticalCenter
-                    height: 100
-                    width: 100
-                    text: "Chart"
-                    font.pointSize: 10
-                    Material.background: Material.LightGreen
-                    onClicked: {
-                        contentFrame.pagesTitles.push(contentFrame.depth + " Chart")
-                        contentFrame.push("qrc:PartyStatisticsView.qml")
-                    }
-                }
-            }
+
+        Column {
+            anchors.centerIn: parent
+            spacing: 30
+
+
+
+            //            Row {
+            //                anchors.horizontalCenter: parent.horizontalCenter
+            //                //                width: parent.width
+            //                //                height: 60
+            //                spacing: 60
+
+            //                RoundButton {
+            //                    id: partyButton
+            //                    anchors.verticalCenter: parent.verticalCenter
+            //                    height: 100
+            //                    width: 100
+            //                    text: "Cancel"
+            //                    font.pointSize: 10
+            //                    Material.background: Material.Purple
+            //                    onClicked: {
+            //                        console.log("Cancel")
+            //                        navigationController.goBack()
+            //                    }
+            //                }
+
+            //                RoundButton {
+            //                    id: typeButton
+            //                    anchors.verticalCenter: parent.verticalCenter
+            //                    height: 100
+            //                    width: 100
+            //                    text: "Chart"
+            //                    font.pointSize: 10
+            //                    Material.background: Material.LightGreen
+            //                    onClicked: {
+            //                        contentFrame.pagesTitles.push(contentFrame.depth + " Chart")
+            //                        contentFrame.push("qrc:PartyStatisticsView.qml")
+            //                    }
+            //                }
+            //            }
         }
     }
 }

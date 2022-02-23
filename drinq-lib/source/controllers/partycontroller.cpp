@@ -11,10 +11,11 @@
 //#include <QtCharts/QAbstractAxis>
 //#include <QtCharts/QXYSeries>
 //#include <QtCharts/QAreaSeries>
-//#include <QtCharts/QAbstractSeries>
 
+#include <QtCharts/QAbstractSeries>
 #include <QtCharts/QXYSeries>
 #include <QtCharts/QAreaSeries>
+#include <QtCharts/QLineSeries>
 
 
 QT_CHARTS_USE_NAMESPACE
@@ -42,7 +43,7 @@ QQmlListProperty<drinq::models::Drink2> PartyController::ui_drinks()
 
 unsigned int PartyController::ui_plot_max_value()
 {
-    return 100;
+    return 1000;
 }
 
 void PartyController::startParty()
@@ -141,7 +142,9 @@ void PartyController::deleteDrink(const QVariant &id)
 void PartyController::update(QAbstractSeries* series)
 {
     if (series) {
-        QXYSeries *xySeries = static_cast<QXYSeries *>(series);
+        QAreaSeries* area_series = static_cast<QAreaSeries*>(series);
+//        QLineSeries* line_series = static_cast<QLineSeries*>(area_series->upperSeries());
+        QXYSeries *xySeries = static_cast<QXYSeries *>(area_series->upperSeries());
 //        m_index++;
 //        if (m_index > m_data.count() - 1)
 //            m_index = 0;
