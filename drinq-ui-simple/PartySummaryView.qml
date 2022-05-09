@@ -52,10 +52,21 @@ Item {
                     name: "Consumption (" + unit + ")"
                     axisX: axisX
                     axisY: axisY1
-                    upperSeries: /*consumption*/ LineSeries {
-                        id: consumption
-                    }
+                    upperSeries: consumption
+//                    upperSeries: /*consumption*/ LineSeries {
+//                        id: consumption
+//                    }
                 }
+
+                LineSeries {
+                    axisX: axisX
+                    axisY: axisY1
+                    id: consumption
+                    pointsVisible: true
+                    color: "red"
+                    width: 5
+                }
+
             }
 
             ListView {
