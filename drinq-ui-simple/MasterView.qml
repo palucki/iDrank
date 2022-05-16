@@ -24,29 +24,79 @@ ApplicationWindow {
         }
     }
 
-    StackView {
-        property var pagesTitles : masterController.ui_party_started ? [masterController.ui_party_title] : [""]
+    //    StackView {
+    //        property var pagesTitles : masterController.ui_party_started ? [masterController.ui_party_title] : [""]
 
-        id: contentFrame
+    //        id: contentFrame
+    //        anchors.fill: parent
+    //        clip: true
+    //        initialItem: masterController.ui_party_started ? "qrc:PartyDashboardView.qml" : "qrc:DashboardView.qml"
+    //        onCurrentItemChanged: {
+    //            console.log("contents changed")
+    ////            toolbar.labelText = contentFrame.pagesTitles.at(-1) //means: last item
+    //            toolbar.labelText = contentFrame.pagesTitles[contentFrame.pagesTitles.length - 1] //means: last item
+    //        }
+
+    //        //        onDepthChanged: {
+    //        //            if(depth > 1) {
+    //        //                leftButton.enabled = true
+    //        //                leftButton.text = "<"
+    //        //            } else {
+    //        //                leftButton.enabled = true
+    //        //                leftButton.text = "<"
+    //        //            }
+    //        //        }
+    //    }
+
+    SwipeView {
+        id: swipeView
         anchors.fill: parent
-        clip: true
-        initialItem: masterController.ui_party_started ? "qrc:PartyDashboardView.qml" : "qrc:DashboardView.qml"
-        onCurrentItemChanged: {
-            console.log("contents changed")
-//            toolbar.labelText = contentFrame.pagesTitles.at(-1) //means: last item
-            toolbar.labelText = contentFrame.pagesTitles[contentFrame.pagesTitles.length - 1] //means: last item
+
+        currentIndex: tabBar.currentIndex
+
+        PartyDashboardView {
+            id: dashboardView
         }
 
-        //        onDepthChanged: {
-        //            if(depth > 1) {
-        //                leftButton.enabled = true
-        //                leftButton.text = "<"
-        //            } else {
-        //                leftButton.enabled = true
-        //                leftButton.text = "<"
-        //            }
-        //        }
+        PartiesView {
+            id: partiesView
+        }
+
+        AboutView {
+            id: aboutView
+        }
     }
+
+    footer: TabBar {
+        id: tabBar
+        currentIndex: swipeView.currentIndex
+
+        TabButton {
+            text: "Home"
+            icon.source: "qrc:/history.svg"
+            display: AbstractButton.TextUnderIcon
+        }
+        TabButton {
+            text: "History"
+            icon.source: "qrc:/history.svg"
+            display: AbstractButton.TextUnderIcon
+        }
+        TabButton {
+            text: "About"
+            icon.source: "qrc:/history.svg"
+            display: AbstractButton.TextUnderIcon
+        }
+    }
+
+    //    PageIndicator {
+    //        id: indicator
+
+    //        count: swipeView.count
+    //        currentIndex: swipeView.currentIndex
+
+    //        anchors.bottom: swipeView.bottom
+    //        anchors.horizontalCenter: parent.horizontalCenter
+    //    }
 
     //    Material.theme: Material.Dark
     //    Material.accent: Material.Purple
@@ -66,7 +116,7 @@ ApplicationWindow {
             Label  {
                 id: centerLabel
                 text: "Title"
-//                maximumLength: 30
+                //                maximumLength: 30
                 color: "white"
                 font.pointSize: 14
                 elide: Label.ElideRight
@@ -80,7 +130,7 @@ ApplicationWindow {
                 enabled: contentFrame.depth == 1
                 onClicked: {
                     contentFrame.pagesTitles.push(contentFrame.depth + " Parties")
-                    contentFrame.push("qrc:PartiesView.qml")                    
+                    contentFrame.push("qrc:PartiesView.qml")
                 }
             }
         }
