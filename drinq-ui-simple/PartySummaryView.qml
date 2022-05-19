@@ -22,7 +22,7 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        color: "yellow"
+        color: "skyblue"
 
         Column {
             anchors.horizontalCenter: parent.horizontalCenter
@@ -93,6 +93,8 @@ Item {
                     width: drinksList.width
                     height: 40
 
+
+
                     color: ListView.isCurrentItem?"#157efb" : "transparent"
                     border.color: Qt.lighter(color, 1.1)
 
@@ -118,8 +120,6 @@ Item {
                     }
                 }
             }
-
-
         }
 
 

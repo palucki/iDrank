@@ -7,6 +7,32 @@ import QtQuick.Layouts 1.12
 
 import "qrc:/"
 
+//Page {
+//    header: TabBar {
+//        id: dashboardTabBar
+//        //        currentIndex: dashboardSwipeView.currentIndex
+
+//        TabButton {
+//            text: "Przeglad"
+//            //            icon.source: "qrc:/history.svg"
+//            //            display: AbstractButton.TextUnderIcon
+//        }
+//        TabButton {
+//            text: "Przebieg imprezy"
+//            //            icon.source: "qrc:/history.svg"
+//            //            display: AbstractButton.TextUnderIcon
+//        }
+//    }
+
+//    SwipeView {
+//        id: dashboardSwipeView
+//        interactive: false
+//        anchors.fill: parent
+//        currentIndex: dashboardTabBar.currentIndex
+//    }
+//}
+
+
 Item {
     Rectangle {
         anchors.fill: parent
@@ -50,9 +76,9 @@ Item {
                     anchors.fill: parent
                     enabled: masterController.ui_party_started && partyController.ui_drinks_count > 0
                     onClicked: {
-                        console.log("Opening statistics view")
-                        contentFrame.pagesTitles.push(contentFrame.depth + " Statistics")
-                        contentFrame.push("qrc:PartySummaryView.qml")
+//                        console.log("Opening statistics view")
+//                        contentFrame.pagesTitles.push(contentFrame.depth + " Statistics")
+//                        contentFrame.push("qrc:PartySummaryView.qml")
                     }
                 }
             }
@@ -119,21 +145,6 @@ Item {
                             masterController.startParty()
                             //                            drinkController.setPartyId(partyController.currentPartyId())
                         }
-                    }
-                }
-
-                RoundButton {
-                    id: typeButton
-                    anchors.verticalCenter: parent.verticalCenter
-                    height: 100
-                    width: 100
-                    text: "Drink type"
-                    font.pointSize: 10
-                    Material.background: Material.LightGreen
-                    onClicked: {
-                        console.log("Select drink type")
-                        contentFrame.pagesTitles.push(contentFrame.depth + " Drink properties")
-                        contentFrame.push("qrc:DrinkPropertiesView.qml")
                     }
                 }
             }

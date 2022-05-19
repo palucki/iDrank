@@ -13,5 +13,7 @@
         <file alias="football.png">assets/football.png</file>
         <file alias="logo.png">assets/logo.png</file>
         <file alias="history.svg">assets/history_icon_grey.svg</file>
+        <file>StartPartyView.qml</file>
+        <file>PartyMasterView.qml</file>
     </qresource>
 </RCC>

@@ -51,10 +51,21 @@ ApplicationWindow {
     SwipeView {
         id: swipeView
         anchors.fill: parent
+        interactive: false
+
+        //DashboardView (StackView / StackLayout):
+            //StartPartyView (party nie zaczete, "rozpocznij spozycie")
+            //PartyDashboardView (party zaczete, tutaj mamy ten swipe view z przeglad / przebieg imprezy
+
+        //HistoryView - tutaj mamy stack layout, a moze bardziej stackView, zeby robic push z argumentami i pop
+            //lista imprez
+            //szzegoly imprezy  wybranej
+
+        //AboutView
 
         currentIndex: tabBar.currentIndex
 
-        PartyDashboardView {
+        DashboardView {
             id: dashboardView
         }
 
@@ -69,7 +80,7 @@ ApplicationWindow {
 
     footer: TabBar {
         id: tabBar
-        currentIndex: swipeView.currentIndex
+//        currentIndex: swipeView.currentIndex
 
         TabButton {
             text: "Home"
@@ -88,51 +99,6 @@ ApplicationWindow {
         }
     }
 
-    //    PageIndicator {
-    //        id: indicator
-
-    //        count: swipeView.count
-    //        currentIndex: swipeView.currentIndex
-
-    //        anchors.bottom: swipeView.bottom
-    //        anchors.horizontalCenter: parent.horizontalCenter
-    //    }
-
     //    Material.theme: Material.Dark
     //    Material.accent: Material.Purple
-
-    header: ToolBar {
-        id: toolbar
-        property alias labelText : centerLabel.text
-
-        RowLayout {
-            anchors.fill: parent
-            ToolButton {
-                id: leftButton
-                text: contentFrame.depth > 1 ? "<" : ""
-                enabled: contentFrame.depth > 1
-                onClicked: navigationController.goBack()
-            }
-            Label  {
-                id: centerLabel
-                text: "Title"
-                //                maximumLength: 30
-                color: "white"
-                font.pointSize: 14
-                elide: Label.ElideRight
-                horizontalAlignment: Qt.AlignHCenter
-                verticalAlignment: Qt.AlignVCenter
-                Layout.fillWidth: true
-            }
-            ToolButton {
-                id: rightButton
-                text:  contentFrame.depth > 1 ? "" : qsTr("☰")
-                enabled: contentFrame.depth == 1
-                onClicked: {
-                    contentFrame.pagesTitles.push(contentFrame.depth + " Parties")
-                    contentFrame.push("qrc:PartiesView.qml")
-                }
-            }
-        }
-    }
 }
