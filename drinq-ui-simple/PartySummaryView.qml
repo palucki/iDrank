@@ -31,9 +31,11 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: 30
 
+            width: parent.width
+
             ChartView {
                 height: 400
-                width: 400
+                width: parent.width
                 id: chartView
                 antialiasing: true
 
@@ -96,8 +98,6 @@ Item {
                     width: drinksList.width
                     height: 40
 
-
-
                     color: ListView.isCurrentItem?"#157efb" : "transparent"
                     border.color: Qt.lighter(color, 1.1)
 
@@ -126,9 +126,9 @@ Item {
         }
 
 
-        Column {
-            anchors.centerIn: parent
-            spacing: 30
+//        Column {
+//            anchors.centerIn: parent
+//            spacing: 30
 
 
 
@@ -166,6 +166,6 @@ Item {
             //                    }
             //                }
             //            }
-        }
+//        }
     }
 }
