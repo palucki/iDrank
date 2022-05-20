@@ -44,7 +44,9 @@ public:
 private:
     bool initialise()
     {
-        //ou don't need to create your database programmatically. You could create an empty database with all your tables and relationships and store it as a resource in your app. Then you would copy this resource to a writable location if it didn't exist yet.
+        //You don't need to create your database programmatically.
+        //You could create an empty database with all your tables and relationships and store it as a resource in your app.
+        //Then you would copy this resource to a writable location if it didn't exist yet.
         //That's what I suggested. It would be like a template database.
 
 

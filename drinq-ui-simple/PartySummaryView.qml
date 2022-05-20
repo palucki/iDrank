@@ -17,6 +17,9 @@ Item {
         target: partyController
         function onUi_drinksChanged() {
             partyController.update(chartView.series(0))
+
+            axisX.min = partyController.plot_min()
+            axisX.max = partyController.plot_max()
         }
     }
 
@@ -42,8 +45,8 @@ Item {
 
                 DateTimeAxis{
                     id: axisX
-                    min: partyController.plot_min()
-                    max: partyController.plot_max()
+//                    min: partyController.plot_min()
+//                    max: partyController.plot_max()
                     labelsAngle: 270
                     format: "ddd hh:mm"
                 }

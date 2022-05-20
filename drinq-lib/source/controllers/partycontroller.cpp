@@ -175,6 +175,11 @@ QDateTime PartyController::plot_min()
 {
     //reversed order
     //handle cases like no results, 1 result, multiple results, add some space from left and right, start with full hour etc.
+    if(m_drinks.isEmpty())
+    {
+        return {};
+    }
+
     return m_drinks.last()->m_timestamp;
 }
 
@@ -182,5 +187,11 @@ QDateTime PartyController::plot_max()
 {
     //reversed order
     //handle cases like no results, 1 result, multiple results, add some space from left and right, start with full hour etc.
+
+    if(m_drinks.isEmpty())
+    {
+        return {};
+    }
+
     return m_drinks.first()->m_timestamp;
 }
