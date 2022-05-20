@@ -9,126 +9,129 @@ import QtCharts 2.12
 Item {
     property string unit : "ml"
 
-    Component.onCompleted: {
+    function updateChart() {
         partyController.update(chartView.series(0))
+
+        axisX.min = partyController.plot_min()
+        axisX.max = partyController.plot_max()
     }
+
+    Component.onCompleted: updateChart()
 
     Connections {
         target: partyController
-        function onUi_drinksChanged() {
-            partyController.update(chartView.series(0))
-
-            axisX.min = partyController.plot_min()
-            axisX.max = partyController.plot_max()
-        }
+        function onUi_drinksChanged(){  updateChart() }
     }
 
-    Rectangle {
+    ScrollView {
         anchors.fill: parent
-        color: "skyblue"
 
-        Column {
-            anchors.horizontalCenter: parent.horizontalCenter
-            spacing: 30
+        Rectangle {
+            anchors.fill: parent
+            color: "skyblue"
 
-            width: parent.width
+            Column {
+                anchors.horizontalCenter: parent.horizontalCenter
+                spacing: 30
 
-            ChartView {
-                height: 400
                 width: parent.width
-                id: chartView
-                antialiasing: true
 
-                ValueAxis {
-                    id: axisY1
-                    min: 0
-                    max: 1000 /*partyController.ui_plot_max_value() + 10*/
-                }
+                ChartView {
+                    height: 400
+                    width: parent.width
+                    id: chartView
+                    antialiasing: true
 
-                DateTimeAxis{
-                    id: axisX
-//                    min: partyController.plot_min()
-//                    max: partyController.plot_max()
-                    labelsAngle: 270
-                    format: "ddd hh:mm"
-                }
-
-                AreaSeries {
-                    name: "Consumption (" + unit + ")"
-                    axisX: axisX
-                    axisY: axisY1
-                    upperSeries: consumption
-//                    upperSeries: /*consumption*/ LineSeries {
-//                        id: consumption
-//                    }
-                }
-
-                LineSeries {
-                    axisX: axisX
-                    axisY: axisY1
-                    id: consumption
-                    pointsVisible: true
-                    color: "red"
-                    width: 5
-                }
-
-            }
-
-            ListView {
-                //                    anchors.fill: parent
-                id: drinksList
-                height: 200
-                width: parent.width
-                anchors.margins: 20
-
-                clip: true
-
-                model: partyController.ui_drinks
-
-                delegate: drinkTypeDelegate
-                spacing: 5
-
-                focus: true
-            }
-
-            Component {
-                id: drinkTypeDelegate
-
-                Rectangle {
-                    width: drinksList.width
-                    height: 40
-
-                    color: ListView.isCurrentItem?"#157efb" : "transparent"
-                    border.color: Qt.lighter(color, 1.1)
-
-                    Text {
-                        anchors.left: parent.left
-                        font.pixelSize: 10
-                        text: drinkController.type(modelData.ui_drink_type_id) + " " + modelData.ui_amount_ml + " " + unit + " (" + modelData.ui_timestamp + ")"
+                    ValueAxis {
+                        id: axisY1
+                        min: 0
+                        max: 1000 /*partyController.ui_plot_max_value() + 10*/
                     }
 
-                    //to hightliht
-                    //                    MouseArea {
-                    //                        anchors.fill: parent
-                    //                        onClicked: drinksList.currentIndex = index
-                    //                    }
+                    DateTimeAxis{
+                        id: axisX
+                        //                    min: partyController.plot_min()
+                        //                    max: partyController.plot_max()
+                        labelsAngle: 270
+                        format: "ddd hh:mm"
+                    }
 
-                    Button {
-                        anchors.right: parent.right
-                        text: "X"
-                        onClicked: {
-                            console.log("DELETE drink")
-                            partyController.deleteDrink(modelData.ui_id)
+                    AreaSeries {
+                        name: "Consumption (" + unit + ")"
+                        axisX: axisX
+                        axisY: axisY1
+                        upperSeries: consumption
+                        //                    upperSeries: /*consumption*/ LineSeries {
+                        //                        id: consumption
+                        //                    }
+                    }
+
+                    LineSeries {
+                        axisX: axisX
+                        axisY: axisY1
+                        id: consumption
+                        pointsVisible: true
+                        color: "red"
+                        width: 5
+                    }
+
+                }
+
+                ListView {
+                    //                    anchors.fill: parent
+                    id: drinksList
+                    height: 200
+                    width: parent.width
+                    anchors.margins: 20
+
+                    clip: true
+
+                    model: partyController.ui_drinks
+
+                    delegate: drinkTypeDelegate
+                    spacing: 5
+
+                    focus: true
+                }
+
+                Component {
+                    id: drinkTypeDelegate
+
+                    Rectangle {
+                        width: drinksList.width
+                        height: 40
+
+                        color: ListView.isCurrentItem?"#157efb" : "transparent"
+                        border.color: Qt.lighter(color, 1.1)
+
+                        Text {
+                            anchors.left: parent.left
+                            font.pixelSize: 10
+                            text: drinkController.type(modelData.ui_drink_type_id) + " " + modelData.ui_amount_ml + " " + unit + " (" + modelData.ui_timestamp + ")"
+                        }
+
+                        //to hightliht
+                        //                    MouseArea {
+                        //                        anchors.fill: parent
+                        //                        onClicked: drinksList.currentIndex = index
+                        //                    }
+
+                        Button {
+                            anchors.right: parent.right
+                            text: "X"
+                            onClicked: {
+                                console.log("DELETE drink")
+                                partyController.deleteDrink(modelData.ui_id)
+                            }
                         }
                     }
                 }
             }
-        }
 
 
-//        Column {
-//            anchors.centerIn: parent
-//            spacing: 30
+            //        Column {
+            //            anchors.centerIn: parent
+            //            spacing: 30
 
 
 
@@ -166,6 +169,7 @@ Item {
             //                    }
             //                }
             //            }
-//        }
+            //        }
+        }
     }
 }

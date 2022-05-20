@@ -11,7 +11,7 @@ ApplicationWindow {
     width: 480
     height: 720
     visible: true
-    title: qsTr("iDrunk")
+    title: qsTr("iDrank")
 
     Item {
         id: navigationController

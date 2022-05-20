@@ -1,14 +1,15 @@
 TODO
 
-[ ] change StackView to SwipeView with stack views where necessary 
-[ ] page indicator allows custom images 
+[x] change StackView to SwipeView with stack views where necessary 
+[x] page indicator allows custom images 
 [ ] drinki obrazkowe zamiast tekstu
 [ ] wydzielic komponenty do innego plickzu
 [ ] wydzielic tab button jako component
 [x] na wykresie dodac kropki w miejscu spozycia
-[ ] dodac stronke about 
+[x] dodac stronke about 
 [ ] dodac drugi wykres z iloscia spozytego plynu? ma to sens? 
 [ ] dodac trzeci wykres z estymacja stezenia promili we krwi?
+[ ] niektore widoki musza byc scrollowalne, wieksze niz ekran
 
 
 sudo groupadd -r kvm

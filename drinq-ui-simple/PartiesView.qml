@@ -86,7 +86,7 @@ Item {
                     onClicked: {
                         console.log("Ok")
 //                        drinkController.setCurrentDrinkProperties(drinkTypesList.currentIndex, amountInput.value)
-                        navigationController.goBack()
+//                        navigationController.goBack()
 //                        drinkController.setDrinkProperties(type, amount)
                     }
                 }
