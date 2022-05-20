@@ -12,6 +12,7 @@ Item {
 
         Column {
             anchors.centerIn: parent
+            width: parent.width
             spacing: 30
 
             ListView {
