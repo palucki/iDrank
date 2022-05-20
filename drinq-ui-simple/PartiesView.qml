@@ -50,44 +50,10 @@ Item {
 
                     MouseArea {
                         anchors.fill: parent
-                        onClicked: partiesList.currentIndex = index
-                    }
-                }
-            }
-
-            Row {
-                anchors.horizontalCenter: parent.horizontalCenter
-                //                width: parent.width
-                //                height: 60
-                spacing: 60
-
-                RoundButton {
-                    id: partyButton
-                    anchors.verticalCenter: parent.verticalCenter
-                    height: 100
-                    width: 100
-                    text: "Cancel"
-                    font.pointSize: 10
-                    Material.background: Material.Purple
-                    onClicked: {
-                        console.log("Cancel")
-                        navigationController.goBack()
-                    }
-                }
-
-                RoundButton {
-                    id: typeButton
-                    anchors.verticalCenter: parent.verticalCenter
-                    height: 100
-                    width: 100
-                    text: "Ok"
-                    font.pointSize: 10
-                    Material.background: Material.LightGreen
-                    onClicked: {
-                        console.log("Ok")
-//                        drinkController.setCurrentDrinkProperties(drinkTypesList.currentIndex, amountInput.value)
-//                        navigationController.goBack()
-//                        drinkController.setDrinkProperties(type, amount)
+                        onClicked: {
+                            console.log("Clicked on party ")
+                            partiesList.currentIndex = index
+                        }
                     }
                 }
             }
