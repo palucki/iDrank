@@ -23,12 +23,8 @@ Item {
         function onUi_drinksChanged(){  updateChart() }
     }
 
-
-
     ScrollView {
         anchors.fill: parent
-
-
 
         Rectangle {
             anchors.fill: parent

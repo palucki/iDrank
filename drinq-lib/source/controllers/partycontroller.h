@@ -17,7 +17,6 @@ class Party2;
 }
 //plotting
 
-
 #include <QtCharts/QAbstractSeries>
 QT_CHARTS_USE_NAMESPACE
 
@@ -63,6 +62,10 @@ private:
     drinq::controllers::DatabaseControllerInterface* m_db = nullptr;
     drinq::controllers::DrinkController* m_drinkController = nullptr;
 
+    //DrinksProivder?
+
+    //PartyController to tylko malutka klasa posiadajaca start i end party
+    //cala reszta to bedzie Drinks Proviider albo cos w tym stylu
     QList<drinq::models::Drink2*> m_drinks;
     int m_current_drinks_count = 0;
     QVariant m_currentPartyId;

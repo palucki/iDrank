@@ -89,9 +89,6 @@ Page {
 
     }
 
-
-
-
     SwipeView {
         id: dashboardSwipeView
         interactive: false
@@ -110,7 +107,7 @@ Page {
         }
 
         PartyStatisticsView {
-
+            //set party id
         }
     }
 }
