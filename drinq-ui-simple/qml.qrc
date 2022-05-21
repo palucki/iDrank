@@ -4,11 +4,10 @@
         <file>MasterView.qml</file>
         <file>DashboardView.qml</file>
         <file>DrinkPropertiesView.qml</file>
-        <file>PartySummaryView.qml</file>
+        <file>PartyStatisticsView.qml</file>
         <file>PartiesView.qml</file>
         <file>PartyDashboardView.qml</file>
         <file>LabelDialog.qml</file>
-        <file>PartyStatisticsView.qml</file>
         <file>AboutView.qml</file>
         <file alias="football.png">assets/football.png</file>
         <file alias="logo.png">assets/logo.png</file>

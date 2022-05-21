@@ -54,7 +54,7 @@ Item {
                             console.log("Clicked on party " + modelData.ui_name)
                             partiesList.currentIndex = index
 
-                            historyStackView.push("qrc:PartySummaryView.qml")
+                            historyStackView.push("qrc:PartyStatisticsView.qml")
                         }
                     }
                 }

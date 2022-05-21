@@ -109,7 +109,7 @@ Page {
 
         }
 
-        PartySummaryView {
+        PartyStatisticsView {
 
         }
     }
