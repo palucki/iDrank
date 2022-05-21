@@ -34,6 +34,43 @@ import "qrc:/"
 
 
 Item {
+    Timer {
+        id: timeSinceLastDrinkCounter
+        interval: 10000; running: true; repeat: true
+        onTriggered: {
+            updateTimeSinceLastDrink()
+        }
+    }
+
+    Component.onCompleted: updateTimeSinceLastDrink()
+
+    Connections {
+        target: partyController
+        function onUi_drinksChanged(){  updateTimeSinceLastDrink() }
+    }
+
+
+    function updateTimeSinceLastDrink() {
+        var diff_secs = partyController.secondsSinceLastDrink()
+
+        console.log("seconds since last " + diff_secs)
+
+        if(diff_secs <= 60)
+        {
+            timeSinceLastDrinkTextField.text = "last consumed drink: < 1 minute ago"
+        }
+        else if(diff_secs <= 3600)
+        {
+            var diff_mins = diff_secs / 60
+            timeSinceLastDrinkTextField.text = "last consumed drink: " + parseInt(diff_mins) + " minutes ago"
+        }
+        else
+        {
+            var diff_hours = diff_secs / 3600
+            timeSinceLastDrinkTextField.text = "last consumed drink: " + parseInt(diff_hours) + " hour ago"
+        }
+    }
+
     Rectangle {
         anchors.fill: parent
         color: "skyblue"
@@ -44,14 +81,14 @@ Item {
 
         Column {
             anchors.centerIn: parent
-            spacing: 30
+            spacing: 10
 
             Rectangle {
                 height: 150
                 width: 200
                 anchors.horizontalCenter: parent.horizontalCenter
                 Column {
-                    spacing: 10
+                    spacing: 5
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     Text {
@@ -80,6 +117,29 @@ Item {
 //                        contentFrame.pagesTitles.push(contentFrame.depth + " Statistics")
 //                        contentFrame.push("qrc:PartyStatisticsView.qml")
                     }
+                }
+            }
+
+            Rectangle {
+                height: 50
+                width: 200
+                anchors.horizontalCenter: parent.horizontalCenter
+                Column {
+                    spacing: 5
+                    anchors.horizontalCenter: parent.horizontalCenter
+
+                    Text {
+                        id: timeSinceLastDrinkTextField
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text: "PLACEHOLDER"
+                    }
+
+//                    Text {
+//                        id: shotsCounter
+//                        anchors.horizontalCenter: parent.horizontalCenter
+//                        text: partyController.ui_drinks_count
+//                        font.pointSize: 50
+//                    }
                 }
             }
 

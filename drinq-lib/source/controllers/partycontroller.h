@@ -24,6 +24,7 @@ class DRINQLIB_EXPORT PartyController : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(int ui_drinks_count MEMBER m_current_drinks_count NOTIFY ui_drinks_countChanged)
+//    Q_PROPERTY(qint64 ui_seconds_since_last_drink READ secondsSinceLastDrink NOTIFY ui_secondsChanged)
     Q_PROPERTY(QQmlListProperty<drinq::models::Drink2> ui_drinks READ ui_drinks NOTIFY ui_drinksChanged )
 
     //for plotting the drinks consumption
@@ -39,6 +40,9 @@ public:
     Q_INVOKABLE unsigned int ui_plot_max_value();
 
 public slots:
+
+    qint64 secondsSinceLastDrink();
+
     void startParty();
     void setPartyId(QVariant id);
     void endParty();

@@ -46,6 +46,20 @@ unsigned int PartyController::ui_plot_max_value()
     return 1000;
 }
 
+qint64 PartyController::secondsSinceLastDrink()
+{
+    if(m_drinks.empty())
+    {
+        return 0;
+    }
+
+    //because sorted in reverse order
+    auto& last_drink = m_drinks.first();
+
+    const qint64 diff_sec = last_drink->m_timestamp.secsTo(QDateTime::currentDateTime());
+    return diff_sec;
+}
+
 void PartyController::startParty()
 {
     m_drinks.clear();
