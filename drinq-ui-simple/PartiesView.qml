@@ -29,7 +29,7 @@ Item {
                 delegate: partyPreviewDelegate
                 spacing: 5
 
-                focus: true
+                focus: false
             }
 
             Component {
@@ -51,8 +51,10 @@ Item {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            console.log("Clicked on party ")
+                            console.log("Clicked on party " + modelData.ui_name)
                             partiesList.currentIndex = index
+
+                            historyStackView.push("qrc:PartySummaryView.qml")
                         }
                     }
                 }

@@ -15,5 +15,6 @@
         <file alias="history.svg">assets/history_icon_grey.svg</file>
         <file>StartPartyView.qml</file>
         <file>PartyMasterView.qml</file>
+        <file>HistoryMasterView.qml</file>
     </qresource>
 </RCC>

@@ -15,7 +15,7 @@ Dialog {
     anchors.centerIn: parent
     height: 250
     width: 300
-    focus: true
+//    focus: true
     Label {
         id: dialogLabel
         anchors.centerIn: parent

@@ -22,7 +22,7 @@ Dialog {
     height: 250
     width: 300
     standardButtons: Dialog.Ok | Dialog.Cancel
-    focus: true
+//    focus: true
     Column {
         anchors.fill: parent
         TextField {

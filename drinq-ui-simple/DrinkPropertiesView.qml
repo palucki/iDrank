@@ -35,7 +35,7 @@ Item {
                 delegate: drinkTypeDelegate
                 spacing: 5
 
-                focus: true
+//                focus: true
             }
 
             Component {

@@ -98,6 +98,13 @@ Page {
         anchors.fill: parent
         currentIndex: dashboardTabBar.currentIndex
 
+        onCurrentIndexChanged: {
+            if(currentIndex == 1)
+            {
+//                partyController.setPartyId()
+            }
+        }
+
         PartyDashboardView {
 
         }

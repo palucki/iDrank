@@ -16,12 +16,12 @@ ApplicationWindow {
     Item {
         id: navigationController
         signal goBack
-        onGoBack: {
-            console.log("Go back")
-            contentFrame.pagesTitles.pop()
-            toolbar.labelText = contentFrame.pagesTitles[contentFrame.pagesTitles.length - 1]
-            contentFrame.pop()
-        }
+//        onGoBack: {
+//            console.log("Go back")
+////            contentFrame.pagesTitles.pop()
+////            toolbar.labelText = contentFrame.pagesTitles[contentFrame.pagesTitles.length - 1]
+////            contentFrame.pop()
+//        }
     }
 
     //    StackView {
@@ -49,9 +49,23 @@ ApplicationWindow {
     //    }
 
     SwipeView {
+
         id: swipeView
         anchors.fill: parent
         interactive: false
+
+
+        focus:true //required to allow capture of buttons
+//        Keys.onPressed: {
+////        dev version
+//            if(event.key == Qt.Key_Back || event.key == Qt.Key_Backspace)
+//                navigationController.goBack()
+
+////            console.log("Pressed key " + event.key)
+//        }
+
+//    }
+
 
         //DashboardView (StackView / StackLayout):
             //StartPartyView (party nie zaczete, "rozpocznij spozycie")
@@ -69,8 +83,10 @@ ApplicationWindow {
             id: dashboardView
         }
 
-        PartiesView {
-            id: partiesView
+        HistoryMasterView {
+            id: historyView
+
+
         }
 
         AboutView {
@@ -79,20 +95,25 @@ ApplicationWindow {
     }
 
     footer: TabBar {
+
+
         id: tabBar
 //        currentIndex: swipeView.currentIndex
 
         TabButton {
+            focusPolicy: Qt.NoFocus
             text: "Home"
             icon.source: "qrc:/history.svg"
             display: AbstractButton.TextUnderIcon
         }
         TabButton {
+            focusPolicy: Qt.NoFocus
             text: "History"
             icon.source: "qrc:/history.svg"
             display: AbstractButton.TextUnderIcon
         }
         TabButton {
+            focusPolicy: Qt.NoFocus
             text: "About"
             icon.source: "qrc:/history.svg"
             display: AbstractButton.TextUnderIcon

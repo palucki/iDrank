@@ -19,6 +19,8 @@ sudo groupadd -r kvm
 sudo gpasswd -a $USER kvm
 
 
+Buttons steal focus sometimes!!!
+
 
 
 Make install: Copy App Files to /home/piotr/workspace/build-drinq-Android_Qt_5_15_2_Clang_Multi_Abi-Release/drinq-ui-simple/android-build
