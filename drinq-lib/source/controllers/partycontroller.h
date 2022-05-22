@@ -51,7 +51,7 @@ public slots:
     void deleteDrink(const QVariant& id);
 
     //plotting
-    void update(QAbstractSeries *series);
+    void update(QAbstractSeries *series, QAbstractSeries *start);
     QDateTime plot_min();
     QDateTime plot_max();
 

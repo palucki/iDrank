@@ -16,7 +16,7 @@
 #include <QtCharts/QXYSeries>
 #include <QtCharts/QAreaSeries>
 #include <QtCharts/QLineSeries>
-
+#include <QtCharts/QScatterSeries>
 
 QT_CHARTS_USE_NAMESPACE
 
@@ -161,9 +161,10 @@ void PartyController::deleteDrink(const QVariant &id)
     }
 }
 
-void PartyController::update(QAbstractSeries* series)
+void PartyController::update(QAbstractSeries* series, QAbstractSeries* start)
 {
-    if (series) {
+    if(series)
+    {
         QAreaSeries* area_series = static_cast<QAreaSeries*>(series);
 //        QLineSeries* line_series = static_cast<QLineSeries*>(area_series->upperSeries());
         QXYSeries *xySeries = static_cast<QXYSeries *>(area_series->upperSeries());
@@ -191,6 +192,13 @@ void PartyController::update(QAbstractSeries* series)
         m_current_sum = current_sum;
 
         emit ui_plot_max_valueChanged();
+    }
+
+    if(start)
+    {
+        QScatterSeries* scatter_series = static_cast<QScatterSeries*>(start);
+//        scatter_series->replace(0, );
+        scatter_series->replace(QList<QPointF>{{static_cast<qreal>(m_currentPartyStarted.toMSecsSinceEpoch()) , 0.0}});
     }
 }
 

@@ -10,7 +10,7 @@ Item {
     property string unit : "ml"
 
     function updateChart() {
-        partyController.update(chartView.series(0))
+        partyController.update(chartView.series(0), chartView.series(2))
 
         axisX.min = partyController.plot_min()
         axisX.max = partyController.plot_max()
@@ -69,12 +69,25 @@ Item {
                     }
 
                     LineSeries {
+
                         axisX: axisX
                         axisY: axisY1
                         id: consumption
                         pointsVisible: true
                         color: "red"
-                        width: 5
+                        width: 2
+
+                    }
+
+                    ScatterSeries {
+                        name: "Party start"
+                        axisX: axisX
+                        axisY: axisY1
+                        id: partyStart
+                        color: "green"
+                        pointsVisible: true
+                        markerSize: 20
+
                     }
 
                 }
