@@ -73,5 +73,6 @@ private:
     QList<drinq::models::Drink2*> m_drinks;
     int m_current_drinks_count = 0;
     QVariant m_currentPartyId;
+    QDateTime m_currentPartyStarted;
     unsigned int m_current_sum = 0;
 };

@@ -150,8 +150,8 @@ public:
     ~Party2();
 
     void setName(const QString& name) { m_data["name"] = name; m_name = name; }
-    void setStarted(QDateTime ts) { m_data["started"] = ts; m_started = ts;}
-    void setEnded(QDateTime ts) { m_data["ended"] = ts; m_ended = ts;}
+    void setStarted(const QDateTime& ts) { m_data["started"] = ts; m_started = ts;}
+    void setEnded(const QDateTime& ts) { m_data["ended"] = ts; m_ended = ts;}
 
     void update(const QJsonObject& src) override;
 public:

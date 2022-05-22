@@ -69,10 +69,18 @@ void PartyController::startParty()
 
 void PartyController::setPartyId(QVariant id)
 {
+    drinq::models::Party2 party(this);
+    party.setId(id);
+
+    m_db->get(party);
+    drinq::models::Party2 current_party{party.toJson()};
+
+    m_currentPartyStarted = current_party.m_started;
+
     m_currentPartyId = id;
     auto drinks = m_db->getAll(drinq::models::Drink2{this}, "WHERE party_id = " + m_currentPartyId.toString());
 
-    qDebug() << "Found " << drinks.size() << " drinks";
+    qDebug() << "Found " << drinks.size() << " drinks. party started at " << m_currentPartyStarted;
 
     for(const auto& d : drinks)
     {
@@ -165,6 +173,12 @@ void PartyController::update(QAbstractSeries* series)
 
         qreal current_sum = 0.0;
         QVector<QPointF> drink_points;
+
+        if(!m_drinks.isEmpty())
+        {
+            drink_points.append({static_cast<qreal>(m_currentPartyStarted.toMSecsSinceEpoch()), static_cast<qreal>(0.0)});
+        }
+
         for(auto rit = m_drinks.rbegin(); rit != m_drinks.rend(); ++rit)
         {
             current_sum += (*rit)->m_amount_ml;
@@ -189,7 +203,9 @@ QDateTime PartyController::plot_min()
         return QDateTime::currentDateTime().addSecs(-600);
     }
 
-    return m_drinks.last()->m_timestamp;
+    return m_currentPartyStarted;
+
+//    return m_drinks.last()->m_timestamp;
 }
 
 QDateTime PartyController::plot_max()

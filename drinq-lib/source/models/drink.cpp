@@ -216,6 +216,7 @@ void Party2::update(const QJsonObject &src)
     setId(src["id"].toVariant());
     setName(src["name"].toString());
     setStarted(QDateTime::fromString(src["started"].toString(), Qt::ISODate));
+    qDebug() << "Party updated. started " << QDateTime::fromString(src["started"].toString(), Qt::ISODate);
     setEnded(QDateTime::fromString(src["ended"].toString(), Qt::ISODate));
 }
 
