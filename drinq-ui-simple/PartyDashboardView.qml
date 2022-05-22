@@ -42,7 +42,15 @@ Item {
         }
     }
 
-    Component.onCompleted: updateTimeSinceLastDrink()
+    Component.onCompleted : {
+        updateTimeSinceLastDrink()
+
+        console.log("Setting values from settings. Drink type " + drinkController.ui_currentDrinkTypeIndex
+                    + " amount " + drinkController.ui_currentDrinkAmountMl)
+        drinkTypesList.currentIndex = drinkController.ui_currentDrinkTypeIndex
+        amountInput.value = drinkController.ui_currentDrinkAmountMl
+    }
+
 
     Connections {
         target: partyController
@@ -143,10 +151,71 @@ Item {
                 }
             }
 
-            RoundButton {
+            Label {
+                text: "wybierz rodzaj alkoholu"
+            }
+
+            ListView {
+                //                    anchors.fill: parent
+                id: drinkTypesList
+                height: 50
+                width: parent.width
+                anchors.margins: 20
+
+                clip: true
+                orientation: ListView.Horizontal
+
+                model: drinkController.ui_drinkTypes
+
+                delegate: drinkTypeDelegate
+                spacing: 5
+
+//                focus: true
+            }
+
+            Component {
+                id: drinkTypeDelegate
+
+                Rectangle {
+                    width: 40 //drinkTypesList.width
+                    height: 40
+
+                    color: ListView.isCurrentItem?"#157efb" : "transparent"
+                    border.color: Qt.lighter(color, 1.1)
+
+                    Text {
+                        anchors.centerIn: parent
+                        font.pixelSize: 10
+                        text: "(" + index +") " + modelData.ui_name
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: drinkTypesList.currentIndex = index
+                    }
+                }
+            }
+
+            Label {
+                text: "ilość (ml)"
+            }
+
+            SpinBox {
+                id: amountInput
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: 200
+                height: 50
+                stepSize: 10
+                from: 0
+                to: 1000
+                editable: true
+            }
+
+
+            Button {
                 id: addButton
                 anchors.horizontalCenter: parent.horizontalCenter
-                height: 200
+                height: 50
                 width: 200
                 //                text: "Add"
                 enabled: masterController.ui_party_started
@@ -154,6 +223,8 @@ Item {
 
                 //                icon: ""
                 onClicked: {
+                    drinkController.setCurrentDrinkProperties(drinkTypesList.currentIndex, amountInput.value)
+
                     dialog.openDialog(toastProvider.randomToast().ui_text)
                     partyController.addDrink()
                 }
@@ -161,20 +232,20 @@ Item {
                 Column {
                     anchors.centerIn: parent
                     Text {
-                        text: "Add"
+                        text: "Add "
                         anchors.horizontalCenter: parent.horizontalCenter
                         font.pointSize: 20
                     }
 
-                    Text {
-                        text: drinkController.ui_currentDrinkType
-                        anchors.horizontalCenter: parent.horizontalCenter
-                    }
+//                    Text {
+//                        text: drinkController.ui_currentDrinkType
+//                        anchors.horizontalCenter: parent.horizontalCenter
+//                    }
 
-                    Text {
-                        text: drinkController.ui_currentDrinkAmountMl + "ml"
-                        anchors.horizontalCenter: parent.horizontalCenter
-                    }
+//                    Text {
+//                        text: drinkController.ui_currentDrinkAmountMl + "ml"
+//                        anchors.horizontalCenter: parent.horizontalCenter
+//                    }
                 }
             }
 
@@ -184,11 +255,11 @@ Item {
                 //                height: 60
                 spacing: 60
 
-                RoundButton {
+                Button {
                     id: partyButton
                     anchors.verticalCenter: parent.verticalCenter
-                    height: 100
-                    width: 100
+                    height: 50
+                    width: 200
                     text: masterController.ui_party_started ? "End party" : "Start party"
                     font.pointSize: 10
                     Material.background: Material.Purple
