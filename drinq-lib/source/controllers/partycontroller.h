@@ -28,7 +28,7 @@ class DRINQLIB_EXPORT PartyController : public QObject
     Q_PROPERTY(QQmlListProperty<drinq::models::Drink2> ui_drinks READ ui_drinks NOTIFY ui_drinksChanged )
 
     //for plotting the drinks consumption
-    Q_PROPERTY(unsigned int ui_plot_max_value READ ui_plot_max_value NOTIFY ui_plot_max_valueChanged)
+    Q_PROPERTY(unsigned int ui_plot_max_value MEMBER m_current_sum NOTIFY ui_plot_max_valueChanged)
 
 public:
     explicit PartyController(QObject *parent = nullptr,
@@ -73,4 +73,5 @@ private:
     QList<drinq::models::Drink2*> m_drinks;
     int m_current_drinks_count = 0;
     QVariant m_currentPartyId;
+    unsigned int m_current_sum = 0;
 };

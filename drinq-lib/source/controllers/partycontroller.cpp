@@ -43,7 +43,7 @@ QQmlListProperty<drinq::models::Drink2> PartyController::ui_drinks()
 
 unsigned int PartyController::ui_plot_max_value()
 {
-    return 1000;
+    return m_current_sum;
 }
 
 qint64 PartyController::secondsSinceLastDrink()
@@ -172,16 +172,11 @@ void PartyController::update(QAbstractSeries* series)
                                  static_cast<qreal>(current_sum)});
         }
 
-//        QVector<QPointF> points {
-//            {20000, 10},
-//            {10, 20},
-//            {20, 40},
-//            {30, 50},
-//            {40, 90}
-//        };
-//            = m_data.at(m_index);
         // Use replace instead of clear + append, it's optimized for performance
         xySeries->replace(drink_points);
+        m_current_sum = current_sum;
+
+        emit ui_plot_max_valueChanged();
     }
 }
 
@@ -191,7 +186,7 @@ QDateTime PartyController::plot_min()
     //handle cases like no results, 1 result, multiple results, add some space from left and right, start with full hour etc.
     if(m_drinks.isEmpty())
     {
-        return {};
+        return QDateTime::currentDateTime().addSecs(-600);
     }
 
     return m_drinks.last()->m_timestamp;
@@ -204,7 +199,7 @@ QDateTime PartyController::plot_max()
 
     if(m_drinks.isEmpty())
     {
-        return {};
+        return QDateTime::currentDateTime().addSecs(600);
     }
 
     return m_drinks.first()->m_timestamp;

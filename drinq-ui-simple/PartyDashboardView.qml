@@ -217,7 +217,7 @@ Item {
                 anchors.horizontalCenter: parent.horizontalCenter
                 height: 50
                 width: 200
-                //                text: "Add"
+                text: "Add"
                 enabled: masterController.ui_party_started
                 Material.background: Material.Orange
 
@@ -229,13 +229,13 @@ Item {
                     partyController.addDrink()
                 }
 
-                Column {
-                    anchors.centerIn: parent
-                    Text {
-                        text: "Add "
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        font.pointSize: 20
-                    }
+//                Column {
+//                    anchors.centerIn: parent
+//                    Text {
+//                        text: "Add "
+//                        anchors.horizontalCenter: parent.horizontalCenter
+//                        font.pointSize: 20
+//                    }
 
 //                    Text {
 //                        text: drinkController.ui_currentDrinkType
@@ -246,7 +246,7 @@ Item {
 //                        text: drinkController.ui_currentDrinkAmountMl + "ml"
 //                        anchors.horizontalCenter: parent.horizontalCenter
 //                    }
-                }
+//                }
             }
 
             Row {

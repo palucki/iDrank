@@ -14,6 +14,8 @@ Item {
 
         axisX.min = partyController.plot_min()
         axisX.max = partyController.plot_max()
+        console.log("setting max to " + partyController.ui_plot_max_value + 20)
+        axisY1.max = partyController.ui_plot_max_value + 20
     }
 
     Component.onCompleted: updateChart()
@@ -45,7 +47,7 @@ Item {
                     ValueAxis {
                         id: axisY1
                         min: 0
-                        max: 1000 /*partyController.ui_plot_max_value() + 10*/
+//                        max: 1000 /*partyController.ui_plot_max_value() + 10*/
                     }
 
                     DateTimeAxis{
