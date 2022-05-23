@@ -56,13 +56,19 @@ ApplicationWindow {
 
 
         focus:true //required to allow capture of buttons
-//        Keys.onPressed: {
-////        dev version
-//            if(event.key == Qt.Key_Back || event.key == Qt.Key_Backspace)
-//                navigationController.goBack()
+        Keys.onPressed: {
+            if(event.key == Qt.Key_Back || event.key == Qt.Key_Backspace) {
+                if(swipeView.currentIndex == 0) {
+                    Qt.quit()
+                } else if(swipeView.currentIndex == 1) {
+                    //ignore, handle in history master view
+                } else if(swipeView.currentIndex == 2) {
+                    masterTabBar.currentIndex = 0
+                }
 
-////            console.log("Pressed key " + event.key)
-//        }
+                event.accepted = true
+            }
+        }
 
 //    }
 
@@ -77,7 +83,7 @@ ApplicationWindow {
 
         //AboutView
 
-        currentIndex: tabBar.currentIndex
+        currentIndex: masterTabBar.currentIndex
 
         DashboardView {
             id: dashboardView
@@ -85,8 +91,6 @@ ApplicationWindow {
 
         HistoryMasterView {
             id: historyView
-
-
         }
 
         AboutView {
@@ -97,7 +101,7 @@ ApplicationWindow {
     footer: TabBar {
 
 
-        id: tabBar
+        id: masterTabBar
 //        currentIndex: swipeView.currentIndex
 
         TabButton {

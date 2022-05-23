@@ -7,16 +7,21 @@ import QtQuick.Layouts 1.12
 
 Item {
 
-    focus:true
+    focus: true
 
-    function goBack() {
+    function goBack(event) {
         console.log("Go back function in history master view ")
 
-        if(historyStackView.depth == 2) //when party summary on
-        {
+        //when party summary on
+        if(historyStackView.depth >= 2) {
             console.log("Executing pop")
             historyStackView.pop()
         }
+        else {
+            masterTabBar.currentIndex = 0
+            event.accepted = true
+        }
+
         //            else
         //                Qt.quit()
     }
@@ -24,7 +29,7 @@ Item {
     Keys.onPressed: {
 //        dev version
         if(event.key == Qt.Key_Back || event.key == Qt.Key_Backspace)
-            goBack()
+            goBack(event)
 
 //            console.log("Pressed key " + event.key)
     }
