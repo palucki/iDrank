@@ -15,11 +15,9 @@ Item {
         currentIndex: masterController.ui_party_started ? 1 : 0
 
         StartPartyView {
-
         }
 
         PartyMasterView {
-
         }
     }
 }

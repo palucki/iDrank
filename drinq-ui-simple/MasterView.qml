@@ -16,44 +16,13 @@ ApplicationWindow {
     Item {
         id: navigationController
         signal goBack
-//        onGoBack: {
-//            console.log("Go back")
-////            contentFrame.pagesTitles.pop()
-////            toolbar.labelText = contentFrame.pagesTitles[contentFrame.pagesTitles.length - 1]
-////            contentFrame.pop()
-//        }
     }
 
-    //    StackView {
-    //        property var pagesTitles : masterController.ui_party_started ? [masterController.ui_party_title] : [""]
-
-    //        id: contentFrame
-    //        anchors.fill: parent
-    //        clip: true
-    //        initialItem: masterController.ui_party_started ? "qrc:PartyDashboardView.qml" : "qrc:DashboardView.qml"
-    //        onCurrentItemChanged: {
-    //            console.log("contents changed")
-    ////            toolbar.labelText = contentFrame.pagesTitles.at(-1) //means: last item
-    //            toolbar.labelText = contentFrame.pagesTitles[contentFrame.pagesTitles.length - 1] //means: last item
-    //        }
-
-    //        //        onDepthChanged: {
-    //        //            if(depth > 1) {
-    //        //                leftButton.enabled = true
-    //        //                leftButton.text = "<"
-    //        //            } else {
-    //        //                leftButton.enabled = true
-    //        //                leftButton.text = "<"
-    //        //            }
-    //        //        }
-    //    }
-
     SwipeView {
-
         id: swipeView
         anchors.fill: parent
         interactive: false
-
+        currentIndex: masterTabBar.currentIndex
 
         focus:true //required to allow capture of buttons
         Keys.onPressed: {
@@ -65,25 +34,9 @@ ApplicationWindow {
                 } else if(swipeView.currentIndex == 2) {
                     masterTabBar.currentIndex = 0
                 }
-
                 event.accepted = true
             }
         }
-
-//    }
-
-
-        //DashboardView (StackView / StackLayout):
-            //StartPartyView (party nie zaczete, "rozpocznij spozycie")
-            //PartyDashboardView (party zaczete, tutaj mamy ten swipe view z przeglad / przebieg imprezy
-
-        //HistoryView - tutaj mamy stack layout, a moze bardziej stackView, zeby robic push z argumentami i pop
-            //lista imprez
-            //szzegoly imprezy  wybranej
-
-        //AboutView
-
-        currentIndex: masterTabBar.currentIndex
 
         DashboardView {
             id: dashboardView
@@ -99,10 +52,7 @@ ApplicationWindow {
     }
 
     footer: TabBar {
-
-
         id: masterTabBar
-//        currentIndex: swipeView.currentIndex
 
         TabButton {
             focusPolicy: Qt.NoFocus
@@ -123,7 +73,4 @@ ApplicationWindow {
             display: AbstractButton.TextUnderIcon
         }
     }
-
-    //    Material.theme: Material.Dark
-    //    Material.accent: Material.Purple
 }

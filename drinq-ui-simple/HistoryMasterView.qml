@@ -5,7 +5,7 @@ import QtQuick.Controls.Material 2.12
 import QtQml 2.12
 import QtQuick.Layouts 1.12
 
-Item {
+Page {
 
     focus: true
 

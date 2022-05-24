@@ -62,12 +62,10 @@ Page {
             Layout.fillWidth: true
         }
 
-
         TabBar {
             background: Rectangle {
                     color: "plum"
             }
-
 
             Layout.fillWidth: true
 //            anchors.left: parent.left
@@ -86,7 +84,6 @@ Page {
                 //            display: AbstractButton.TextUnderIcon
             }
         }
-
     }
 
     SwipeView {

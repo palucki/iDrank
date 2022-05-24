@@ -24,8 +24,6 @@ Item {
                 onAccepted: {
                     console.log("Party name " + dialogText)
                     masterController.startParty(dialogText)
-                    pagesTitles[0] = dialogText
-                    contentFrame.replace("qrc:PartyDashboardView.qml")
                 }
             }
 
@@ -38,51 +36,6 @@ Item {
                 Material.background: Material.Orange
                 onClicked: dialog.openDialog()
             }
-
-            //            Row {
-            //                anchors.horizontalCenter: parent.horizontalCenter
-            //                //                width: parent.width
-            //                //                height: 60
-            //                spacing: 60
-
-            //                RoundButton {
-            //                    id: partyButton
-            //                    anchors.verticalCenter: parent.verticalCenter
-            //                    height: 100
-            //                    width: 100
-            //                    enabled: partyController.ui_party_started
-            //                    text: partyController.ui_party_started ? "End party" : "Start party"
-            //                    font.pointSize: 10
-            //                    Material.background: Material.Purple
-            //                    onClicked: {
-            //                        //                        toolbar.labelText = shotsTaken
-            //                        //                        drinkController.resetCounter()
-            //                        if(partyController.ui_party_started) {
-            //                            partyController.endParty()
-            //                        }
-            //                        else {
-            ////                            shotsTaken = 0
-            //                            partyController.startParty()
-            ////                            drinkController.setPartyId(partyController.currentPartyId())
-            //                        }
-            //                    }
-            //                }
-
-            //                RoundButton {
-            //                    id: typeButton
-            //                    anchors.verticalCenter: parent.verticalCenter
-            //                    height: 100
-            //                    width: 100
-            //                    text: "Drink type"
-            //                    font.pointSize: 10
-            //                    Material.background: Material.LightGreen
-            //                    onClicked: {
-            //                        console.log("Select drink type")
-            //                        contentFrame.pagesTitles.push(contentFrame.depth + " Drink properties")
-            //                        contentFrame.push("qrc:DrinkPropertiesView.qml")
-            //                    }
-            //                }
-            //            }
         }
     }
 }
