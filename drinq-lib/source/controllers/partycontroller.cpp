@@ -24,12 +24,10 @@ Q_DECLARE_METATYPE(QAbstractSeries *)
 Q_DECLARE_METATYPE(QAbstractAxis *)
 
 PartyController::PartyController(QObject *parent, drinq::controllers::DatabaseControllerInterface *db, drinq::controllers::DrinkController *drinksController)
-    : QObject(parent), m_db(db), m_drinkController(drinksController)
+    : QObject(parent), m_db(db), m_drinkController(drinksController), m_drinkProvider(db)
 {
     qRegisterMetaType<QAbstractSeries*>();
     qRegisterMetaType<QAbstractAxis*>();
-
-
 }
 
 PartyController::~PartyController()
@@ -38,7 +36,7 @@ PartyController::~PartyController()
 
 QQmlListProperty<drinq::models::Drink2> PartyController::ui_drinks()
 {
-    return QQmlListProperty<drinq::models::Drink2>(this, m_drinks);
+    return QQmlListProperty<drinq::models::Drink2>(this, &m_drinks);
 }
 
 unsigned int PartyController::ui_plot_max_value()
@@ -78,21 +76,23 @@ void PartyController::setPartyId(QVariant id)
     m_currentPartyStarted = current_party.m_started;
 
     m_currentPartyId = id;
-    auto drinks = m_db->getAll(drinq::models::Drink2{this}, "WHERE party_id = " + m_currentPartyId.toString());
+
+    auto drinks = m_drinkProvider.getUIDrinksList(id);
 
     qDebug() << "Found " << drinks.size() << " drinks. party started at " << m_currentPartyStarted;
 
     for(const auto& d : drinks)
     {
-        qDebug() << d.toJson();
-        m_drinks.append(new drinq::models::Drink2(d.toJson(), this));
+        QObject *object = qvariant_cast<QObject*>(d);
+        drinq::models::Drink2* drink = qobject_cast<drinq::models::Drink2*>(object);
+        m_drinks.append(drink);
     }
 
     std::sort(m_drinks.begin(), m_drinks.end(), [](drinq::models::Drink2* lhs, drinq::models::Drink2* rhs){
         return rhs->m_timestamp < lhs->m_timestamp;
     });
 
-     setDrinksCount(drinks.count());
+    setDrinksCount(drinks.count());
 }
 
 void PartyController::endParty()
@@ -188,7 +188,7 @@ void PartyController::update(QAbstractSeries* series, QAbstractSeries* start)
         }
 
         // Use replace instead of clear + append, it's optimized for performance
-        xySeries->replace(drink_points);
+//        xySeries->replace(drink_points);
         m_current_sum = current_sum;
 
         emit ui_plot_max_valueChanged();
@@ -196,9 +196,9 @@ void PartyController::update(QAbstractSeries* series, QAbstractSeries* start)
 
     if(start)
     {
-        QScatterSeries* scatter_series = static_cast<QScatterSeries*>(start);
+//        QScatterSeries* scatter_series = static_cast<QScatterSeries*>(start);
 //        scatter_series->replace(0, );
-        scatter_series->replace(QList<QPointF>{{static_cast<qreal>(m_currentPartyStarted.toMSecsSinceEpoch()) , 0.0}});
+//        scatter_series->replace(QList<QPointF>{{static_cast<qreal>(m_currentPartyStarted.toMSecsSinceEpoch()) , 0.0}});
     }
 }
 

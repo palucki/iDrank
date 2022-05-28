@@ -8,51 +8,14 @@ import QtQuick.Layouts 1.12
 import "qrc:/"
 
 Page {
-
-    //    header: ToolBar {
-    //        id: toolbar
-    //        property alias labelText : centerLabel.text
-
-    //        RowLayout {
-    //            anchors.fill: parent
-    //            ToolButton {
-    //                id: leftButton
-    //                text: contentFrame.depth > 1 ? "<" : ""
-    //                enabled: contentFrame.depth > 1
-    //                onClicked: navigationController.goBack()
-    //            }
-    //            Label  {
-    //                id: centerLabel
-    //                text: "Title"
-    //                //                maximumLength: 30
-    //                color: "white"
-    //                font.pointSize: 14
-    //                elide: Label.ElideRight
-    //                horizontalAlignment: Qt.AlignHCenter
-    //                verticalAlignment: Qt.AlignVCenter
-    //                Layout.fillWidth: true
-    //            }
-    //            ToolButton {
-    //                id: rightButton
-    //                text:  contentFrame.depth > 1 ? "" : qsTr("☰")
-    //                enabled: contentFrame.depth == 1
-    //                onClicked: {
-    //                    contentFrame.pagesTitles.push(contentFrame.depth + " Parties")
-    //                    contentFrame.push("qrc:PartiesView.qml")
-    //                }
-    //            }
-    //        }
-    //    }
-
-
     header: ColumnLayout {
         spacing: 0
         Label  {
             background: Rectangle {
                     color: "plum"
             }
-            id: centerLabel
-            text: "Title"
+            id: partyCenterLabel
+            text: "Party title"
             //                maximumLength: 30
             color: "black"
             font.pointSize: 14
@@ -104,7 +67,7 @@ Page {
         }
 
         PartyStatisticsView {
-            //set party id
+
         }
     }
 }

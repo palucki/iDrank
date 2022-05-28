@@ -41,6 +41,21 @@ Page {
 //        }
 //    }
 
+    header: Label  {
+            background: Rectangle {
+                    color: "plum"
+            }
+            id: historyCenterLabel
+            text: "Historia imprez"
+            //                maximumLength: 30
+            color: "black"
+            font.pointSize: 14
+            elide: Label.ElideRight
+            horizontalAlignment: Qt.AlignHCenter
+            verticalAlignment: Qt.AlignVCenter
+            Layout.fillWidth: true
+    }
+
     StackView {
         id: historyStackView
 

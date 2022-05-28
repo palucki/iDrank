@@ -12,6 +12,7 @@
 
 #include "framework/drinkprovider.h"
 #include "framework/databasetoastprovider.h"
+#include "framework/partyplotter.h"
 
 int main(int argc, char *argv[])
 {
@@ -42,6 +43,7 @@ int main(int argc, char *argv[])
     drinq::controllers::MasterController2 masterController(&app, &db, &partyController);
     DatabaseToastProvider toastProvider(db);
     DrinkProvider drinkProvider(&db);
+    PartyPlotter plotter(&app, &db);
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("drinkController", &drinkController);
@@ -49,6 +51,7 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("masterController", &masterController);
     engine.rootContext()->setContextProperty("toastProvider", &toastProvider);
     engine.rootContext()->setContextProperty("drinkProvider", &drinkProvider);
+    engine.rootContext()->setContextProperty("plotter", &plotter);
     engine.addImportPath("qrc:/");
     const QUrl url(QStringLiteral("qrc:/MasterView.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

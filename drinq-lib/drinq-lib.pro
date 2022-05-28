@@ -10,7 +10,8 @@ RCC_DIR = $$PWD/build/$$DESTINATION_PATH/.qrc
 UI_DIR = $$PWD/build/$$DESTINATION_PATH/.ui
 
 QT -= gui
-QT += core sql charts
+QT += core sql  #charts
+
 
 TARGET = drinq-lib
 TEMPLATE = lib
@@ -38,9 +39,11 @@ SOURCES += \
     source/data/stringdecorator.cpp \
     source/data/datetimedecorator.cpp \
     source/framework/command.cpp \
+    source/framework/partyplotter.cpp \
     source/framework/toast.cpp \
     source/framework/databasetoastprovider.cpp \
     source/framework/objectfactory.cpp \
+    source/framework/drinkprovider.cpp \
     source/models/address.cpp \
     source/models/appointment.cpp \
     source/models/clientsearch.cpp \
@@ -70,11 +73,13 @@ HEADERS += \
     source/data/datetimedecorator.h \
     source/drinq-lib_global.h \
     source/framework/command.h \
+    source/framework/partyplotter.h \
     source/framework/toast.h \
     source/framework/toastproviderinterface.h \
     source/framework/databasetoastprovider.h \
     source/framework/objectfactory.h \
     source/framework/objectfactoryinterface.h \
+    source/framework/drinkprovider.h \
     source/models/address.h \
     source/models/appointment.h \
     source/models/clientsearch.h \

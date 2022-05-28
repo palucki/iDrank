@@ -55,10 +55,11 @@ Item {
 
                         console.log("Party id " + modelData.ui_id)
 
-                        console.log("Size of drinks " + drinkProvider.getDrinksList(modelData.ui_id))
+                        console.log("Size of drinks " + drinkProvider.getUIDrinksList(modelData.ui_id))
 
                         historyStackView.push("qrc:PartyStatisticsView.qml",
-                                              {drinks: drinkProvider.getDrinksList(modelData.ui_id)})
+                                              {partyId: modelData.ui_id,
+                                               drinks: drinkProvider.getUIDrinksList(modelData.ui_id)})
                     }
                 }
             }

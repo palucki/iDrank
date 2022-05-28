@@ -8,17 +8,35 @@ import QtCharts 2.12
 
 Item {
     property string unit : "ml"
+    property int partyId: partyController.ui_current_party_id
+    property var drinks : drinkProvider.getUIDrinksList(partyId)//partyController.ui_drinks //drinksProvider.ui_drinks
+//    property alias
 
     function updateChart() {
-        partyController.update(chartView.series(0), chartView.series(2))
+        //adding start point
 
-        axisX.min = partyController.plot_min()
-        axisX.max = partyController.plot_max()
-        console.log("setting max to " + partyController.ui_plot_max_value + 20)
-        axisY1.max = partyController.ui_plot_max_value + 20
+//        plotter.setChartView()
+//        plotter.update(partyStartTime, drinks)
+
+//        partyController.update(chartView.series(0), chartView.series(2))
+
+        //addind drinks
+        //drinksProvider.update(chartView)
+
+//        axisX.min = partyController.plot_min()
+//        axisX.max = partyController.plot_max()
+//        console.log("setting max to " + partyController.ui_plot_max_value + 20)
+//        axisY1.max = partyController.ui_plot_max_value + 20
+
+        plotter.update(partyId)
     }
 
-    Component.onCompleted: updateChart()
+    Component.onCompleted: {
+        console.log("Party statistics onCompleted")
+        plotter.setSeries(chartView.series(0))
+        plotter.setAxes(axisX, axisY1)
+        updateChart()
+    }
 
     Connections {
         target: partyController
@@ -34,7 +52,7 @@ Item {
 
             Column {
                 anchors.horizontalCenter: parent.horizontalCenter
-                spacing: 30
+                spacing: 10
 
                 width: parent.width
 
@@ -46,7 +64,7 @@ Item {
 
                     ValueAxis {
                         id: axisY1
-                        min: 0
+//                        min: 0
 //                        max: 1000 /*partyController.ui_plot_max_value() + 10*/
                     }
 
@@ -97,11 +115,11 @@ Item {
                     id: drinksList
                     height: 200
                     width: parent.width
-                    anchors.margins: 20
+//                    anchors.margins: 20
 
                     clip: true
 
-                    model: partyController.ui_drinks
+                    model: drinks //partyController.ui_drinks
 
                     delegate: drinkTypeDelegate
                     spacing: 5
