@@ -10,6 +10,8 @@ Item {
     property string unit : "ml"
     property int partyId: partyController.ui_current_party_id
     property var drinks : drinkProvider.getUIDrinksList(partyId)//partyController.ui_drinks //drinksProvider.ui_drinks
+    property date partyStarted: partyController.ui_current_party_started
+    property date partyEnded
 //    property alias
 
     function updateChart() {
@@ -28,12 +30,12 @@ Item {
 //        console.log("setting max to " + partyController.ui_plot_max_value + 20)
 //        axisY1.max = partyController.ui_plot_max_value + 20
 
-        plotter.update(partyId)
+        plotter.update(partyId, partyStarted)
     }
 
     Component.onCompleted: {
         console.log("Party statistics onCompleted")
-        plotter.setSeries(chartView.series(0))
+        plotter.setSeries(chartView.series(0), chartView.series(2))
         plotter.setAxes(axisX, axisY1)
         updateChart()
     }
@@ -98,7 +100,7 @@ Item {
                     }
 
                     ScatterSeries {
-                        name: "Party start"
+                        name: "Party start / end"
                         axisX: axisX
                         axisY: axisY1
                         id: partyStart

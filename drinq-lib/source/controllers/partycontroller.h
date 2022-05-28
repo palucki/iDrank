@@ -33,6 +33,8 @@ class DRINQLIB_EXPORT PartyController : public QObject
 
     Q_PROPERTY(QVariant ui_current_party_id MEMBER m_currentPartyId NOTIFY ui_current_party_idChanged)
 
+    Q_PROPERTY(QDateTime ui_current_party_started MEMBER m_currentPartyStarted NOTIFY ui_current_party_startedChanged)
+
 public:
     explicit PartyController(QObject *parent = nullptr,
                              drinq::controllers::DatabaseControllerInterface* db = nullptr,
@@ -63,6 +65,7 @@ signals:
     void ui_drinksChanged();
     void ui_plot_max_valueChanged();
     void ui_current_party_idChanged();
+    void ui_current_party_startedChanged();
 
 private:
     void setDrinksCount(int count);

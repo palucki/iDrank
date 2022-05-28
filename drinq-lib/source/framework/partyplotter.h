@@ -5,6 +5,7 @@
 #include <QObject>
 //#include <QtCharts/QAbstractSeries>
 #include <QtCharts/QXYSeries>
+#include <QtCharts/QScatterSeries>
 #include <QtCharts/QDateTimeAxis>
 #include <QtCharts/QValueAxis>
 QT_CHARTS_USE_NAMESPACE
@@ -22,15 +23,14 @@ public:
     PartyPlotter(QObject* parent = nullptr, drinq::controllers::DatabaseControllerInterface *db = nullptr);
     virtual ~PartyPlotter();
 public slots:
-    void setSeries(QAbstractSeries* drinkSeries);
+    void setSeries(QAbstractSeries* drinkSeries, QAbstractSeries* partyStartEndSeries);
     void setAxes(QAbstractAxis* xAxis, QAbstractAxis* yAxis);
 
-    void update(QVariant partyId);
+    void update(QVariant partyId, QDateTime partyStarted, QDateTime partyEnded = {});
 
 private:
     DrinkProvider m_drinkProvider;
-//    QAbstractSeries* mPartyStartSeries;
-//    QAbstractSeries* mPartyEndSeries;
+    QScatterSeries* mPartyStartEndSeries{nullptr};
     QXYSeries* mDrinksSeries {nullptr};
     QDateTimeAxis* mDateTimeAxis{nullptr};
     QValueAxis* mValueAxis{nullptr};

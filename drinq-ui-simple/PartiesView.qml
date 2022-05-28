@@ -11,7 +11,7 @@ Item {
         color: "yellow"
 
         ListView {
-                                anchors.fill: parent
+            anchors.fill: parent
             id: partiesList
 //            height: 200
 //            width: parent.width
@@ -59,7 +59,9 @@ Item {
 
                         historyStackView.push("qrc:PartyStatisticsView.qml",
                                               {partyId: modelData.ui_id,
-                                               drinks: drinkProvider.getUIDrinksList(modelData.ui_id)})
+                                               drinks: drinkProvider.getUIDrinksList(modelData.ui_id),
+                                               partyStarted: modelData.ui_started,
+                                               partyEnded: modelData.ui_ended})
                     }
                 }
             }

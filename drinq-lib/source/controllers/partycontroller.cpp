@@ -77,29 +77,22 @@ void PartyController::setPartyId(QVariant id)
 
     m_currentPartyId = id;
 
-    auto drinks = m_drinkProvider.getUIDrinksList(id);
+    m_drinks = m_drinkProvider.getDrinksList(id);
 
-    qDebug() << "Found " << drinks.size() << " drinks. party started at " << m_currentPartyStarted;
-
-    for(const auto& d : drinks)
-    {
-        QObject *object = qvariant_cast<QObject*>(d);
-        drinq::models::Drink2* drink = qobject_cast<drinq::models::Drink2*>(object);
-        m_drinks.append(drink);
-    }
+    qDebug() << "Found " << m_drinks.size() << " drinks. party started at " << m_currentPartyStarted;
 
     std::sort(m_drinks.begin(), m_drinks.end(), [](drinq::models::Drink2* lhs, drinq::models::Drink2* rhs){
         return rhs->m_timestamp < lhs->m_timestamp;
     });
 
-    setDrinksCount(drinks.count());
+    setDrinksCount(m_drinks.count());
 }
 
 void PartyController::endParty()
 {
-    m_drinks.clear();
-    emit ui_drinksChanged();
-    setDrinksCount(0);
+//    m_drinks.clear();
+//    emit ui_drinksChanged();
+//    setDrinksCount(0);
 }
 
 void PartyController::setDrinksCount(int count)
