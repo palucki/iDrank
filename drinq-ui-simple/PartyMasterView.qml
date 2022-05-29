@@ -8,6 +8,19 @@ import QtQuick.Layouts 1.12
 import "qrc:/"
 
 Page {
+    focus: true
+    Keys.onPressed: {
+        console.log("presed in partymasterview")
+        if(event.key == Qt.Key_Back || event.key == Qt.Key_Backspace) {
+            if(dashboardTabBar.currentIndex == 0) {
+                Qt.quit()
+            } else {
+                dashboardTabBar.currentIndex = 0
+                event.accepted = true
+            }
+        }
+    }
+
     header: ColumnLayout {
         spacing: 0
         Label  {
@@ -31,17 +44,17 @@ Page {
             }
 
             Layout.fillWidth: true
-//            anchors.left: parent.left
-//            anchors.right: parent.right
             id: dashboardTabBar
             //        currentIndex: dashboardSwipeView.currentIndex
 
             TabButton {
+                focusPolicy: Qt.NoFocus
                 text: "Przeglad"
                 //            icon.source: "qrc:/history.svg"
                 //            display: AbstractButton.TextUnderIcon
             }
             TabButton {
+                focusPolicy: Qt.NoFocus
                 text: "Przebieg imprezy"
                 //            icon.source: "qrc:/history.svg"
                 //            display: AbstractButton.TextUnderIcon

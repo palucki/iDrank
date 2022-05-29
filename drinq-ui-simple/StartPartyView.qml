@@ -7,7 +7,7 @@ import QtQuick.Layouts 1.12
 
 import "qrc:/"
 
-Item {
+Page {
     Rectangle {
         anchors.fill: parent
         color: "skyblue"
@@ -28,6 +28,7 @@ Item {
             }
 
             RoundButton {
+                focusPolicy: Qt.NoFocus
                 id: addButton
                 anchors.horizontalCenter: parent.horizontalCenter
                 height: 200

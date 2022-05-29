@@ -8,6 +8,8 @@ import QtQuick.Controls.Material 2.12
 ApplicationWindow {
     id: root
 
+    onActiveFocusItemChanged: print("activeFocusItem", activeFocusItem)
+
     width: 480
     height: 720
     visible: true
@@ -24,17 +26,17 @@ ApplicationWindow {
         interactive: false
         currentIndex: masterTabBar.currentIndex
 
-        focus:true //required to allow capture of buttons
+        focus: true //required to allow capture of buttons
         Keys.onPressed: {
             if(event.key == Qt.Key_Back || event.key == Qt.Key_Backspace) {
-                if(swipeView.currentIndex == 0) {
-                    Qt.quit()
-                } else if(swipeView.currentIndex == 1) {
+                if(masterTabBar.currentIndex == 0) { // start party / party dashboard
+                    //ignore, handle in dashboard view
+                } else if(masterTabBar.currentIndex == 1) { // history master view
                     //ignore, handle in history master view
-                } else if(swipeView.currentIndex == 2) {
+                } else if(masterTabBar.currentIndex == 2) { //about
                     masterTabBar.currentIndex = 0
+                    event.accepted = true
                 }
-                event.accepted = true
             }
         }
 

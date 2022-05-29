@@ -6,7 +6,7 @@ import QtQml 2.12
 import QtQuick.Layouts 1.12
 import QtCharts 2.12
 
-Item {
+Page {
     property string unit : "ml"
     property int partyId: partyController.ui_current_party_id
     property var drinks : drinkProvider.getUIDrinksList(partyId)//partyController.ui_drinks //drinksProvider.ui_drinks
@@ -125,8 +125,6 @@ Item {
 
                     delegate: drinkTypeDelegate
                     spacing: 5
-
-//                    focus: true
                 }
 
                 Component {
@@ -152,6 +150,7 @@ Item {
                         //                    }
 
                         Button {
+                            focusPolicy: Qt.NoFocus
                             anchors.right: parent.right
                             text: "X"
                             onClicked: {

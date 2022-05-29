@@ -7,33 +7,7 @@ import QtQuick.Layouts 1.12
 
 import "qrc:/"
 
-//Page {
-//    header: TabBar {
-//        id: dashboardTabBar
-//        //        currentIndex: dashboardSwipeView.currentIndex
-
-//        TabButton {
-//            text: "Przeglad"
-//            //            icon.source: "qrc:/history.svg"
-//            //            display: AbstractButton.TextUnderIcon
-//        }
-//        TabButton {
-//            text: "Przebieg imprezy"
-//            //            icon.source: "qrc:/history.svg"
-//            //            display: AbstractButton.TextUnderIcon
-//        }
-//    }
-
-//    SwipeView {
-//        id: dashboardSwipeView
-//        interactive: false
-//        anchors.fill: parent
-//        currentIndex: dashboardTabBar.currentIndex
-//    }
-//}
-
-
-Item {
+Page {
     Timer {
         id: timeSinceLastDrinkCounter
         interval: 10000; running: true; repeat: true
@@ -213,6 +187,7 @@ Item {
 
 
             Button {
+                focusPolicy: Qt.NoFocus
                 id: addButton
                 anchors.horizontalCenter: parent.horizontalCenter
                 height: 50
@@ -256,6 +231,7 @@ Item {
                 spacing: 60
 
                 Button {
+                    focusPolicy: Qt.NoFocus
                     id: partyButton
                     anchors.verticalCenter: parent.verticalCenter
                     height: 50
