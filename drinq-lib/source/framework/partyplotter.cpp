@@ -69,11 +69,8 @@ void PartyPlotter::update(QVariant partyId, QDateTime partyStarted, QDateTime pa
     {
         qDebug() << "No drinks, skipping update in party plotter";
 
-        mDateTimeAxis->setMin(partyStarted.addSecs(-300));
-        mDateTimeAxis->setMax(QDateTime::currentDateTime().addSecs(+600));
-
-        mValueAxis->setMin(0);
-        mValueAxis->setMax(1000);
+        mDateTimeAxis->setRange(partyStarted.addSecs(-300), QDateTime::currentDateTime().addSecs(+600));
+        mValueAxis->setRange(0, 1000);
 
         startEndPoints.append({static_cast<qreal>(partyStarted.toMSecsSinceEpoch()),
                                static_cast<qreal>(0)});
@@ -85,11 +82,8 @@ void PartyPlotter::update(QVariant partyId, QDateTime partyStarted, QDateTime pa
     //drink provider fetches from newest
     std::reverse(drinks.begin(), drinks.end());
 
-    mDateTimeAxis->setMin(partyStarted.addSecs(-300));
-    mDateTimeAxis->setMax(drinks.last()->m_timestamp.addSecs(+600));
-
-    mValueAxis->setMin(0);
-    mValueAxis->setMax(1000);
+    mDateTimeAxis->setRange(partyStarted.addSecs(-300), drinks.last()->m_timestamp.addSecs(+600));
+    mValueAxis->setRange(0, 1000);
 
     qreal current_sum = 0.0;
     QVector<QPointF> drink_points;

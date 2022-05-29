@@ -269,7 +269,7 @@ Item {
                         if(masterController.ui_party_started) {
                             console.log("PartyDashboardView::endParty()")
                             masterController.endParty()
-                            contentFrame.replace("qrc:DashboardView.qml")
+//                            contentFrame.replace("qrc:DashboardView.qml")
                         }
                         else {
                             //                            shotsTaken = 0

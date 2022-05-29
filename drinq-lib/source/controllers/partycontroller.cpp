@@ -7,41 +7,13 @@
 
 #include <QDebug>
 
-//#include <QtCharts/QXYSeries>
-//#include <QtCharts/QAbstractAxis>
-//#include <QtCharts/QXYSeries>
-//#include <QtCharts/QAreaSeries>
-
-#include <QtCharts/QAbstractSeries>
-#include <QtCharts/QXYSeries>
-#include <QtCharts/QAreaSeries>
-#include <QtCharts/QLineSeries>
-#include <QtCharts/QScatterSeries>
-
-QT_CHARTS_USE_NAMESPACE
-
-Q_DECLARE_METATYPE(QAbstractSeries *)
-Q_DECLARE_METATYPE(QAbstractAxis *)
-
 PartyController::PartyController(QObject *parent, drinq::controllers::DatabaseControllerInterface *db, drinq::controllers::DrinkController *drinksController)
     : QObject(parent), m_db(db), m_drinkController(drinksController), m_drinkProvider(db)
 {
-    qRegisterMetaType<QAbstractSeries*>();
-    qRegisterMetaType<QAbstractAxis*>();
 }
 
 PartyController::~PartyController()
 {
-}
-
-QQmlListProperty<drinq::models::Drink2> PartyController::ui_drinks()
-{
-    return QQmlListProperty<drinq::models::Drink2>(this, &m_drinks);
-}
-
-unsigned int PartyController::ui_plot_max_value()
-{
-    return m_current_sum;
 }
 
 qint64 PartyController::secondsSinceLastDrink()
@@ -154,70 +126,6 @@ void PartyController::deleteDrink(const QVariant &id)
     }
 }
 
-void PartyController::update(QAbstractSeries* series, QAbstractSeries* start)
-{
-    if(series)
-    {
-        QAreaSeries* area_series = static_cast<QAreaSeries*>(series);
-//        QLineSeries* line_series = static_cast<QLineSeries*>(area_series->upperSeries());
-        QXYSeries *xySeries = static_cast<QXYSeries *>(area_series->upperSeries());
-//        m_index++;
-//        if (m_index > m_data.count() - 1)
-//            m_index = 0;
-
-        qreal current_sum = 0.0;
-        QVector<QPointF> drink_points;
-
-        if(!m_drinks.isEmpty())
-        {
-            drink_points.append({static_cast<qreal>(m_currentPartyStarted.toMSecsSinceEpoch()), static_cast<qreal>(0.0)});
-        }
-
-        for(auto rit = m_drinks.rbegin(); rit != m_drinks.rend(); ++rit)
-        {
-            current_sum += (*rit)->m_amount_ml;
-            drink_points.append({static_cast<qreal>((*rit)->m_timestamp.toMSecsSinceEpoch()),
-                                 static_cast<qreal>(current_sum)});
-        }
-
-        // Use replace instead of clear + append, it's optimized for performance
-//        xySeries->replace(drink_points);
-        m_current_sum = current_sum;
-
-        emit ui_plot_max_valueChanged();
-    }
-
-    if(start)
-    {
-//        QScatterSeries* scatter_series = static_cast<QScatterSeries*>(start);
-//        scatter_series->replace(0, );
-//        scatter_series->replace(QList<QPointF>{{static_cast<qreal>(m_currentPartyStarted.toMSecsSinceEpoch()) , 0.0}});
-    }
-}
-
-QDateTime PartyController::plot_min()
-{
-    //reversed order
-    //handle cases like no results, 1 result, multiple results, add some space from left and right, start with full hour etc.
-    if(m_drinks.isEmpty())
-    {
-        return QDateTime::currentDateTime().addSecs(-600);
-    }
-
-    return m_currentPartyStarted;
-
-//    return m_drinks.last()->m_timestamp;
-}
-
-QDateTime PartyController::plot_max()
-{
-    //reversed order
-    //handle cases like no results, 1 result, multiple results, add some space from left and right, start with full hour etc.
-
-    if(m_drinks.isEmpty())
-    {
-        return QDateTime::currentDateTime().addSecs(600);
-    }
-
-    return m_drinks.first()->m_timestamp;
-}
+//CRASHE
+//start / end party -> jak sie usunie je z  master controllera to powinno byc git?
+//party przebieg -> other party history -> add drink -> CRASH

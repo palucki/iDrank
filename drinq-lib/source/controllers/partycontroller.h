@@ -25,14 +25,7 @@ class DRINQLIB_EXPORT PartyController : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(int ui_drinks_count MEMBER m_current_drinks_count NOTIFY ui_drinks_countChanged)
-//    Q_PROPERTY(qint64 ui_seconds_since_last_drink READ secondsSinceLastDrink NOTIFY ui_secondsChanged)
-    Q_PROPERTY(QQmlListProperty<drinq::models::Drink2> ui_drinks READ ui_drinks NOTIFY ui_drinksChanged )
-
-    //for plotting the drinks consumption
-    Q_PROPERTY(unsigned int ui_plot_max_value MEMBER m_current_sum NOTIFY ui_plot_max_valueChanged)
-
     Q_PROPERTY(QVariant ui_current_party_id MEMBER m_currentPartyId NOTIFY ui_current_party_idChanged)
-
     Q_PROPERTY(QDateTime ui_current_party_started MEMBER m_currentPartyStarted NOTIFY ui_current_party_startedChanged)
 
 public:
@@ -40,9 +33,6 @@ public:
                              drinq::controllers::DatabaseControllerInterface* db = nullptr,
                              drinq::controllers::DrinkController* drinksController = nullptr);
     virtual ~PartyController();
-
-    Q_INVOKABLE QQmlListProperty<drinq::models::Drink2> ui_drinks();
-    Q_INVOKABLE unsigned int ui_plot_max_value();
 
 public slots:
 
@@ -55,15 +45,9 @@ public slots:
     void addDrink();
     void deleteDrink(const QVariant& id);
 
-    //plotting
-    void update(QAbstractSeries *series, QAbstractSeries *start);
-    QDateTime plot_min();
-    QDateTime plot_max();
-
 signals:
     void ui_drinks_countChanged(int count);
     void ui_drinksChanged();
-    void ui_plot_max_valueChanged();
     void ui_current_party_idChanged();
     void ui_current_party_startedChanged();
 
