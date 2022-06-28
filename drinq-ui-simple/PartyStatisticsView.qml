@@ -34,7 +34,7 @@ Page {
     }
 
     Component.onCompleted: {
-        console.log("Party statistics onCompleted")
+        console.log("Party statistics onCompleted series 0 " + chartView.series(0))
         plotter.setSeries(chartView.series(0), chartView.series(2))
         plotter.setAxes(axisX, axisY1)
         updateChart()
@@ -44,6 +44,8 @@ Page {
         target: partyController
         function onUi_drinksChanged()
         {
+            plotter.setSeries(chartView.series(0), chartView.series(2))
+            plotter.setAxes(axisX, axisY1)
             drinks = drinkProvider.getUIDrinksList(partyId)
             updateChart()
         }

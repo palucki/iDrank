@@ -79,6 +79,12 @@ void PartyPlotter::update(QVariant partyId, QDateTime partyStarted, QDateTime pa
         return;
     }
 
+    if(!partyStarted.isValid())
+    {
+        qDebug() << "Will not update invalid party started";
+        return;
+    }
+
     //drink provider fetches from newest
     std::reverse(drinks.begin(), drinks.end());
 
