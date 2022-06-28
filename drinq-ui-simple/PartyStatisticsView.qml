@@ -44,6 +44,7 @@ Page {
         target: partyController
         function onUi_drinksChanged()
         {
+            console.log("Drinks changed in party statistics view. party Id " + partyId)
             plotter.setSeries(chartView.series(0), chartView.series(2))
             plotter.setAxes(axisX, axisY1)
             drinks = drinkProvider.getUIDrinksList(partyId)

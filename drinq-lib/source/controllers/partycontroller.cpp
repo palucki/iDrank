@@ -57,14 +57,16 @@ void PartyController::setPartyId(QVariant id)
         return rhs->m_timestamp < lhs->m_timestamp;
     });
 
+    emit ui_current_party_idChanged();
+    emit ui_drinksChanged();
     setDrinksCount(m_drinks.count());
 }
 
 void PartyController::endParty()
 {
-//    m_drinks.clear();
-//    emit ui_drinksChanged();
-//    setDrinksCount(0);
+    m_drinks.clear();
+    emit ui_drinksChanged();
+    setDrinksCount(0);
 }
 
 void PartyController::setDrinksCount(int count)
@@ -128,4 +130,3 @@ void PartyController::deleteDrink(const QVariant &id)
 
 //CRASHE
 //start / end party -> jak sie usunie je z  master controllera to powinno byc git?
-//party przebieg -> other party history -> add drink -> CRASH

@@ -83,8 +83,6 @@ void MasterController2::startParty(const QString& name)
 {
     qDebug() << "Starting party " << name;
 
-    partyController->startParty();
-
     m_current_party = new drinq::models::Party2(this);
     setPartyName(name);
     if(databaseController->create(*m_current_party))
@@ -100,6 +98,7 @@ void MasterController2::startParty(const QString& name)
     }
 
     partyController->setPartyId(m_current_party->m_id);
+    partyController->startParty();
     m_party_started = isPartyStarted();
     emit ui_party_startedChanged();
     emit ui_partiesChanged();

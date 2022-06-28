@@ -75,6 +75,7 @@ void PartyPlotter::update(QVariant partyId, QDateTime partyStarted, QDateTime pa
         startEndPoints.append({static_cast<qreal>(partyStarted.toMSecsSinceEpoch()),
                                static_cast<qreal>(0)});
 
+        mDrinksSeries->clear();
         mPartyStartEndSeries->replace(startEndPoints);
         return;
     }
