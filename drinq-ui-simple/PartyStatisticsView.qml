@@ -42,7 +42,11 @@ Page {
 
     Connections {
         target: partyController
-        function onUi_drinksChanged(){  updateChart() }
+        function onUi_drinksChanged()
+        {
+            drinks = drinkProvider.getUIDrinksList(partyId)
+            updateChart()
+        }
     }
 
     ScrollView {
