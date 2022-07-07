@@ -12,6 +12,16 @@ QT_CHARTS_USE_NAMESPACE
 
 #include "framework/drinkprovider.h"
 
+/*!
+ *  This class is used for plotting party statistics (alcohol consumption over time).
+ *
+ *  The X axis is in range (party_start_time, last_alcohol_consumed_timestamp).
+ *  If there are no drinks consumed yet, the latter is replaced with current time.
+ *
+ *  The Y axis is in range (0, alcohol consumed) ml.
+ *  If there are no drinks consumed yet, the latter is replaced with 100.
+ */
+
 namespace drinq::controllers {
 class DatabaseControllerInterface;
 }

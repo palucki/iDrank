@@ -54,7 +54,7 @@ void PartyPlotter::setAxes(QAbstractAxis *xAxis, QAbstractAxis *yAxis)
     }
 }
 
-void PartyPlotter::update(QVariant partyId, QDateTime partyStarted, QDateTime partyEnded)
+void PartyPlotter::update(QVariant partyId, QDateTime party_started, QDateTime partyEnded)
 {
     if(!mDrinksSeries || !mPartyStartEndSeries || !mDateTimeAxis || !mValueAxis)
     {
@@ -62,65 +62,49 @@ void PartyPlotter::update(QVariant partyId, QDateTime partyStarted, QDateTime pa
         return;
     }
 
-    auto drinks = m_drinkProvider.getDrinksList(partyId);
-    QVector<QPointF> startEndPoints;
-
-    if(drinks.isEmpty())
+    if(!party_started.isValid())
     {
-        qDebug() << "No drinks, skipping update in party plotter";
-
-        mDateTimeAxis->setRange(partyStarted.addSecs(-300), QDateTime::currentDateTime().addSecs(+600));
-        mValueAxis->setRange(0, 1000);
-
-        startEndPoints.append({static_cast<qreal>(partyStarted.toMSecsSinceEpoch()),
-                               static_cast<qreal>(0)});
-
-        mDrinksSeries->clear();
-        mPartyStartEndSeries->replace(startEndPoints);
+        qDebug() << "Will not update invalid party started";
         return;
     }
 
-    if(!partyStarted.isValid())
+    auto drinks = m_drinkProvider.getDrinksList(partyId);
+    QVector<QPointF> startEndPoints;
+    const auto current_time = QDateTime::currentDateTime();
+
+    startEndPoints.append({static_cast<qreal>(party_started.toMSecsSinceEpoch()),
+                           static_cast<qreal>(0)});
+    if(drinks.isEmpty())
     {
-        qDebug() << "Will not update invalid party started";
+        mDateTimeAxis->setRange(party_started, current_time);
+        mValueAxis->setRange(0, 100);
+        mDrinksSeries->replace(startEndPoints);
         return;
     }
 
     //drink provider fetches from newest
     std::reverse(drinks.begin(), drinks.end());
 
-    mDateTimeAxis->setRange(partyStarted.addSecs(-300), drinks.last()->m_timestamp.addSecs(+600));
-    mValueAxis->setRange(0, 1000);
-
     qreal current_sum = 0.0;
     QVector<QPointF> drink_points;
 
-    drink_points.append({static_cast<qreal>(partyStarted.toMSecsSinceEpoch()),
+    drink_points.append({static_cast<qreal>(party_started.toMSecsSinceEpoch()),
                          static_cast<qreal>(0)});
-
-    startEndPoints.append({static_cast<qreal>(partyStarted.toMSecsSinceEpoch()),
-                           static_cast<qreal>(0)});
 
     for(const auto& d : drinks)
     {
-        current_sum += d->m_amount_ml;
-
+        //depending on the drink type either apply both points, or only the latter one
         drink_points.append({static_cast<qreal>(d->m_timestamp.toMSecsSinceEpoch()),
                              static_cast<qreal>(current_sum)});
-//        qDebug() << "Plotter added " << d->m_amount_ml << " ml at " << d->m_timestamp << " current sum " << current_sum;
-    }
 
-    qDebug() << " FIXME party ended " << partyEnded;
-
-    if(!partyEnded.isNull())
-    {
-        drink_points.append({static_cast<qreal>(partyEnded.toMSecsSinceEpoch()),
-                             static_cast<qreal>(current_sum)});
-        startEndPoints.append({static_cast<qreal>(partyEnded.toMSecsSinceEpoch()),
+        current_sum += d->m_amount_ml;
+        drink_points.append({static_cast<qreal>(d->m_timestamp.toMSecsSinceEpoch()),
                              static_cast<qreal>(current_sum)});
     }
+
+    mDateTimeAxis->setRange(party_started, drinks.last()->m_timestamp);
+    mValueAxis->setRange(0, current_sum);
 
     // Use replace instead of clear + append, it's optimized for performance
     mDrinksSeries->replace(drink_points);
-    mPartyStartEndSeries->replace(startEndPoints);
 }
