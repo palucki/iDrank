@@ -94,8 +94,8 @@ void PartyPlotter::update(QVariant partyId, QDateTime party_started, QDateTime p
     for(const auto& d : drinks)
     {
         //depending on the drink type either apply both points, or only the latter one
-        drink_points.append({static_cast<qreal>(d->m_timestamp.toMSecsSinceEpoch()),
-                             static_cast<qreal>(current_sum)});
+//        drink_points.append({static_cast<qreal>(d->m_timestamp.toMSecsSinceEpoch()),
+//                             static_cast<qreal>(current_sum)});
 
         current_sum += d->m_amount_ml;
         drink_points.append({static_cast<qreal>(d->m_timestamp.toMSecsSinceEpoch()),

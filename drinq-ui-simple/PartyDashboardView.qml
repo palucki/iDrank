@@ -40,7 +40,7 @@ Page {
         }
         else if(diff_secs <= 60)
         {
-            timeSinceLastDrinkTextField.text = "last consumed drink: < 1 minute ago"
+            timeSinceLastDrinkTextField.text = "last consumed drink: less than a minute ago"
         }
         else if(diff_secs <= 3600)
         {
