@@ -9,35 +9,15 @@ import QtCharts 2.12
 Page {
     property string unit : "ml"
     property int partyId: partyController.ui_current_party_id
-    property var drinks : drinkProvider.getUIDrinksList(partyId)//partyController.ui_drinks //drinksProvider.ui_drinks
+    property var drinks : drinkProvider.getUIDrinksList(partyId)
     property date partyStarted: partyController.ui_current_party_started
     property date partyEnded
-//    property alias
-
-    function updateChart() {
-        //adding start point
-
-//        plotter.setChartView()
-//        plotter.update(partyStartTime, drinks)
-
-//        partyController.update(chartView.series(0), chartView.series(2))
-
-        //addind drinks
-        //drinksProvider.update(chartView)
-
-//        axisX.min = partyController.plot_min()
-//        axisX.max = partyController.plot_max()
-//        console.log("setting max to " + partyController.ui_plot_max_value + 20)
-//        axisY1.max = partyController.ui_plot_max_value + 20
-
-        plotter.update(partyId, partyStarted)
-    }
 
     Component.onCompleted: {
         console.log("Party statistics onCompleted series 0 " + chartView.series(0))
         plotter.setSeries(chartView.series(0), chartView.series(2))
         plotter.setAxes(axisX, axisY1)
-        updateChart()
+        plotter.update(partyId, partyStarted)
     }
 
     Connections {
@@ -48,7 +28,7 @@ Page {
             plotter.setSeries(chartView.series(0), chartView.series(2))
             plotter.setAxes(axisX, axisY1)
             drinks = drinkProvider.getUIDrinksList(partyId)
-            updateChart()
+            plotter.update(partyId, partyStarted)
         }
     }
 
@@ -73,14 +53,10 @@ Page {
 
                     ValueAxis {
                         id: axisY1
-//                        min: 0
-//                        max: 1000 /*partyController.ui_plot_max_value() + 10*/
                     }
 
                     DateTimeAxis{
                         id: axisX
-                        //                    min: partyController.plot_min()
-                        //                    max: partyController.plot_max()
                         labelsAngle: 270
                         format: "ddd hh:mm"
                     }
@@ -90,9 +66,6 @@ Page {
                         axisX: axisX
                         axisY: axisY1
                         upperSeries: consumption
-                        //                    upperSeries: /*consumption*/ LineSeries {
-                        //                        id: consumption
-                        //                    }
                     }
 
                     LineSeries {
@@ -100,7 +73,6 @@ Page {
                         axisX: axisX
                         axisY: axisY1
                         id: consumption
-                        pointsVisible: true
                         color: "red"
                         width: 2
 
@@ -114,22 +86,16 @@ Page {
                         color: "green"
                         pointsVisible: true
                         markerSize: 20
-
                     }
 
                 }
 
                 ListView {
-                    //                    anchors.fill: parent
                     id: drinksList
                     height: 200
                     width: parent.width
-//                    anchors.margins: 20
-
                     clip: true
-
-                    model: drinks //partyController.ui_drinks
-
+                    model: drinks
                     delegate: drinkTypeDelegate
                     spacing: 5
                 }
@@ -168,49 +134,6 @@ Page {
                     }
                 }
             }
-
-
-            //        Column {
-            //            anchors.centerIn: parent
-            //            spacing: 30
-
-
-
-            //            Row {
-            //                anchors.horizontalCenter: parent.horizontalCenter
-            //                //                width: parent.width
-            //                //                height: 60
-            //                spacing: 60
-
-            //                RoundButton {
-            //                    id: partyButton
-            //                    anchors.verticalCenter: parent.verticalCenter
-            //                    height: 100
-            //                    width: 100
-            //                    text: "Cancel"
-            //                    font.pointSize: 10
-            //                    Material.background: Material.Purple
-            //                    onClicked: {
-            //                        console.log("Cancel")
-            //                        navigationController.goBack()
-            //                    }
-            //                }
-
-            //                RoundButton {
-            //                    id: typeButton
-            //                    anchors.verticalCenter: parent.verticalCenter
-            //                    height: 100
-            //                    width: 100
-            //                    text: "Chart"
-            //                    font.pointSize: 10
-            //                    Material.background: Material.LightGreen
-            //                    onClicked: {
-            //                        contentFrame.pagesTitles.push(contentFrame.depth + " Chart")
-            //                        contentFrame.push("qrc:PartyStatisticsView.qml")
-            //                    }
-            //                }
-            //            }
-            //        }
         }
     }
 }
