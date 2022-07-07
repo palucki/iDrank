@@ -20,7 +20,7 @@ qint64 PartyController::secondsSinceLastDrink()
 {
     if(m_drinks.empty())
     {
-        return 0;
+        return -1;
     }
 
     //because sorted in reverse order

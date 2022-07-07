@@ -31,13 +31,14 @@ Page {
         function onUi_drinksChanged(){  updateTimeSinceLastDrink() }
     }
 
-
     function updateTimeSinceLastDrink() {
         var diff_secs = partyController.secondsSinceLastDrink()
 
-        console.log("seconds since last " + diff_secs)
-
-        if(diff_secs <= 60)
+        if(diff_secs === -1)
+        {
+            timeSinceLastDrinkTextField.text = ""
+        }
+        else if(diff_secs <= 60)
         {
             timeSinceLastDrinkTextField.text = "last consumed drink: < 1 minute ago"
         }
