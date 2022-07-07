@@ -56,6 +56,7 @@ Page {
             TabButton {
                 focusPolicy: Qt.NoFocus
                 text: "Przebieg imprezy"
+                enabled: partyController.ui_drinks_count > 0
                 //            icon.source: "qrc:/history.svg"
                 //            display: AbstractButton.TextUnderIcon
             }

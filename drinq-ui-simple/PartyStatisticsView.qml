@@ -17,6 +17,7 @@ Page {
         console.log("Party statistics onCompleted series 0 " + chartView.series(0))
         plotter.setSeries(chartView.series(0), chartView.series(2))
         plotter.setAxes(axisX, axisY1)
+        drinks = drinkProvider.getUIDrinksList(partyId)
         plotter.update(partyId, partyStarted)
     }
 

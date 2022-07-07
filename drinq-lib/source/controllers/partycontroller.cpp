@@ -33,6 +33,7 @@ qint64 PartyController::secondsSinceLastDrink()
 void PartyController::startParty()
 {
     m_drinks.clear();
+    //required to update date time axis only?
     emit ui_drinksChanged();
     setDrinksCount(0);
 }
@@ -59,6 +60,7 @@ void PartyController::setPartyId(QVariant id)
 
     emit ui_current_party_idChanged();
     emit ui_drinksChanged();
+    emit ui_current_party_startedChanged();
     setDrinksCount(m_drinks.count());
 }
 
