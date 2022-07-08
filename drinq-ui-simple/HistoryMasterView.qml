@@ -11,7 +11,7 @@ Page {
 
     function goBack(event) {
         console.log("Go back function in history master view ")
-
+        console.log("History stackView dept " + historyStackView.depth)
         //when party summary on
         if(historyStackView.depth >= 2) {
             console.log("Executing pop")
@@ -19,8 +19,8 @@ Page {
         }
         else {
             masterTabBar.currentIndex = 0
-            event.accepted = true
         }
+        event.accepted = true
 
         //            else
         //                Qt.quit()
