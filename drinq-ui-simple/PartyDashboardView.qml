@@ -162,6 +162,8 @@ Page {
                         anchors.centerIn: parent
                         font.pixelSize: 10
                         text: "(" + index +") " + modelData.ui_name
+                        wrapMode: Text.WordWrap
+                        width: parent.width
                     }
 
                     MouseArea {

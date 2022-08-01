@@ -122,18 +122,32 @@ class DRINQLIB_EXPORT DrinkType : public data::EntityLite
     Q_PROPERTY(QString ui_name MEMBER m_name CONSTANT)
     Q_PROPERTY(unsigned int ui_default_amount_ml MEMBER m_default_amount_ml CONSTANT)
 public:
+
+    //If consumption type = Shot, add two points immidiately at the timestamp, first with current amount,
+    //another with current amount increased by the drink amount. This will generate "step" series.
+    //If consumption type = Long, add point only at the timestamp with current amount, but increase current amount after
+    //so it will be printed with next drink.
+    //TODO: If it is the last drink, then the information is lost
+    enum ConsumptionType
+    {
+        Shot = 0,
+        Long = 1
+    };
+
     explicit DrinkType(QObject* parent = nullptr);
     DrinkType(const QJsonObject& json, QObject* parent = nullptr);
     ~DrinkType();
 
     void setName(const QString& name) { m_data["name"] = name; m_name = name;}
     void setDefaultAmountMl(unsigned int a) { m_data["default_amount_ml"] = a; m_default_amount_ml = a; }
+    void setConsumptionType(ConsumptionType type) { m_data["consumption_type"] = type; m_consumption_type = type;};
 
     void update(const QJsonObject& src) override;
 
 public:
     QString m_name{};
     unsigned int m_default_amount_ml{0};
+    ConsumptionType m_consumption_type{ConsumptionType::Shot};
 };
 
 

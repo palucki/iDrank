@@ -78,7 +78,7 @@ private:
 
         QStringList queries {
             "CREATE TABLE IF NOT EXISTS party (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, started DATETIME, ended DATETIME)",
-            "CREATE TABLE IF NOT EXISTS drink_type (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, default_amount_ml INTEGER)",
+            "CREATE TABLE IF NOT EXISTS drink_type (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, default_amount_ml INTEGER, consumption_type INTEGER)",
             "CREATE TABLE IF NOT EXISTS drink (id INTEGER PRIMARY KEY AUTOINCREMENT, drink_type_id INTEGER, party_id INTEGER, timestamp DATETIME, amount_ml INTEGER, FOREIGN KEY(drink_type_id) REFERENCES drink_type(id) ON DELETE CASCADE, FOREIGN KEY(party_id) REFERENCES party(id) ON DELETE CASCADE)",
         };
 

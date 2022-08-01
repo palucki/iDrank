@@ -6,6 +6,8 @@
 #include <QtCharts/QLineSeries>
 #include <QtCharts/QScatterSeries>
 
+#include "controllers/databasecontrollerinterface.h"
+
 QT_CHARTS_USE_NAMESPACE
 
 Q_DECLARE_METATYPE(QAbstractSeries *)
@@ -13,7 +15,8 @@ Q_DECLARE_METATYPE(QAbstractAxis *)
 
 PartyPlotter::PartyPlotter(QObject *parent, drinq::controllers::DatabaseControllerInterface *db)
     : QObject(parent),
-      m_drinkProvider(db)
+      m_drinkProvider(db),
+      m_database_controller(db)
 {
     qRegisterMetaType<QAbstractSeries*>();
     qRegisterMetaType<QAbstractAxis*>();
@@ -91,15 +94,32 @@ void PartyPlotter::update(QVariant partyId, QDateTime party_started, QDateTime p
     drink_points.append({static_cast<qreal>(party_started.toMSecsSinceEpoch()),
                          static_cast<qreal>(0)});
 
+    const auto drink_types = m_database_controller->getAll(drinq::models::DrinkType{this});
+    QMap<int, drinq::models::DrinkType::ConsumptionType> drink_type_map;
+    for(const auto& dt : drink_types)
+    {
+        drink_type_map.insert(dt.m_data["id"].toInt(),
+                              static_cast<drinq::models::DrinkType::ConsumptionType>(dt.m_data["consumption_type"].toInt()));
+    }
+
     for(const auto& d : drinks)
     {
-        //depending on the drink type either apply both points, or only the latter one
-//        drink_points.append({static_cast<qreal>(d->m_timestamp.toMSecsSinceEpoch()),
-//                             static_cast<qreal>(current_sum)});
-
-        current_sum += d->m_amount_ml;
-        drink_points.append({static_cast<qreal>(d->m_timestamp.toMSecsSinceEpoch()),
-                             static_cast<qreal>(current_sum)});
+        const auto consumption_type = drink_type_map[d->m_drink_type_id.toInt()];
+        qDebug() << "Plotting drink types " << d->m_id << " with consumption type " << d->m_data["consumption_type"].toInt();
+        if(consumption_type == drinq::models::DrinkType::ConsumptionType::Shot)
+        {
+            drink_points.append({static_cast<qreal>(d->m_timestamp.toMSecsSinceEpoch()),
+                                 static_cast<qreal>(current_sum)});
+            current_sum += d->m_amount_ml;
+            drink_points.append({static_cast<qreal>(d->m_timestamp.toMSecsSinceEpoch()),
+                                 static_cast<qreal>(current_sum)});
+        }
+        else
+        {
+            drink_points.append({static_cast<qreal>(d->m_timestamp.toMSecsSinceEpoch()),
+                                 static_cast<qreal>(current_sum)});
+            current_sum += d->m_amount_ml;
+        }
     }
 
     mDateTimeAxis->setRange(party_started, drinks.last()->m_timestamp);

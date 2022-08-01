@@ -224,6 +224,7 @@ DrinkType::DrinkType(QObject *parent) : EntityLite("drink_type", parent)
 {
     addField("name", m_name);
     addField("default_amount_ml", m_default_amount_ml);
+    addField("consumption_type", m_consumption_type);
 }
 
 DrinkType::DrinkType(const QJsonObject &json, QObject *parent) : DrinkType(parent)
@@ -240,6 +241,7 @@ void DrinkType::update(const QJsonObject &src)
     setId(src["id"].toVariant());
     setName(src["name"].toString());
     setDefaultAmountMl(src["default_amount_ml"].toInt());
+    setConsumptionType(static_cast<ConsumptionType>(src["consumption_type"].toInt()));
 }
 
 }}

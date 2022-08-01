@@ -138,25 +138,31 @@ void DrinkController::setCurrentDrinkProperties(int index, unsigned int amount_m
 
 void DrinkController::createDrinkTypes()
 {
-    QVector<QPair<QString, unsigned int>> drink_types = {
-        {"wine", 150},
-        {"beer", 500},
-        {"vodka", 25},
-        {"vodka", 50}
+    using ConsumptionType = drinq::models::DrinkType::ConsumptionType;
+
+    QVector<std::tuple<QString, unsigned int, ConsumptionType>> drink_types = {
+        {"wine", 150, ConsumptionType::Long},
+        {"beer", 500, ConsumptionType::Long},
+        {"vodka", 25, ConsumptionType::Shot},
+        {"vodka", 50, ConsumptionType::Long}
     };
 
     for(auto dt : drink_types)
     {
         drinq::models::DrinkType newDrink;
-        newDrink.setName(dt.first);
-        newDrink.setDefaultAmountMl(dt.second);
+        newDrink.setName(std::get<0>(dt));
+        newDrink.setDefaultAmountMl(std::get<1>(dt));
+        newDrink.setConsumptionType(std::get<2>(dt));
+
         if(m_db->create(newDrink))
         {
-            qDebug() << "Created drink type " << dt.first << " with default amount " << dt.second;
+            qDebug() << "Created drink type " << std::get<0>(dt)
+                     << " with default amount " << std::get<1>(dt)
+                     << " and consumption type " << (std::get<2>(dt) == ConsumptionType::Long ? "Long" : "Shot");
         }
         else
         {
-            qDebug() << "Creation of drink type " << dt.first << " failed";
+            qDebug() << "Creation of drink type " << std::get<0>(dt) << " failed";
         }
     }
 }

@@ -40,6 +40,7 @@ public slots:
 
 private:
     DrinkProvider m_drinkProvider;
+    drinq::controllers::DatabaseControllerInterface* m_database_controller{nullptr};
     QScatterSeries* mPartyStartEndSeries{nullptr};
     QXYSeries* mDrinksSeries {nullptr};
     QDateTimeAxis* mDateTimeAxis{nullptr};
