@@ -36,7 +36,7 @@ public slots:
     void setSeries(QAbstractSeries* drinkSeries, QAbstractSeries* partyStartEndSeries);
     void setAxes(QAbstractAxis* xAxis, QAbstractAxis* yAxis);
 
-    void update(QVariant partyId, QDateTime partyStarted, QDateTime partyEnded = {});
+    void update(QVariant partyId);
 
 private:
     DrinkProvider m_drinkProvider;

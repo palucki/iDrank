@@ -57,13 +57,21 @@ void PartyPlotter::setAxes(QAbstractAxis *xAxis, QAbstractAxis *yAxis)
     }
 }
 
-void PartyPlotter::update(QVariant partyId, QDateTime party_started, QDateTime partyEnded)
+void PartyPlotter::update(QVariant partyId)
 {
     if(!mDrinksSeries || !mPartyStartEndSeries || !mDateTimeAxis || !mValueAxis)
     {
         qDebug() << "No series intialized, skipping update in PartyPlotter";
         return;
     }
+
+    auto* party = new drinq::models::Party2(this);
+    party->setId(partyId);
+    m_database_controller->get(*party);
+    party->update(party->toJson());
+
+    QDateTime party_started = party->m_started;
+    QDateTime partyEnded = party->m_ended;
 
     if(!party_started.isValid())
     {
@@ -120,6 +128,13 @@ void PartyPlotter::update(QVariant partyId, QDateTime party_started, QDateTime p
                                  static_cast<qreal>(current_sum)});
             current_sum += d->m_amount_ml;
         }
+    }
+
+    if(!partyEnded.isNull() &&
+       drink_type_map[drinks.last()->m_drink_type_id.toInt()] == drinq::models::DrinkType::ConsumptionType::Long)
+    {
+        drink_points.append({static_cast<qreal>(partyEnded.toMSecsSinceEpoch()),
+                             static_cast<qreal>(current_sum)});
     }
 
     mDateTimeAxis->setRange(party_started, drinks.last()->m_timestamp);

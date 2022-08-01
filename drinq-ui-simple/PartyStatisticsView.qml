@@ -10,7 +10,7 @@ Page {
     property string unit : "ml"
     property int partyId: partyController.ui_current_party_id
     property var drinks : drinkProvider.getUIDrinksList(partyId)
-    property date partyStarted: partyController.ui_current_party_started
+//    property date partyStarted: partyController.ui_current_party_started
     property date partyEnded
 
     Component.onCompleted: {
@@ -18,7 +18,7 @@ Page {
         plotter.setSeries(chartView.series(0), chartView.series(2))
         plotter.setAxes(axisX, axisY1)
         drinks = drinkProvider.getUIDrinksList(partyId)
-        plotter.update(partyId, partyStarted)
+        plotter.update(partyId)
     }
 
     Connections {
@@ -29,7 +29,7 @@ Page {
             plotter.setSeries(chartView.series(0), chartView.series(2))
             plotter.setAxes(axisX, axisY1)
             drinks = drinkProvider.getUIDrinksList(partyId)
-            plotter.update(partyId, partyStarted)
+            plotter.update(partyId)
         }
     }
 
