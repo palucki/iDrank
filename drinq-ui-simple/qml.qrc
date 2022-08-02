@@ -15,5 +15,6 @@
         <file>StartPartyView.qml</file>
         <file>PartyMasterView.qml</file>
         <file>HistoryMasterView.qml</file>
+        <file>PartyDashboardMasterView.qml</file>
     </qresource>
 </RCC>

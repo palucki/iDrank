@@ -8,8 +8,8 @@ import QtQuick.Layouts 1.12
 import "qrc:/"
 Page {
     Keys.onPressed: {
+        console.log("presed in dashboard view " + stackLayout.currentIndex)
         if(event.key == Qt.Key_Back || event.key == Qt.Key_Backspace) {
-            console.log("presed in dashboard view " + stackLayout.currentIndex)
             if(stackLayout.currentIndex == 0) {
                 Qt.quit()
             }

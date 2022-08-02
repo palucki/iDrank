@@ -145,6 +145,29 @@ Page {
                 delegate: drinkTypeDelegate
                 spacing: 5
 
+                footer:
+                    Rectangle {
+                        width: 40 //drinkTypesList.width
+                        height: 40
+                        color: "transparent"
+
+                        Text {
+                            id: textItem
+                            anchors.centerIn: parent
+                            font.pixelSize: 10
+                            text: "( Add new )"
+                            wrapMode: Text.WordWrap
+                            width: parent.width
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                console.log("Will add new drink type")
+                                partyDashboardStackView.push("qrc:DrinkPropertiesView.qml")
+                            }
+                        }
+                    }
 //                focus: true
             }
 
@@ -159,6 +182,7 @@ Page {
                     border.color: Qt.lighter(color, 1.1)
 
                     Text {
+                        id: textItem
                         anchors.centerIn: parent
                         font.pixelSize: 10
                         text: "(" + index +") " + modelData.ui_name
@@ -169,6 +193,7 @@ Page {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: drinkTypesList.currentIndex = index
+                        onDoubleClicked: console.log("editing index " + index)
                     }
                 }
             }
@@ -206,25 +231,6 @@ Page {
                     dialog.openDialog(toastProvider.randomToast().ui_text)
                     partyController.addDrink()
                 }
-
-//                Column {
-//                    anchors.centerIn: parent
-//                    Text {
-//                        text: "Add "
-//                        anchors.horizontalCenter: parent.horizontalCenter
-//                        font.pointSize: 20
-//                    }
-
-//                    Text {
-//                        text: drinkController.ui_currentDrinkType
-//                        anchors.horizontalCenter: parent.horizontalCenter
-//                    }
-
-//                    Text {
-//                        text: drinkController.ui_currentDrinkAmountMl + "ml"
-//                        anchors.horizontalCenter: parent.horizontalCenter
-//                    }
-//                }
             }
 
             Row {

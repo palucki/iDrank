@@ -28,11 +28,14 @@ ApplicationWindow {
 
         focus: true //required to allow capture of buttons
         Keys.onPressed: {
+            console.log("pressed in MasterView")
             if(event.key == Qt.Key_Back || event.key == Qt.Key_Backspace) {
                 if(masterTabBar.currentIndex == 0) { // start party / party dashboard
                     //ignore, handle in dashboard view
+                    console.log("--> handled in DashboardView")
                 } else if(masterTabBar.currentIndex == 1) { // history master view
                     //ignore, handle in history master view
+                    console.log("--> handed in HistoryMasterView")
                 } else if(masterTabBar.currentIndex == 2) { //about
                     masterTabBar.currentIndex = 0
                     event.accepted = true

@@ -6,9 +6,6 @@ import QtQml 2.12
 import QtQuick.Layouts 1.12
 
 Page {
-
-    focus: true
-
     function goBack(event) {
         console.log("Go back function in history master view ")
         console.log("History stackView dept " + historyStackView.depth)
@@ -63,19 +60,5 @@ Page {
         clip: true
 
         initialItem: "qrc:PartiesView.qml"
-
-//        focus: true
-
-
-
-//        Keys.onBackPressed: goBack()
-
-//        Keys.onPressed: {
-////        dev version
-//            if(event.key == Qt.Key_Back || event.key == Qt.Key_Backspace)
-//                goBack()
-
-//            console.log("Pressed key " + event.key)
-//        }
     }
 }

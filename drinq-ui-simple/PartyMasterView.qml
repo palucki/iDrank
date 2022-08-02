@@ -64,24 +64,16 @@ Page {
     }
 
     SwipeView {
+        focus: true
         id: dashboardSwipeView
         interactive: false
         anchors.fill: parent
         currentIndex: dashboardTabBar.currentIndex
 
-        onCurrentIndexChanged: {
-            if(currentIndex == 1)
-            {
-//                partyController.setPartyId()
-            }
-        }
-
-        PartyDashboardView {
-
+        PartyDashboardMasterView {
         }
 
         PartyStatisticsView {
-
         }
     }
 }
