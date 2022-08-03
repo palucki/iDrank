@@ -192,7 +192,10 @@ Page {
 
                     MouseArea {
                         anchors.fill: parent
-                        onClicked: drinkTypesList.currentIndex = index
+                        onClicked: {
+                            drinkTypesList.currentIndex = index
+                            amountInput.value = drinkController.ui_drinkTypes[index].ui_default_amount_ml
+                        }
                         onDoubleClicked: {
                             console.log("editing index " + index)
                             partyDashboardStackView.push("qrc:DrinkPropertiesView.qml",
