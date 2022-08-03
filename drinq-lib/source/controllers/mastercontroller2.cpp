@@ -116,5 +116,17 @@ void MasterController2::endParty()
     emit ui_partiesChanged();
 }
 
+qint64 MasterController2::secondsSinceLastDrink()
+{
+    //This assumes drink time cannot be changed and last id is the most recent
+    const QVariant last_drink_id = databaseController->getLastId("drink");
+    auto* drink = new drinq::models::Drink2(this);
+    drink->setId(last_drink_id);
+    databaseController->get(*drink);
+    drink->update(drink->toJson());
+    const qint64 diff_sec = drink->m_timestamp.secsTo(QDateTime::currentDateTime());
+    return diff_sec;
+}
+
 }
 }

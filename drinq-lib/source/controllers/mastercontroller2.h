@@ -33,6 +33,7 @@ public:
 public slots:
     void startParty(const QString& name);
     void endParty();
+    qint64 secondsSinceLastDrink();
 
 signals:
     void ui_partiesChanged();

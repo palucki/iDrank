@@ -8,6 +8,41 @@ import QtQuick.Layouts 1.12
 import "qrc:/"
 
 Page {
+    function updateTimeSinceLastDrink() {
+        var diff_secs = masterController.secondsSinceLastDrink()
+
+        if(diff_secs === -1)
+        {
+            timeSinceLastDrinkTextField.text = ""
+        }
+        else if(diff_secs <= 60)
+        {
+            timeSinceLastDrinkTextField.text = "last consumed drink: less than a minute ago"
+        }
+        else if(diff_secs <= 3600)
+        {
+            var diff_mins = diff_secs / 60
+            timeSinceLastDrinkTextField.text = "last consumed drink: " + parseInt(diff_mins) + " minutes ago"
+        }
+        else
+        {
+            var diff_hours = diff_secs / 3600
+            timeSinceLastDrinkTextField.text = "last consumed drink: " + parseInt(diff_hours) + " hour ago"
+        }
+    }
+
+    Timer {
+        id: timeSinceLastPartyCounter
+        interval: 60000; running: true; repeat: true
+        onTriggered: {
+            updateTimeSinceLastDrink()
+        }
+    }
+
+    Component.onCompleted : {
+        updateTimeSinceLastDrink()
+    }
+
     Rectangle {
         anchors.fill: parent
         color: "skyblue"
@@ -24,6 +59,22 @@ Page {
                 onAccepted: {
                     console.log("Party name " + dialogText)
                     masterController.startParty(dialogText)
+                }
+            }
+
+            Rectangle {
+                height: 50
+                width: 200
+                anchors.horizontalCenter: parent.horizontalCenter
+                Column {
+                    spacing: 5
+                    anchors.horizontalCenter: parent.horizontalCenter
+
+                    Text {
+                        id: timeSinceLastDrinkTextField
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text: "PLACEHOLDER"
+                    }
                 }
             }
 
