@@ -6,8 +6,33 @@ import DrinQ 1.0
 import QtQml 2.12
 import QtQuick.Layouts 1.12
 
-Item {
+Page {
     property DrinkType drinkType;
+
+    header: Rectangle {
+        RowLayout {
+            anchors.fill: parent
+            ToolButton {
+                text: qsTr("‹")
+                onClicked: partyDashboardStackView.pop()
+            }
+            Label {
+                text: "Edytuj typ alkoholu"
+                elide: Label.ElideRight
+                horizontalAlignment: Qt.AlignHCenter
+                verticalAlignment: Qt.AlignVCenter
+                Layout.fillWidth: true
+            }
+            ToolButton {
+                text: qsTr("Zapisz")
+                onClicked: {
+                    drinkController.addDrinkType(drinkTypeName.text, drinkTypeDefaultAmount.value,
+                                                 drinkTypeShot.checked ? DrinkType.Shot : DrinkType.Long)
+                    partyDashboardStackView.pop()
+                }
+            }
+        }
+    }
 
     Rectangle {
         anchors.fill: parent
@@ -23,6 +48,7 @@ Item {
             }
 
             TextInput {
+                id: drinkTypeName
                 width: parent.width * 0.75
                 text: drinkType ? drinkType.ui_name : "Name"
             }
@@ -33,6 +59,7 @@ Item {
             }
 
             SpinBox {
+                id: drinkTypeDefaultAmount
                 width: parent.width * 0.75
                 stepSize: 10
                 from: 0
@@ -48,10 +75,12 @@ Item {
 
             RowLayout {
                 RadioButton {
+                    id: drinkTypeShot
                     checked: drinkType ? drinkType.ui_consumption_type === DrinkType.Shot : true
                     text: qsTr("Shot")
                 }
                 RadioButton {
+                    id: drinkTypeLong
                     checked: drinkType ? drinkType.ui_consumption_type === DrinkType.Long : false
                     text: qsTr("Drink")
                 }

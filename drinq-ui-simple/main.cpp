@@ -35,6 +35,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<drinq::models::Drink2>("DrinQ", 1, 0, "Drink2");
     qmlRegisterType<drinq::models::Party2>("DrinQ", 1, 0, "Party2");
     qmlRegisterType<Toast>("DrinQ", 1, 0, "Toast");
+    qRegisterMetaType<drinq::models::DrinkType::ConsumptionType>();
 
     QSettings settings; //HKEY_CURRENT_USER\SOFTWARE\Apps\iDrank
     drinq::controllers::DatabaseController db;

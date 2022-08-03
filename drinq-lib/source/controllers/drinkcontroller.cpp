@@ -106,10 +106,23 @@ QString DrinkController::type(QVariant id)
 //    m_currentPartyId = partyId;
 //}
 
-void DrinkController::addDrinkType()
+void DrinkController::addDrinkType(const QString &name, int default_amount, drinq::models::DrinkType::ConsumptionType type)
 {
-    //todo:
-    emit drinkTypesChanged();
+    auto newDrinkType = new drinq::models::DrinkType{this};
+    newDrinkType->setName(name);
+    newDrinkType->setDefaultAmountMl(default_amount);
+    newDrinkType->setConsumptionType(type);
+
+    if(m_db->create(*newDrinkType))
+    {
+        m_drinkTypes.append(newDrinkType);
+        qDebug() << "Created new drink type " << newDrinkType->toJson();
+        emit drinkTypesChanged();
+    }
+    else
+    {
+        qDebug() << "Unable to create new drink type";
+    }
 }
 
 void DrinkController::setCurrentDrinkProperties(int index, unsigned int amount_ml)

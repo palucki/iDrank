@@ -29,7 +29,7 @@ public:
     Q_INVOKABLE QString type(QVariant id);
 
 public slots:
-    void addDrinkType();
+    void addDrinkType(const QString& name, int default_amount, drinq::models::DrinkType::ConsumptionType type);
     void setCurrentDrinkProperties(int index, unsigned int amount_ml);
 
 signals:
