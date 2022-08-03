@@ -9,6 +9,19 @@ import QtQuick.Layouts 1.12
 Page {
     property DrinkType drinkType;
 
+    function saveDrinkType() {
+        if(drinkType) {
+            drinkType.ui_name = drinkTypeName.text
+            drinkType.ui_default_amount_ml = drinkTypeDefaultAmount.value
+            drinkType.ui_consumption_type = drinkTypeShot.checked ? DrinkType.Shot : DrinkType.Long
+            drinkController.updateDrinkType(drinkType)
+        }
+        else {
+            drinkController.addDrinkType(drinkTypeName.text, drinkTypeDefaultAmount.value,
+                                         drinkTypeShot.checked ? DrinkType.Shot : DrinkType.Long)
+        }
+    }
+
     header: Rectangle {
         RowLayout {
             anchors.fill: parent
@@ -26,8 +39,7 @@ Page {
             ToolButton {
                 text: qsTr("Zapisz")
                 onClicked: {
-                    drinkController.addDrinkType(drinkTypeName.text, drinkTypeDefaultAmount.value,
-                                                 drinkTypeShot.checked ? DrinkType.Shot : DrinkType.Long)
+                    saveDrinkType()
                     partyDashboardStackView.pop()
                 }
             }

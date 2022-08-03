@@ -125,6 +125,17 @@ void DrinkController::addDrinkType(const QString &name, int default_amount, drin
     }
 }
 
+void DrinkController::updateDrinkType(drinq::models::DrinkType* drink_type)
+{
+    if(!drink_type)
+    {
+        qDebug() << "Invalid drink type";
+        return;
+    }
+
+    qDebug() << "Valid drink type: " << drink_type->toJson();
+}
+
 void DrinkController::setCurrentDrinkProperties(int index, unsigned int amount_ml)
 {
     m_currentDrinkTypeIndex = index;

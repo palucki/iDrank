@@ -119,9 +119,9 @@ public:
 class DRINQLIB_EXPORT DrinkType : public data::EntityLite
 {
     Q_OBJECT
-    Q_PROPERTY(QString ui_name MEMBER m_name CONSTANT)
-    Q_PROPERTY(unsigned int ui_default_amount_ml MEMBER m_default_amount_ml CONSTANT)
-    Q_PROPERTY(ConsumptionType ui_consumption_type MEMBER m_consumption_type CONSTANT)
+    Q_PROPERTY(QString ui_name MEMBER m_name NOTIFY ui_nameChanged)
+    Q_PROPERTY(unsigned int ui_default_amount_ml MEMBER m_default_amount_ml NOTIFY ui_default_amount_mlChanged)
+    Q_PROPERTY(ConsumptionType ui_consumption_type MEMBER m_consumption_type NOTIFY ui_consumption_typeChanged)
 public:
 
     //If consumption type = Shot, add two points immidiately at the timestamp, first with current amount,
@@ -145,6 +145,11 @@ public:
     void setConsumptionType(ConsumptionType type) { m_data["consumption_type"] = type; m_consumption_type = type;};
 
     void update(const QJsonObject& src) override;
+
+signals:
+    void ui_nameChanged();
+    void ui_default_amount_mlChanged();
+    void ui_consumption_typeChanged();
 
 public:
     QString m_name{};

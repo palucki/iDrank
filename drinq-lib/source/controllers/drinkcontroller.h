@@ -30,6 +30,7 @@ public:
 
 public slots:
     void addDrinkType(const QString& name, int default_amount, drinq::models::DrinkType::ConsumptionType type);
+    void updateDrinkType(drinq::models::DrinkType* drink_type);
     void setCurrentDrinkProperties(int index, unsigned int amount_ml);
 
 signals:
