@@ -121,6 +121,7 @@ class DRINQLIB_EXPORT DrinkType : public data::EntityLite
     Q_OBJECT
     Q_PROPERTY(QString ui_name MEMBER m_name CONSTANT)
     Q_PROPERTY(unsigned int ui_default_amount_ml MEMBER m_default_amount_ml CONSTANT)
+    Q_PROPERTY(ConsumptionType ui_consumption_type MEMBER m_consumption_type CONSTANT)
 public:
 
     //If consumption type = Shot, add two points immidiately at the timestamp, first with current amount,
@@ -133,6 +134,7 @@ public:
         Shot = 0,
         Long = 1
     };
+    Q_ENUM(ConsumptionType)
 
     explicit DrinkType(QObject* parent = nullptr);
     DrinkType(const QJsonObject& json, QObject* parent = nullptr);
