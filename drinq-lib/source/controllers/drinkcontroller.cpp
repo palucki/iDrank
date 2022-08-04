@@ -158,6 +158,12 @@ void DrinkController::setCurrentDrinkProperties(int index, unsigned int amount_m
     emit currentDrinkAmountMlChanged();
     emit currentDrinkTypeIndexChanged();
     emit currentDrinkTypeChanged();
+
+    //push added to the first place by rolling all in m_drink_types
+    const auto currentDrinkType = m_drinkTypes[index];
+    m_drinkTypes.removeAt(index);
+    m_drinkTypes.prepend(currentDrinkType);
+    emit drinkTypesChanged();
 }
 
 void DrinkController::createDrinkTypes()
