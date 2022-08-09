@@ -115,14 +115,8 @@ Page {
                         id: timeSinceLastDrinkTextField
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: "PLACEHOLDER"
+                        wrapMode: Text.WordWrap
                     }
-
-//                    Text {
-//                        id: shotsCounter
-//                        anchors.horizontalCenter: parent.horizontalCenter
-//                        text: partyController.ui_drinks_count
-//                        font.pointSize: 50
-//                    }
                 }
             }
 

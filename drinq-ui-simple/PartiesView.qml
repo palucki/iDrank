@@ -40,7 +40,7 @@ Item {
                 Text {
                     anchors.centerIn: parent
                     font.pixelSize: 10
-                    text: "#" + index + " " + modelData.ui_name + " (start:" + modelData.ui_started + ")"
+                    text: modelData.ui_name + " (start:" + modelData.ui_started + ")"
                 }
 
                 MouseArea {
