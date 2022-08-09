@@ -12,42 +12,14 @@
 
 namespace drinq::controllers {
 
+const QString DRINK_TYPES_IDS_ORDER = "drink_types_ids_order";
 const QString DRINK_TYPE_KEY = "drink_type_id";
 const QString DRINK_AMOUNT_KEY = "drink_amount_ml";
 
 DrinkController::DrinkController(QObject *parent, drinq::controllers::DatabaseControllerInterface *db, QSettings* settings)
     : QObject(parent), m_db(db), m_settings(settings)
 {
-    auto drink_types = m_db->getAll(drinq::models::DrinkType{this});
-
-    if(drink_types.isEmpty())
-    {
-        createDrinkTypes();
-        drink_types = m_db->getAll(drinq::models::DrinkType{this});
-    }
-
-
-    for(const auto& dt : drink_types)
-    {
-        m_drinkTypes.append(new drinq::models::DrinkType(dt.toJson(), this));
-    }
-
-    if(m_settings->contains(DRINK_TYPE_KEY) && m_settings->contains(DRINK_AMOUNT_KEY))
-    {
-        setCurrentDrinkProperties(m_settings->value(DRINK_TYPE_KEY).toInt(), m_settings->value(DRINK_AMOUNT_KEY).toInt());
-    }
-    else
-    {
-        if(!drink_types.isEmpty())
-        {
-            setCurrentDrinkProperties(0, m_drinkTypes.first()->m_default_amount_ml);
-        }
-        else
-        {
-            qDebug() << "No drink types defined";
-        }
-    }
-    emit drinkTypesChanged();
+    loadDrinkTypeSettings();
 }
 
 DrinkController::~DrinkController()
@@ -143,7 +115,7 @@ void DrinkController::setCurrentDrinkProperties(int index, unsigned int amount_m
 
     if(index >= m_drinkTypes.size())
     {
-        qDebug() << "Incorrect index supplied";
+        qDebug() << "Incorrect index supplied: " << index;
         index = 0;
     }
 
@@ -164,6 +136,16 @@ void DrinkController::setCurrentDrinkProperties(int index, unsigned int amount_m
     m_drinkTypes.removeAt(index);
     m_drinkTypes.prepend(currentDrinkType);
     emit drinkTypesChanged();
+
+    QStringList drinkTypesIds;
+    for(const auto& drinkType : m_drinkTypes)
+    {
+        drinkTypesIds.append(drinkType->m_id.toString());
+    }
+
+    qDebug() << "Settings drinks tpyes ids to " << drinkTypesIds.join(',');
+
+    m_settings->setValue(DRINK_TYPES_IDS_ORDER, drinkTypesIds.join(','));
 }
 
 void DrinkController::createDrinkTypes()
@@ -195,6 +177,57 @@ void DrinkController::createDrinkTypes()
             qDebug() << "Creation of drink type " << std::get<0>(dt) << " failed";
         }
     }
+}
+
+void DrinkController::loadDrinkTypeSettings()
+{
+    auto drink_types = m_db->getAll(drinq::models::DrinkType{this});
+
+    if(drink_types.isEmpty())
+    {
+        createDrinkTypes();
+        drink_types = m_db->getAll(drinq::models::DrinkType{this});
+    }
+
+    std::reverse(drink_types.begin(), drink_types.end());
+
+    if(m_settings->contains(DRINK_TYPES_IDS_ORDER) && m_settings->contains(DRINK_AMOUNT_KEY))
+    {
+        const auto drink_types_ids = m_settings->value(DRINK_TYPES_IDS_ORDER).toString().split(',');
+        if(drink_types_ids.size() == drink_types.size())
+        {
+            QMap<QVariant, drinq::models::DrinkType*> drink_type_by_id;
+            for(const auto& dt : qAsConst(drink_types))
+            {
+                drink_type_by_id[dt.m_data["id"]] = new drinq::models::DrinkType(dt.toJson(), this);
+            }
+
+            for(const auto& dti : drink_types_ids)
+            {
+                if(!drink_type_by_id.contains(dti))
+                {
+                    qDebug() << "ERROR while loading drink types from settings";
+                    continue;
+                }
+
+                m_drinkTypes.append(drink_type_by_id[dti]);
+            }
+
+            qDebug() << "Sunny day setting drink types";
+            setCurrentDrinkProperties(0, m_settings->value(DRINK_AMOUNT_KEY).toInt());
+            return;
+        }
+    }
+
+    qDebug() << "Fallback setting drink types";
+    for(const auto& dt : drink_types)
+    {
+        m_drinkTypes.append(new drinq::models::DrinkType(dt.toJson(), this));
+    }
+
+    setCurrentDrinkProperties(0, m_drinkTypes.first()->m_default_amount_ml);
+
+    emit drinkTypesChanged();
 }
 
 }

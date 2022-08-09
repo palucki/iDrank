@@ -41,6 +41,7 @@ signals:
 
 private:
     void createDrinkTypes();
+    void loadDrinkTypeSettings();
 
 public:
     drinq::controllers::DatabaseControllerInterface* m_db;
