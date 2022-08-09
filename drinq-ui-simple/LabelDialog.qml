@@ -17,8 +17,10 @@ Dialog {
     width: 300
 //    focus: true
     Label {
+        width: parent.width
         id: dialogLabel
         anchors.centerIn: parent
+        wrapMode: Text.WordWrap
     }
 
     MouseArea {
