@@ -47,6 +47,6 @@ Page {
         anchors.fill: parent
         clip: true
 
-        initialItem: "qrc:PartiesView.qml"
+        initialItem: "qrc:/PartiesView.qml"
     }
 }

@@ -35,10 +35,18 @@ Item {
                 color: ListView.isCurrentItem?"#157efb" : "transparent"
                 border.color: Qt.lighter(color, 1.1)
 
+                function partyDecoration(partyId, currentPartyId) {
+                    if(currentPartyId === partyId)
+                        return ">>> "
+
+                    return ""
+                }
+
                 Text {
                     anchors.centerIn: parent
                     font.pixelSize: 10
-                    text: modelData.ui_name + " (start:" + modelData.ui_started + ")"
+                    text: partyDecoration(modelData.ui_id, partyController.ui_current_party_id)
+                    + modelData.ui_name + " (start:" + modelData.ui_started + ")"
                 }
 
                 MouseArea {
@@ -49,7 +57,7 @@ Item {
                         historyCenterLabel.text = modelData.ui_name
                         console.log("Party id " + modelData.ui_id)
                         console.log("Size of drinks " + drinkProvider.getUIDrinksList(modelData.ui_id))
-                        historyStackView.push("qrc:PartyStatisticsView.qml",
+                        historyStackView.push("qrc:/PartyStatisticsView.qml",
                                               {partyId: modelData.ui_id,
                                                drinks: drinkProvider.getUIDrinksList(modelData.ui_id),
                                                partyStarted: modelData.ui_started,
