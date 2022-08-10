@@ -79,7 +79,7 @@ void PartyController::setDrinksCount(int count)
     emit ui_drinks_countChanged(m_current_drinks_count);
 }
 
-void PartyController::addDrink()
+void PartyController::addDrink(const QVariant toast_id)
 {
     qDebug() << "Latest party id " << m_currentPartyId;
 
@@ -87,6 +87,7 @@ void PartyController::addDrink()
     newDrink->setPartyId(m_currentPartyId);
     newDrink->setDrinkTypeId(m_drinkController->m_currentDrinkTypeId);
     newDrink->setAmountMl(m_drinkController->m_currentDrinkAmountMl);
+    newDrink->setToastId(toast_id);
 
     if(m_db->create(*newDrink))
     {
@@ -129,6 +130,3 @@ void PartyController::deleteDrink(const QVariant &id)
         setDrinksCount(m_current_drinks_count - 1);
     }
 }
-
-//CRASHE
-//start / end party -> jak sie usunie je z  master controllera to powinno byc git?

@@ -13,12 +13,9 @@ public:
     DatabaseToastProvider(drinq::controllers::DatabaseControllerInterface& db);
     virtual ~DatabaseToastProvider() override;
 
-    Q_INVOKABLE Toast *randomToast() override;
+    Q_INVOKABLE Toast *randomToast(QVariant partyId) override;
 
 private:
     drinq::controllers::DatabaseControllerInterface& m_db;
-
-    const QStringList m_toasts;
-    QStringList m_unusedToasts;
 };
 

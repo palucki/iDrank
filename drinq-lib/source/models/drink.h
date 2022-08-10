@@ -106,6 +106,7 @@ public:
     void setPartyId(const QVariant& id) { m_data["party_id"] = id; m_party_id = id;}
     void setAmountMl(unsigned int a) { m_data["amount_ml"] = a; m_amount_ml = a;}
     void setTimestamp(const QDateTime& ts) { m_data["timestamp"] = ts; m_timestamp = ts;}
+    void setToastId(const QVariant& id) {m_data["toast_id"] = id; m_toast_id = id;}
 
     void update(const QJsonObject& src) override;
 
@@ -114,6 +115,7 @@ public:
     QVariant m_party_id{};
     QDateTime m_timestamp{};
     unsigned int m_amount_ml{0};
+    QVariant m_toast_id{};
 };
 
 class DRINQLIB_EXPORT DrinkType : public data::EntityLite

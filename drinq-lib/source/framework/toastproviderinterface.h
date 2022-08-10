@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QObject>
+#include <QVariant>
 #include <drinq-lib_global.h>
 #include "toast.h"
 
@@ -11,5 +12,5 @@ public:
     explicit ToastProviderInterface(QObject *parent = nullptr) : QObject(parent) {};
     virtual ~ToastProviderInterface() override = default;
 
-    Q_INVOKABLE virtual Toast* randomToast() = 0;
+    Q_INVOKABLE virtual Toast* randomToast(QVariant partyId) = 0;
 };

@@ -174,6 +174,7 @@ Drink2::Drink2(QObject* parent) : EntityLite("drink", parent), m_timestamp(QDate
     addField("party_id", m_party_id);
     addField("timestamp", m_timestamp);
     addField("amount_ml", m_amount_ml);
+    addField("toast_id", m_toast_id);
 }
 
 Drink2::Drink2(const QJsonObject &json, QObject* parent) : Drink2(parent)
@@ -192,6 +193,7 @@ void Drink2::update(const QJsonObject &src)
     setPartyId(src["party_id"]);
     setAmountMl(src["amount_ml"].toInt());
     setTimestamp(QDateTime::fromString(src["timestamp"].toString(), Qt::ISODate));
+    setToastId(src["toast_id"].toVariant());
 }
 
 Party2::Party2(QObject *parent) : EntityLite("party", parent), m_started(QDateTime::currentDateTime())

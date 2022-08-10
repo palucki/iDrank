@@ -229,8 +229,9 @@ Page {
                 onClicked: {
                     drinkController.setCurrentDrinkProperties(drinkTypesList.currentIndex, amountInput.value)
 
-                    dialog.openDialog(toastProvider.randomToast().ui_text)
-                    partyController.addDrink()
+                    var toast = toastProvider.randomToast(partyController.ui_current_party_id)
+                    dialog.openDialog(toast.ui_text)
+                    partyController.addDrink(toast.id)
                 }
             }
 
