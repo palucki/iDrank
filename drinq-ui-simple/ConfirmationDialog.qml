@@ -23,6 +23,4 @@ Dialog {
         anchors.centerIn: parent
         wrapMode: Text.WordWrap
     }
-
-    standardButtons: Dialog.Ok | Dialog.Cancel
 }

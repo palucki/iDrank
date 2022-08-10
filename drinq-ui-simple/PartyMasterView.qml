@@ -28,7 +28,7 @@ Page {
                     color: "plum"
             }
             id: partyCenterLabel
-            text: "Party title"
+            text: qsTr("Party title")
             //                maximumLength: 30
             color: "black"
             font.pointSize: 14
@@ -49,13 +49,13 @@ Page {
 
             TabButton {
                 focusPolicy: Qt.NoFocus
-                text: "Przeglad"
+                text: qsTr("Overview")
                 //            icon.source: "qrc:/history.svg"
                 //            display: AbstractButton.TextUnderIcon
             }
             TabButton {
                 focusPolicy: Qt.NoFocus
-                text: "Przebieg imprezy"
+                text: qsTr("Party statistics")
                 enabled: partyController.ui_drinks_count > 0
                 //            icon.source: "qrc:/history.svg"
                 //            display: AbstractButton.TextUnderIcon

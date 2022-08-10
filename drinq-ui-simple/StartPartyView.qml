@@ -53,8 +53,8 @@ Page {
 
             TextFieldDialog {
                 id: dialog
-                dialogTitle: "Starting new party..."
-                dialogPlaceholderText: "Give it a title"
+                dialogTitle: qsTr("Starting new party...")
+                dialogPlaceholderText: qsTr("Give it a title")
 
                 onAccepted: {
                     console.log("Party name " + dialogText)
@@ -86,7 +86,7 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
                 height: 200
                 width: 200
-                text: "Start"
+                text: qsTr("Start")
                 Material.background: Material.Orange
                 onClicked: dialog.openDialog()
             }

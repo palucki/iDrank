@@ -31,7 +31,7 @@ Page {
                     color: "plum"
             }
             id: historyCenterLabel
-            text: "Historia imprez"
+            text: qsTr("Parties history")
             //                maximumLength: 30
             color: "black"
             font.pointSize: 14

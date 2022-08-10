@@ -40,17 +40,17 @@ Page {
         }
         else if(diff_secs <= 60)
         {
-            timeSinceLastDrinkTextField.text = "last consumed drink: less than a minute ago"
+            timeSinceLastDrinkTextField.text = qsTr("Last consumption: less than a minute ago")
         }
         else if(diff_secs <= 3600)
         {
             var diff_mins = diff_secs / 60
-            timeSinceLastDrinkTextField.text = "last consumed drink: " + parseInt(diff_mins) + " minutes ago"
+            timeSinceLastDrinkTextField.text = qsTr("Last consumption: ") + parseInt(diff_mins) + qsTr(" minutes ago")
         }
         else
         {
             var diff_hours = diff_secs / 3600
-            timeSinceLastDrinkTextField.text = "last consumed drink: " + parseInt(diff_hours) + " hour ago"
+            timeSinceLastDrinkTextField.text = qsTr("Last consumption: ") + parseInt(diff_hours) + qsTr(" hours ago")
         }
     }
 
@@ -64,6 +64,7 @@ Page {
 
         ConfirmationDialog {
             id: endPartyconfirmationDialog
+            standardButtons: Dialog.Ok | Dialog.Cancel
             onAccepted: masterController.endParty()
         }
 
@@ -81,7 +82,7 @@ Page {
 
                     Text {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        text: "Currently after:"
+                        text: qsTr("Currently after:")
                     }
 
                     Text {
@@ -93,17 +94,7 @@ Page {
 
                     Text {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        text: "shots"
-                    }
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    enabled: masterController.ui_party_started && partyController.ui_drinks_count > 0
-                    onClicked: {
-//                        console.log("Opening statistics view")
-//                        contentFrame.pagesTitles.push(contentFrame.depth + " Statistics")
-//                        contentFrame.push("qrc:PartyStatisticsView.qml")
+                        text: qsTr("shots")
                     }
                 }
             }
@@ -127,7 +118,7 @@ Page {
             }
 
             Label {
-                text: "wybierz rodzaj alkoholu"
+                text: qsTr("Choose drink")
             }
 
             ListView {
@@ -155,7 +146,7 @@ Page {
                             id: textItem
                             anchors.centerIn: parent
                             font.pixelSize: 10
-                            text: "( Add new )"
+                            text: qsTr("( Add own )")
                             wrapMode: Text.WordWrap
                             width: parent.width
                         }
@@ -185,7 +176,7 @@ Page {
                         id: textItem
                         anchors.centerIn: parent
                         font.pixelSize: 10
-                        text: "(" + index +") " + modelData.ui_name
+                        text: modelData.ui_name
                         wrapMode: Text.WordWrap
                         width: parent.width
                     }
@@ -206,7 +197,7 @@ Page {
             }
 
             Label {
-                text: "ilość (ml)"
+                text: qsTr("amount (ml)")
             }
 
             SpinBox {
@@ -227,7 +218,7 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
                 height: 50
                 width: 200
-                text: "Add"
+                text: qsTr("Add")
                 enabled: masterController.ui_party_started
                 Material.background: Material.Orange
 
@@ -251,13 +242,13 @@ Page {
                     anchors.verticalCenter: parent.verticalCenter
                     height: 50
                     width: 200
-                    text: masterController.ui_party_started ? "End party" : "Start party"
+                    text: masterController.ui_party_started ? qsTr("End party") : qsTr("Start party")
                     font.pointSize: 10
                     Material.background: Material.Purple
                     onClicked: {
                         if(masterController.ui_party_started) {
                             console.log("PartyDashboardView::endParty()")
-                            endPartyconfirmationDialog.openDialog("Czy na pewno zakończyć imprezę?")
+                            endPartyconfirmationDialog.openDialog(qsTr("Do you want to end the party?"))
                         }
                         else {
                             masterController.startParty()

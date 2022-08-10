@@ -34,7 +34,7 @@ Page {
             anchors.fill: parent
             clip: true
 
-            initialItem: "qrc:PartyDashboardView.qml"
+            initialItem: "qrc:/PartyDashboardView.qml"
         }
 
     }

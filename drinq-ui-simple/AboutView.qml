@@ -25,20 +25,8 @@ Item {
 
             Label {
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: "iDrank"
+                text: qsTr("iDrank")
             }
-
-            Label {
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: "iDrank"
-            }
-
-            Label {
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: "iDrank"
-            }
-
-
         }
     }
 }

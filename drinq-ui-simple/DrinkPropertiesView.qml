@@ -30,14 +30,14 @@ Page {
                 onClicked: partyDashboardStackView.pop()
             }
             Label {
-                text: "Edytuj typ alkoholu"
+                text: qsTr("Edit drink type")
                 elide: Label.ElideRight
                 horizontalAlignment: Qt.AlignHCenter
                 verticalAlignment: Qt.AlignVCenter
                 Layout.fillWidth: true
             }
             ToolButton {
-                text: qsTr("Zapisz")
+                text: qsTr("Save")
                 onClicked: {
                     saveDrinkType()
                     partyDashboardStackView.pop()
@@ -55,18 +55,18 @@ Page {
             spacing: 30
 
             Label {
-                text: "Nazwa"
+                text: qsTr("Name")
                 width: parent.width * 0.75
             }
 
             TextInput {
                 id: drinkTypeName
                 width: parent.width * 0.75
-                text: drinkType ? drinkType.ui_name : "Name"
+                text: drinkType ? drinkType.ui_name : qsTr("Name")
             }
 
             Label {
-                text: "Domyślna ilość"
+                text: qsTr("Default amount")
                 width: parent.width * 0.75
             }
 
@@ -81,7 +81,7 @@ Page {
             }
 
             Label {
-                text: "Typ"
+                text: qsTr("Type")
                 width: parent.width * 0.75
             }
 

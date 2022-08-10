@@ -35,6 +35,7 @@ Page {
 
     ConfirmationDialog {
         id: deleteDrinkConfirmationDialog
+        standardButtons: Dialog.Ok | Dialog.Cancel
     }
 
     ScrollView {
@@ -67,7 +68,7 @@ Page {
                     }
 
                     AreaSeries {
-                        name: "Consumption (" + unit + ")"
+                        name: qsTr("Consumption (") + unit + ")"
                         axisX: axisX
                         axisY: axisY1
                         upperSeries: consumption
@@ -84,7 +85,7 @@ Page {
                     }
 
                     ScatterSeries {
-                        name: "Party start / end"
+                        name: qsTr("Party start / end")
                         axisX: axisX
                         axisY: axisY1
                         id: partyStart
@@ -126,7 +127,7 @@ Page {
                             anchors.right: parent.right
                             text: "X"
                             onClicked: {
-                                deleteDrinkConfirmationDialog.openDialog("Usunąć wpis?")
+                                deleteDrinkConfirmationDialog.openDialog(qsTr("Delete the drink?"))
                                 deleteDrinkConfirmationDialog.accepted.connect(function(){
                                     console.log("DELETE drink")
                                     partyController.deleteDrink(modelData.ui_id)
