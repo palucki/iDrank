@@ -116,6 +116,7 @@ Page {
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: "PLACEHOLDER"
                         wrapMode: Text.WordWrap
+                        width: 200
                     }
                 }
             }
