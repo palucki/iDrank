@@ -62,6 +62,11 @@ Page {
             id: dialog
         }
 
+        ConfirmationDialog {
+            id: endPartyconfirmationDialog
+            onAccepted: masterController.endParty()
+        }
+
         Column {
             anchors.centerIn: parent
             spacing: 10
@@ -238,8 +243,6 @@ Page {
 
             Row {
                 anchors.horizontalCenter: parent.horizontalCenter
-                //                width: parent.width
-                //                height: 60
                 spacing: 60
 
                 Button {
@@ -252,17 +255,12 @@ Page {
                     font.pointSize: 10
                     Material.background: Material.Purple
                     onClicked: {
-                        //                        toolbar.labelText = shotsTaken
-                        //                        drinkController.resetCounter()
                         if(masterController.ui_party_started) {
                             console.log("PartyDashboardView::endParty()")
-                            masterController.endParty()
-//                            contentFrame.replace("qrc:DashboardView.qml")
+                            endPartyconfirmationDialog.openDialog("Czy na pewno zakończyć imprezę?")
                         }
                         else {
-                            //                            shotsTaken = 0
                             masterController.startParty()
-                            //                            drinkController.setPartyId(partyController.currentPartyId())
                         }
                     }
                 }
