@@ -23,15 +23,7 @@ public:
     {
         if (initialise())
         {
-            qDebug() << "Database created using Sqlite version: " + sqliteVersion();
-            if (createTables())
-            {
-                qDebug() << "Database tables created";
-            }
-            else
-            {
-                qDebug() << "ERROR: Unable to create database tables";
-            }
+            qDebug() << "Database using Sqlite version: " + sqliteVersion();
         }
         else
         {
@@ -44,64 +36,24 @@ public:
 private:
     bool initialise()
     {
-        //You don't need to create your database programmatically.
-        //You could create an empty database with all your tables and relationships and store it as a resource in your app.
-        //Then you would copy this resource to a writable location if it didn't exist yet.
-        //That's what I suggested. It would be like a template database.
-
-
         QDir app_data;
         app_data.mkpath(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
         QString dbPath = QDir(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)).filePath("iDrank.db");
+        QFile databaseFile{dbPath};
+
+        //in the future we may need to add some "force update" option here (e.g. major version changed)
+        if(!databaseFile.exists())
+        {
+            qDebug() << "Creating new database from template";
+            QFile::copy(":/db/iDrank.db", dbPath);
+            QFile::setPermissions(dbPath, QFileDevice::ReadOwner|QFileDevice::WriteOwner);
+        }
 
         qDebug() << "Database in path " << dbPath;
 
         database = QSqlDatabase::addDatabase("QSQLITE");
         database.setDatabaseName(dbPath);
         return database.open();
-    }
-
-    bool createTables()
-    {
-        return /*createJsonTable("client") &&
-               createJsonTable("player") &&
-               createJsonTable("drink") &&
-               createJsonTable("party") &&
-               createJsonTable("beverage") &&*/
-//lite
-               createDrinksTables();
-    }
-
-    bool createDrinksTables()
-    {
-        QSqlQuery query(database);
-
-        QStringList queries {
-            "CREATE TABLE IF NOT EXISTS party (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, started DATETIME, ended DATETIME)",
-            "CREATE TABLE IF NOT EXISTS drink_type (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, default_amount_ml INTEGER, consumption_type INTEGER)",
-            "CREATE TABLE IF NOT EXISTS drink (id INTEGER PRIMARY KEY AUTOINCREMENT, drink_type_id INTEGER, party_id INTEGER, timestamp DATETIME, amount_ml INTEGER, FOREIGN KEY(drink_type_id) REFERENCES drink_type(id) ON DELETE CASCADE, FOREIGN KEY(party_id) REFERENCES party(id) ON DELETE CASCADE)",
-        };
-
-        for(const auto& sql : queries)
-        {
-            if(!query.exec(sql))
-            {
-                qDebug() << sql;
-                qDebug() << query.lastError().text();
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    bool createJsonTable(const QString& tableName) const
-    {
-        QSqlQuery query(database);
-        QString sqlStatement = "CREATE TABLE IF NOT EXISTS " +
-                tableName + " (id text primary key, json text not null)";
-        if (!query.prepare(sqlStatement)) return false;
-        return query.exec();
     }
 
     QString sqliteVersion() const
