@@ -44,6 +44,9 @@ HEADERS += components/customchart.h
 
 RESOURCES += qml.qrc
 
+TRANSLATIONS += \
+    $$PWD/translations/iDrank_pl_PL.ts
+
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH += $$PWD
 

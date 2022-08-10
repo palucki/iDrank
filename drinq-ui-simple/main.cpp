@@ -4,7 +4,7 @@
 #include <QQmlContext>
 #include <QSettings>
 #include <QApplication>
-
+#include <QTranslator>
 #include "controllers/mastercontroller2.h"
 #include "controllers/databasecontroller.h"
 #include "controllers/drinkcontroller.h"
@@ -45,6 +45,24 @@ int main(int argc, char *argv[])
     DatabaseToastProvider toastProvider(db);
     DrinkProvider drinkProvider(&db);
     PartyPlotter plotter(&app, &db);
+
+    QTranslator translator;
+    if(translator.load("iDrank_pl_PL.qm", ":/translations"))
+    {
+        qDebug() << "Loading locale";
+        if(app.installTranslator(&translator))
+        {
+            qDebug() << "Installed ok";
+        }
+        else
+        {
+            qDebug() << "Error installing";
+        }
+    }
+    else
+    {
+        qDebug() << "using default locale";
+    }
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("drinkController", &drinkController);

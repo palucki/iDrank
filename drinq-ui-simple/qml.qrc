@@ -21,4 +21,7 @@
     <qresource prefix="/db">
         <file alias="iDrank.db">db/iDrank_pl.db</file>
     </qresource>
+    <qresource prefix="/translations">
+        <file alias="iDrank_pl_PL.qm">translations/iDrank_pl_PL.qm</file>
+    </qresource>
 </RCC>
