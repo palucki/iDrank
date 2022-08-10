@@ -13,8 +13,6 @@ Item {
         ListView {
             anchors.fill: parent
             id: partiesList
-//            height: 200
-//            width: parent.width
             anchors.margins: 20
 
             clip: true
@@ -48,15 +46,9 @@ Item {
                     onClicked: {
                         console.log("Clicked on party " + modelData.ui_name)
                         partiesList.currentIndex = index
-
-
-
                         historyCenterLabel.text = modelData.ui_name
-
                         console.log("Party id " + modelData.ui_id)
-
                         console.log("Size of drinks " + drinkProvider.getUIDrinksList(modelData.ui_id))
-
                         historyStackView.push("qrc:PartyStatisticsView.qml",
                                               {partyId: modelData.ui_id,
                                                drinks: drinkProvider.getUIDrinksList(modelData.ui_id),
@@ -66,10 +58,5 @@ Item {
                 }
             }
         }
-//        Column {
-//            anchors.centerIn: parent
-//            width: parent.width
-//            spacing: 30
-//        }
     }
 }
