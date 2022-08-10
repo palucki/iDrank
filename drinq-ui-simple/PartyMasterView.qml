@@ -28,7 +28,7 @@ Page {
                     color: "plum"
             }
             id: partyCenterLabel
-            text: qsTr("Party title")
+            text: masterController.ui_party_title
             //                maximumLength: 30
             color: "black"
             font.pointSize: 14

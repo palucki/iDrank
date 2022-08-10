@@ -69,6 +69,7 @@ QQmlListProperty<Party2> MasterController2::ui_parties()
 
 void MasterController2::setPartyName(const QString &name)
 {
+    m_party_title = name;
     m_current_party->setName(name);
 
     emit ui_party_titleChanged();
