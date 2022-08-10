@@ -18,25 +18,13 @@ Page {
             masterTabBar.currentIndex = 0
         }
         event.accepted = true
-
-        //            else
-        //                Qt.quit()
     }
 
     Keys.onPressed: {
 //        dev version
         if(event.key == Qt.Key_Back || event.key == Qt.Key_Backspace)
             goBack(event)
-
-//            console.log("Pressed key " + event.key)
     }
-
-//    Connections {
-//        target: navigationController
-//        function onGoBack() {
-//            console.log("Go back in history master view")
-//        }
-//    }
 
     header: Label  {
             background: Rectangle {

@@ -33,6 +33,10 @@ Page {
         }
     }
 
+    ConfirmationDialog {
+        id: deleteDrinkConfirmationDialog
+    }
+
     ScrollView {
         anchors.fill: parent
 
@@ -117,19 +121,16 @@ Page {
                             text: drinkController.type(modelData.ui_drink_type_id) + " " + modelData.ui_amount_ml + " " + unit + " (" + modelData.ui_timestamp + ")"
                         }
 
-                        //to hightliht
-                        //                    MouseArea {
-                        //                        anchors.fill: parent
-                        //                        onClicked: drinksList.currentIndex = index
-                        //                    }
-
                         Button {
                             focusPolicy: Qt.NoFocus
                             anchors.right: parent.right
                             text: "X"
                             onClicked: {
+                                deleteDrinkConfirmationDialog.openDialog("Usunąć wpis?")
                                 console.log("DELETE drink")
-                                partyController.deleteDrink(modelData.ui_id)
+                                deleteDrinkConfirmationDialog.accepted.connect(function(){
+                                    partyController.deleteDrink(modelData.ui_id)
+                                })
                             }
                         }
                     }
