@@ -17,4 +17,7 @@
         <file>HistoryMasterView.qml</file>
         <file>PartyDashboardMasterView.qml</file>
     </qresource>
+    <qresource prefix="/db">
+        <file alias="iDrank.db">db/iDrank_pl.db</file>
+    </qresource>
 </RCC>

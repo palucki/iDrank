@@ -4,3 +4,4 @@ drinq-ui-simple/build/
 drinq-lib/build/
 drink-tests/build/
 drinq.pro.user
+drinq-ui-simple/db/iDrank*db
