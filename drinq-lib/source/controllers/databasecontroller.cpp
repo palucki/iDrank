@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QSqlDatabase>
 #include <QSqlQuery>
+#include <QSqlRecord>
 #include <QSqlError>
 #include <QJsonDocument>
 #include <QStandardPaths>
@@ -237,6 +238,31 @@ bool DatabaseController::remove(data::EntityLite &e)
     }
 
     return true;
+}
+
+QList<QVariantList> DatabaseController::execQuery(const QString &sql)
+{
+    QSqlQuery query(implementation->database);
+    if(!query.exec(sql))
+    {
+        qDebug() << "QUERY ERROR " << query.lastError().text();
+        return {};
+    }
+
+    QList<QVariantList> result;
+
+    while(query.next())
+    {
+        QVariantList fields;
+        const auto record = query.record();
+        for(int i = 0; i < record.count(); ++i)
+        {
+            fields.push_back(record.value(i));
+        }
+        result.push_back(fields);
+    }
+
+    return result;
 }
 
 QList<data::EntityLite> DatabaseController::getAll(const data::EntityLite& e, const QString& where)

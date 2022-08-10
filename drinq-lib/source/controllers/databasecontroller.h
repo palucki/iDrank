@@ -35,6 +35,8 @@ public:
     bool get(data::EntityLite &e) override;
     bool remove(data::EntityLite &e) override;
 
+    QList<QVariantList> execQuery(const QString& sql) override;
+
     QList<data::EntityLite> getAll(const data::EntityLite& e, const QString& where = {}) override;
     int count(const data::EntityLite& e, const QString& where = {}) override;
 
