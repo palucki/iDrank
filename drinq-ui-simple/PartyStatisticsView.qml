@@ -127,8 +127,8 @@ Page {
                             text: "X"
                             onClicked: {
                                 deleteDrinkConfirmationDialog.openDialog("Usunąć wpis?")
-                                console.log("DELETE drink")
                                 deleteDrinkConfirmationDialog.accepted.connect(function(){
+                                    console.log("DELETE drink")
                                     partyController.deleteDrink(modelData.ui_id)
                                 })
                             }
