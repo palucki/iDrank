@@ -17,17 +17,17 @@ Page {
         }
         else if(diff_secs <= 60)
         {
-            timeSinceLastDrinkTextField.text = "last consumed drink: less than a minute ago"
+            timeSinceLastDrinkTextField.text = qsTr("last consumed drink: less than a minute ago")
         }
         else if(diff_secs <= 3600)
         {
             var diff_mins = diff_secs / 60
-            timeSinceLastDrinkTextField.text = "last consumed drink: " + parseInt(diff_mins) + " minutes ago"
+            timeSinceLastDrinkTextField.text = qsTr("last consumed drink: ") + parseInt(diff_mins) + qsTr(" minutes ago")
         }
         else
         {
             var diff_hours = diff_secs / 3600
-            timeSinceLastDrinkTextField.text = "last consumed drink: " + parseInt(diff_hours) + " hour ago"
+            timeSinceLastDrinkTextField.text = qsTr("last consumed drink: ") + parseInt(diff_hours) + qsTr(" hour ago")
         }
     }
 

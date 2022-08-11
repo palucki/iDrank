@@ -26,18 +26,18 @@ Page {
         RowLayout {
             anchors.fill: parent
             ToolButton {
-                text: qsTr("‹")
+                text: qsTranslate("DrinkProperties", "‹")
                 onClicked: partyDashboardStackView.pop()
             }
             Label {
-                text: qsTr("Edit drink type")
+                text: qsTranslate("DrinkProperties", "Edit drink type")
                 elide: Label.ElideRight
                 horizontalAlignment: Qt.AlignHCenter
                 verticalAlignment: Qt.AlignVCenter
                 Layout.fillWidth: true
             }
             ToolButton {
-                text: qsTr("Save")
+                text: qsTranslate("DrinkProperties", "Save")
                 onClicked: {
                     saveDrinkType()
                     partyDashboardStackView.pop()
@@ -55,18 +55,18 @@ Page {
             spacing: 30
 
             Label {
-                text: qsTr("Name")
+                text: qsTranslate("DrinkProperties", "Name")
                 width: parent.width * 0.75
             }
 
             TextInput {
                 id: drinkTypeName
                 width: parent.width * 0.75
-                text: drinkType ? drinkType.ui_name : qsTr("Name")
+                text: drinkType ? drinkType.ui_name : qsTranslate("DrinkProperties", "Name")
             }
 
             Label {
-                text: qsTr("Default amount")
+                text: qsTranslate("DrinkProperties", "Default amount")
                 width: parent.width * 0.75
             }
 
@@ -81,7 +81,7 @@ Page {
             }
 
             Label {
-                text: qsTr("Type")
+                text: qsTranslate("DrinkProperties", "Type")
                 width: parent.width * 0.75
             }
 
@@ -89,12 +89,12 @@ Page {
                 RadioButton {
                     id: drinkTypeShot
                     checked: drinkType ? drinkType.ui_consumption_type === DrinkType.Shot : true
-                    text: qsTr("Shot")
+                    text: qsTranslate("DrinkProperties", "Shot")
                 }
                 RadioButton {
                     id: drinkTypeLong
                     checked: drinkType ? drinkType.ui_consumption_type === DrinkType.Long : false
-                    text: qsTr("Drink")
+                    text: qsTranslate("DrinkProperties", "Drink")
                 }
             }
         }
