@@ -7,7 +7,7 @@ MOC_DIR = $$PWD/build/$$DESTINATION_PATH/.moc
 RCC_DIR = $$PWD/build/$$DESTINATION_PATH/.qrc
 UI_DIR = $$PWD/build/$$DESTINATION_PATH/.ui
 
-QT += qml quick quickcontrols2 charts
+QT += qml quick quickcontrols2 charts svg
 
 #greaterThan(QT_MAJOR_VERSION, 4) QT += widgets printsupport
 
