@@ -62,7 +62,7 @@ ApplicationWindow {
         TabButton {
             focusPolicy: Qt.NoFocus
             text: qsTr("Current party")
-            icon.source: "qrc:/history.svg"
+            icon.source: "qrc:/home.png"
             display: AbstractButton.TextUnderIcon
         }
         TabButton {
@@ -74,7 +74,7 @@ ApplicationWindow {
         TabButton {
             focusPolicy: Qt.NoFocus
             text: qsTr("About")
-            icon.source: "qrc:/history.svg"
+            icon.source: "qrc:/info.png"
             display: AbstractButton.TextUnderIcon
         }
     }

@@ -1,9 +1,10 @@
 import QtQuick 2.12
-import QtQuick.Controls 2.5
+import QtQuick.Controls 2.12
 import QtQuick.Controls.Material 2.12
 
 import QtQml 2.12
 import QtQuick.Layouts 1.12
+import QtGraphicalEffects 1.12
 
 import "qrc:/"
 
@@ -56,7 +57,7 @@ Page {
 
     Rectangle {
         anchors.fill: parent
-        color: "skyblue"
+        //        color: "skyblue"
 
         LabelDialog {
             id: dialog
@@ -138,28 +139,20 @@ Page {
 
                 footer:
                     Rectangle {
-                        width: 40 //drinkTypesList.width
-                        height: 40
-                        color: "transparent"
+                    width: 40 //drinkTypesList.width
+                    height: 40
+                    color: "transparent"
 
-                        Text {
-                            id: textItem
-                            anchors.centerIn: parent
-                            font.pixelSize: 10
-                            text: qsTr("( Add own )")
-                            wrapMode: Text.WordWrap
-                            width: parent.width
+                    RoundButton {
+                        anchors.fill: parent
+                        onClicked: {
+                            console.log("Will add new drink type")
+                            partyDashboardStackView.push("qrc:DrinkPropertiesView.qml")
                         }
-
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: {
-                                console.log("Will add new drink type")
-                                partyDashboardStackView.push("qrc:DrinkPropertiesView.qml")
-                            }
-                        }
+                        text: "+"
+                        Material.background: "transparent"
                     }
-//                focus: true
+                }
             }
 
             Component {
@@ -169,7 +162,7 @@ Page {
                     width: 40 //drinkTypesList.width
                     height: 40
 
-                    color: ListView.isCurrentItem?"#157efb" : "transparent"
+                    color: ListView.isCurrentItem ? "#F6B500" : "transparent"
                     border.color: Qt.lighter(color, 1.1)
 
                     Text {
@@ -212,17 +205,17 @@ Page {
             }
 
 
-            Button {
+            RoundButton {
                 focusPolicy: Qt.NoFocus
                 id: addButton
                 anchors.horizontalCenter: parent.horizontalCenter
                 height: 50
                 width: 200
+                Material.foreground: "white"
+                Material.background: "#ED690F"
+                radius: 10
                 text: qsTr("Add")
                 enabled: masterController.ui_party_started
-                Material.background: Material.Orange
-
-                //                icon: ""
                 onClicked: {
                     drinkController.setCurrentDrinkProperties(drinkTypesList.currentIndex, amountInput.value)
 
@@ -236,15 +229,17 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
                 spacing: 60
 
-                Button {
+                RoundButton {
                     focusPolicy: Qt.NoFocus
                     id: partyButton
                     anchors.verticalCenter: parent.verticalCenter
                     height: 50
                     width: 200
+                    Material.foreground: "gray"
+                    Material.background: "white"
+                    radius: 10
                     text: masterController.ui_party_started ? qsTr("End party") : qsTr("Start party")
                     font.pointSize: 10
-                    Material.background: Material.Purple
                     onClicked: {
                         if(masterController.ui_party_started) {
                             console.log("PartyDashboardView::endParty()")

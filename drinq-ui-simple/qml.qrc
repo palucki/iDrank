@@ -17,6 +17,10 @@
         <file alias="football.png">assets/football.png</file>
         <file alias="logo.png">assets/logo.png</file>
         <file alias="history.svg">assets/history_icon_grey.svg</file>
+        <file alias="home.png">assets/home.png</file>
+        <file alias="info.png">assets/info.png</file>
+        <file alias="main_bg.svg">assets/main_bg.svg</file>
+        <file alias="logo_yellow.svg">assets/logo_yellow.svg</file>
     </qresource>
     <qresource prefix="/db">
         <file alias="iDrank.db">db/iDrank_pl.db</file>

@@ -4,9 +4,14 @@
 <context>
     <name>AboutView</name>
     <message>
-        <location filename="../AboutView.qml" line="28"/>
-        <source>iDrank</source>
-        <translation></translation>
+        <location filename="../AboutView.qml" line="25"/>
+        <source>iDrank helps in tracking alcohol consumption.</source>
+        <translation>iDrank pomaga śledzić ilość spożytego alkoholu.</translation>
+    </message>
+    <message>
+        <location filename="../AboutView.qml" line="30"/>
+        <source>Remember to drink responsibly.</source>
+        <translation>Pamiętaj, aby pić odpowiedzialnie.</translation>
     </message>
 </context>
 <context>
@@ -122,68 +127,67 @@
 <context>
     <name>PartyDashboardView</name>
     <message>
-        <location filename="../PartyDashboardView.qml" line="43"/>
+        <location filename="../PartyDashboardView.qml" line="44"/>
         <source>Last consumption: less than a minute ago</source>
         <translation>Ostatnie spożycie: mniej niż minutę temu</translation>
     </message>
     <message>
-        <location filename="../PartyDashboardView.qml" line="48"/>
-        <location filename="../PartyDashboardView.qml" line="53"/>
+        <location filename="../PartyDashboardView.qml" line="49"/>
+        <location filename="../PartyDashboardView.qml" line="54"/>
         <source>Last consumption: </source>
         <translation>Ostatnie spożycie: </translation>
     </message>
     <message>
-        <location filename="../PartyDashboardView.qml" line="48"/>
+        <location filename="../PartyDashboardView.qml" line="49"/>
         <source> minutes ago</source>
         <translation> minuty temu</translation>
     </message>
     <message>
-        <location filename="../PartyDashboardView.qml" line="53"/>
+        <location filename="../PartyDashboardView.qml" line="54"/>
         <source> hours ago</source>
         <translation> godzin temu</translation>
     </message>
     <message>
-        <location filename="../PartyDashboardView.qml" line="85"/>
+        <location filename="../PartyDashboardView.qml" line="86"/>
         <source>Currently after:</source>
         <translation>Do tej pory spożyto:</translation>
     </message>
     <message>
-        <location filename="../PartyDashboardView.qml" line="97"/>
+        <location filename="../PartyDashboardView.qml" line="98"/>
         <source>shots</source>
         <translation>porcji</translation>
     </message>
     <message>
-        <location filename="../PartyDashboardView.qml" line="121"/>
+        <location filename="../PartyDashboardView.qml" line="122"/>
         <source>Choose drink</source>
         <translation>Wybierz alkohol</translation>
     </message>
     <message>
-        <location filename="../PartyDashboardView.qml" line="149"/>
         <source>( Add own )</source>
-        <translation>( Dodaj własny )</translation>
+        <translation type="vanished">( Dodaj własny )</translation>
     </message>
     <message>
-        <location filename="../PartyDashboardView.qml" line="200"/>
+        <location filename="../PartyDashboardView.qml" line="193"/>
         <source>amount (ml)</source>
         <translation>ilość (ml)</translation>
     </message>
     <message>
-        <location filename="../PartyDashboardView.qml" line="221"/>
+        <location filename="../PartyDashboardView.qml" line="217"/>
         <source>Add</source>
         <translation>Dodaj</translation>
     </message>
     <message>
-        <location filename="../PartyDashboardView.qml" line="245"/>
+        <location filename="../PartyDashboardView.qml" line="241"/>
         <source>End party</source>
         <translation>Zakończ imprezę</translation>
     </message>
     <message>
-        <location filename="../PartyDashboardView.qml" line="245"/>
+        <location filename="../PartyDashboardView.qml" line="241"/>
         <source>Start party</source>
         <translation>Rozpocznij imprezę</translation>
     </message>
     <message>
-        <location filename="../PartyDashboardView.qml" line="251"/>
+        <location filename="../PartyDashboardView.qml" line="246"/>
         <source>Do you want to end the party?</source>
         <translation>Czy chcesz zakończyć imprezę?</translation>
     </message>
@@ -191,12 +195,12 @@
 <context>
     <name>PartyMasterView</name>
     <message>
-        <location filename="../PartyMasterView.qml" line="52"/>
+        <location filename="../PartyMasterView.qml" line="50"/>
         <source>Overview</source>
         <translation>Przegląd</translation>
     </message>
     <message>
-        <location filename="../PartyMasterView.qml" line="58"/>
+        <location filename="../PartyMasterView.qml" line="56"/>
         <source>Party statistics</source>
         <translation>Statystyki</translation>
     </message>
@@ -204,17 +208,17 @@
 <context>
     <name>PartyStatisticsView</name>
     <message>
-        <location filename="../PartyStatisticsView.qml" line="71"/>
+        <location filename="../PartyStatisticsView.qml" line="72"/>
         <source>Consumption (</source>
         <translation>Spożycie (</translation>
     </message>
     <message>
-        <location filename="../PartyStatisticsView.qml" line="88"/>
+        <location filename="../PartyStatisticsView.qml" line="90"/>
         <source>Party start / end</source>
         <translation>Rozpoczęcie / zakończenie</translation>
     </message>
     <message>
-        <location filename="../PartyStatisticsView.qml" line="130"/>
+        <location filename="../PartyStatisticsView.qml" line="128"/>
         <source>Delete the drink?</source>
         <translation>Usunąć wpis?</translation>
     </message>
@@ -222,23 +226,23 @@
 <context>
     <name>StartPartyView</name>
     <message>
-        <location filename="../StartPartyView.qml" line="20"/>
+        <location filename="../StartPartyView.qml" line="21"/>
         <source>last consumed drink: less than a minute ago</source>
         <translation>ostatnie spożycie: mniej niż minutę temu</translation>
     </message>
     <message>
-        <location filename="../StartPartyView.qml" line="25"/>
-        <location filename="../StartPartyView.qml" line="30"/>
+        <location filename="../StartPartyView.qml" line="26"/>
+        <location filename="../StartPartyView.qml" line="31"/>
         <source>last consumed drink: </source>
         <translation>ostatnie spożycie: </translation>
     </message>
     <message>
-        <location filename="../StartPartyView.qml" line="25"/>
+        <location filename="../StartPartyView.qml" line="26"/>
         <source> minutes ago</source>
         <translation> minuty temu</translation>
     </message>
     <message>
-        <location filename="../StartPartyView.qml" line="30"/>
+        <location filename="../StartPartyView.qml" line="31"/>
         <source> hour ago</source>
         <translation> godzin temu</translation>
     </message>
@@ -253,7 +257,7 @@
         <translation>Co to za okazja</translation>
     </message>
     <message>
-        <location filename="../StartPartyView.qml" line="89"/>
+        <location filename="../StartPartyView.qml" line="90"/>
         <source>Start</source>
         <translation>Rozpocznij</translation>
     </message>

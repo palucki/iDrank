@@ -25,13 +25,12 @@ Page {
         spacing: 0
         Label  {
             background: Rectangle {
-                    color: "plum"
+                    color: "#142DC1"
             }
             id: partyCenterLabel
             text: masterController.ui_party_title
-            //                maximumLength: 30
-            color: "black"
-            font.pointSize: 14
+            color: "white"
+            font.pointSize: 16
             elide: Label.ElideRight
             horizontalAlignment: Qt.AlignHCenter
             verticalAlignment: Qt.AlignVCenter
@@ -40,25 +39,24 @@ Page {
 
         TabBar {
             background: Rectangle {
-                    color: "plum"
+                color: "#142DC1"
             }
 
             Layout.fillWidth: true
             id: dashboardTabBar
-            //        currentIndex: dashboardSwipeView.currentIndex
 
             TabButton {
                 focusPolicy: Qt.NoFocus
                 text: qsTr("Overview")
-                //            icon.source: "qrc:/history.svg"
-                //            display: AbstractButton.TextUnderIcon
+                Material.foreground: "white"
+                Material.accent: "white"
             }
             TabButton {
                 focusPolicy: Qt.NoFocus
                 text: qsTr("Party statistics")
+                Material.foreground: "white"
+                Material.accent: "white"
                 enabled: partyController.ui_drinks_count > 0
-                //            icon.source: "qrc:/history.svg"
-                //            display: AbstractButton.TextUnderIcon
             }
         }
     }

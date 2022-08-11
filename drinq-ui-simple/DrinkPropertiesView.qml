@@ -48,7 +48,7 @@ Page {
 
     Rectangle {
         anchors.fill: parent
-        color: "lightpink"
+        color: "white"
 
         ColumnLayout {
             anchors.centerIn: parent

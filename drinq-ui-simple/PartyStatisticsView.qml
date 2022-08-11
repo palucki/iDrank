@@ -5,6 +5,7 @@ import QtQuick.Controls.Material 2.12
 import QtQml 2.12
 import QtQuick.Layouts 1.12
 import QtCharts 2.12
+import QtGraphicalEffects 1.12
 
 Page {
     property string unit : "ml"
@@ -43,7 +44,7 @@ Page {
 
         Rectangle {
             anchors.fill: parent
-            color: "skyblue"
+            color: "transparent"
 
             Column {
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -72,6 +73,7 @@ Page {
                         axisX: axisX
                         axisY: axisY1
                         upperSeries: consumption
+                        color: "#FFD580"
                     }
 
                     LineSeries {
@@ -79,7 +81,7 @@ Page {
                         axisX: axisX
                         axisY: axisY1
                         id: consumption
-                        color: "red"
+                        color: "#ED690F"
                         width: 2
 
                     }
@@ -93,7 +95,6 @@ Page {
                         pointsVisible: true
                         markerSize: 20
                     }
-
                 }
 
                 ListView {
@@ -112,9 +113,6 @@ Page {
                     Rectangle {
                         width: drinksList.width
                         height: 40
-
-                        color: ListView.isCurrentItem?"#157efb" : "transparent"
-                        border.color: Qt.lighter(color, 1.1)
 
                         Text {
                             anchors.left: parent.left

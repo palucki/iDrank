@@ -8,7 +8,7 @@ import QtQuick.Layouts 1.12
 Item {
     Rectangle {
         anchors.fill: parent
-        color: "gray"
+        color: "#142DC1"
 
         Column {
             anchors.centerIn: parent
@@ -16,16 +16,19 @@ Item {
 
             Image {
                 anchors.horizontalCenter: parent.horizontalCenter
-
-                width: 200
-                height: 200
                 fillMode: Image.PreserveAspectFit
-                source: "qrc:/logo.png"
+                source: "qrc:/logo_yellow.svg"
             }
 
             Label {
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: qsTr("iDrank")
+                text: qsTr("iDrank helps in tracking alcohol consumption.")
+                color: "white"
+            }
+            Label {
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: qsTr("Remember to drink responsibly.")
+                color: "white"
             }
         }
     }

@@ -8,7 +8,7 @@ import QtQuick.Layouts 1.12
 Item {
     Rectangle {
         anchors.fill: parent
-        color: "yellow"
+        color: "white"
 
         ListView {
             anchors.fill: parent
@@ -16,7 +16,6 @@ Item {
             anchors.margins: 20
 
             clip: true
-
             model: masterController.ui_parties
 
             delegate: partyPreviewDelegate
@@ -31,8 +30,6 @@ Item {
             Rectangle {
                 width: partiesList.width
                 height: 40
-
-                color: ListView.isCurrentItem?"#157efb" : "transparent"
                 border.color: Qt.lighter(color, 1.1)
 
                 function partyDecoration(partyId, currentPartyId) {
@@ -53,7 +50,7 @@ Item {
                     anchors.fill: parent
                     onClicked: {
                         console.log("Clicked on party " + modelData.ui_name)
-                        partiesList.currentIndex = index
+//                        partiesList.currentIndex = index
                         historyCenterLabel.text = modelData.ui_name
                         console.log("Party id " + modelData.ui_id)
                         console.log("Size of drinks " + drinkProvider.getUIDrinksList(modelData.ui_id))

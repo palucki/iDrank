@@ -28,12 +28,11 @@ Page {
 
     header: Label  {
             background: Rectangle {
-                    color: "plum"
+                color: "#142DC1"
             }
             id: historyCenterLabel
             text: qsTr("Parties history")
-            //                maximumLength: 30
-            color: "black"
+            color: "white"
             font.pointSize: 14
             elide: Label.ElideRight
             horizontalAlignment: Qt.AlignHCenter

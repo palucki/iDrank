@@ -1,5 +1,5 @@
 import QtQuick 2.12
-import QtQuick.Controls 2.5
+import QtQuick.Controls 2.12
 import QtQuick.Controls.Material 2.12
 
 import QtQml 2.12
@@ -8,6 +8,7 @@ import QtQuick.Layouts 1.12
 import "qrc:/"
 
 Page {
+    id: root
     function updateTimeSinceLastDrink() {
         var diff_secs = masterController.secondsSinceLastDrink()
 
@@ -45,8 +46,7 @@ Page {
 
     Rectangle {
         anchors.fill: parent
-        color: "skyblue"
-
+        color: "#142DC1"
         Column {
             anchors.centerIn: parent
             spacing: 30
@@ -66,6 +66,7 @@ Page {
                 height: 50
                 width: 200
                 anchors.horizontalCenter: parent.horizontalCenter
+                color: "transparent"
                 Column {
                     spacing: 5
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -74,6 +75,7 @@ Page {
                         id: timeSinceLastDrinkTextField
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: "PLACEHOLDER"
+                        color: "white"
                         wrapMode: Text.WordWrap
                         width: 200
                     }
@@ -82,12 +84,13 @@ Page {
 
             RoundButton {
                 focusPolicy: Qt.NoFocus
-                id: addButton
                 anchors.horizontalCenter: parent.horizontalCenter
-                height: 200
-                width: 200
+                height: 50
+                width: 300
                 text: qsTr("Start")
-                Material.background: Material.Orange
+                Material.foreground: "white"
+                Material.background: "#ED690F"
+                radius: 10
                 onClicked: dialog.openDialog()
             }
         }
