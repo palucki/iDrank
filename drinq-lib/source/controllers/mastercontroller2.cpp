@@ -121,6 +121,12 @@ qint64 MasterController2::secondsSinceLastDrink()
 {
     //This assumes drink time cannot be changed and last id is the most recent
     const QVariant last_drink_id = databaseController->getLastId("drink");
+
+    if(last_drink_id.isNull())
+    {
+        return -1;
+    }
+
     auto* drink = new drinq::models::Drink2(this);
     drink->setId(last_drink_id);
     databaseController->get(*drink);
