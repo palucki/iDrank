@@ -7,6 +7,12 @@ iDrank comes in handy allowing you to track your alcohol (or any other beverage)
 Create a party and add drinks in one of the 2 modes (shot / long drink) to watch how the consumption graph is growing.
 Revisit historical parties and share your results with friends. Keep track of current consumption and know your limits!
 
+## Screenshots
+
+![About](demo/demo1.png)
+![Party](demo/demo3.png)
+![Stats](demo/demo2.png)
+
 ## Installation
 
 ```bash
