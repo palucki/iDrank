@@ -6,30 +6,13 @@ import QtQml 2.12
 import QtQuick.Layouts 1.12
 
 import "qrc:/"
+import "common.js" as CommonJs
 
 Page {
     id: root
     function updateTimeSinceLastDrink() {
         var diff_secs = masterController.secondsSinceLastDrink()
-
-        if(diff_secs === -1)
-        {
-            timeSinceLastDrinkTextField.text = ""
-        }
-        else if(diff_secs <= 60)
-        {
-            timeSinceLastDrinkTextField.text = qsTr("last consumed drink: less than a minute ago")
-        }
-        else if(diff_secs <= 3600)
-        {
-            var diff_mins = diff_secs / 60
-            timeSinceLastDrinkTextField.text = qsTr("last consumed drink: ") + parseInt(diff_mins) + qsTr(" minutes ago")
-        }
-        else
-        {
-            var diff_hours = diff_secs / 3600
-            timeSinceLastDrinkTextField.text = qsTr("last consumed drink: ") + parseInt(diff_hours) + qsTr(" hour ago")
-        }
+        timeSinceLastDrinkTextField.text = CommonJs.updateTimeSinceLastDrink(diff_secs)
     }
 
     Timer {

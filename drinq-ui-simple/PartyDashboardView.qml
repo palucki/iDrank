@@ -7,6 +7,7 @@ import QtQuick.Layouts 1.12
 import QtGraphicalEffects 1.12
 
 import "qrc:/"
+import "common.js" as CommonJs
 
 Page {
     Timer {
@@ -34,25 +35,7 @@ Page {
 
     function updateTimeSinceLastDrink() {
         var diff_secs = partyController.secondsSinceLastDrink()
-
-        if(diff_secs === -1)
-        {
-            timeSinceLastDrinkTextField.text = ""
-        }
-        else if(diff_secs <= 60)
-        {
-            timeSinceLastDrinkTextField.text = qsTr("Last consumption: less than a minute ago")
-        }
-        else if(diff_secs <= 3600)
-        {
-            var diff_mins = diff_secs / 60
-            timeSinceLastDrinkTextField.text = qsTr("Last consumption: ") + parseInt(diff_mins) + qsTr(" minutes ago")
-        }
-        else
-        {
-            var diff_hours = diff_secs / 3600
-            timeSinceLastDrinkTextField.text = qsTr("Last consumption: ") + parseInt(diff_hours) + qsTr(" hours ago")
-        }
+        timeSinceLastDrinkTextField.text = CommonJs.updateTimeSinceLastDrink(diff_secs)
     }
 
     Rectangle {

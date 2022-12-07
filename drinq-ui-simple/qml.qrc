@@ -21,6 +21,8 @@
         <file alias="info.png">assets/info.png</file>
         <file alias="main_bg.svg">assets/main_bg.svg</file>
         <file alias="logo_yellow.svg">assets/logo_yellow.svg</file>
+        <file alias="Style.qml">assets/Style.qml</file>
+        <file alias="common.js">js/common.js</file>
     </qresource>
     <qresource prefix="/db">
         <file alias="iDrank.db">db/iDrank_pl.db</file>
