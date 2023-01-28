@@ -33,7 +33,7 @@ function updateTimeSinceLastDrink(diff_secs) {
         const diff_hours = Math.floor((diff_secs - (diff_days * 86400)) / 3600)
         const diff_mins = Math.floor((diff_secs - (diff_days * 86400) - (diff_hours * 3600)) / 60)
 
-        const days_string =  (diff_days > 1 ? diff_days + qsTr(" days") : qsTr("1 day"))
+        const days_string =  (diff_days > 1 ? diff_days + qsTr(" days ") : qsTr("1 day"))
         const hours_string = (diff_hours > 1 ? diff_hours + qsTr(" hours ") : qsTr("1 hour"))
         const mins_string = (diff_mins == 0 ? "" : diff_mins == 1 ? qsTr(" 1 minute") : diff_mins + qsTr(" minutes"))
 

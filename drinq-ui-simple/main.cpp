@@ -47,22 +47,8 @@ int main(int argc, char *argv[])
     PartyPlotter plotter(&app, &db);
 
     QTranslator translator;
-    if(translator.load("iDrank_pl_PL.qm", ":/translations"))
-    {
-        qDebug() << "Loading locale";
-        if(app.installTranslator(&translator))
-        {
-            qDebug() << "Installed ok";
-        }
-        else
-        {
-            qDebug() << "Error installing";
-        }
-    }
-    else
-    {
-        qDebug() << "using default locale";
-    }
+    translator.load("iDrank_pl_PL.qm", ":/translations");
+    app.installTranslator(&translator);
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("drinkController", &drinkController);
