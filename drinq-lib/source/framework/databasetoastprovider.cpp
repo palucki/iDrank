@@ -25,8 +25,9 @@ Toast* DatabaseToastProvider::randomToast(QVariant partyId)
                              "WHERE id NOT IN (SELECT COALESCE(toast_id,0) FROM drink WHERE party_id = %1) "
                              "ORDER BY RANDOM() LIMIT 1;").arg(partyId.toInt());
 
-    const auto result = m_db.execQuery(sql);
-    if(!result.isEmpty())
+    bool ok = false;
+    const auto result = m_db.execQuery(sql, ok);
+    if(ok && !result.isEmpty())
     {
         QVariant toast_id{result[0][0]};
         QString toast_text{result[0][1].toString()};
@@ -34,5 +35,5 @@ Toast* DatabaseToastProvider::randomToast(QVariant partyId)
         return new Toast(toast_text, toast_id, this);
     }
 
-    return new Toast("Toasty się skończyły...", {}, this);
+    return new Toast(tr("Toasty się skończyły..."), {}, this);
 }

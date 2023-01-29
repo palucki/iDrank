@@ -47,37 +47,6 @@ QString DrinkController::type(QVariant id)
     return "Unknown";
 }
 
-//bool DrinkController::addDrink()
-//{
-
-//    newDrink.setAmountMl(2137);
-//    qDebug() << "Updating drink";
-//    qDebug() << "Before " << newDrink.toJson();
-//    qDebug() << "Result " << m_db->update(newDrink);
-//    qDebug() << "After " << newDrink.toJson();
-
-//    qDebug() << "Reading drink";
-//    drinq::models::Drink2 readDrink;
-//    readDrink.setId(newDrink.m_id);
-//    qDebug() << "Result " <<  m_db->get(readDrink);
-
-//    qDebug() << "Read drink " << readDrink.toJson();
-
-//    qDebug() << "Removing drink";
-//    qDebug() << "Result " <<  m_db->remove(readDrink);
-
-//    auto result = m_db->createRow("drink", newDrink.toJson());
-
-//    qDebug() << "RESULT " << result;
-
-//    return true;
-//}
-
-//void DrinkController::setPartyId(const QVariant &partyId)
-//{
-//    m_currentPartyId = partyId;
-//}
-
 void DrinkController::addDrinkType(const QString &name, int default_amount, drinq::models::DrinkType::ConsumptionType type)
 {
     auto newDrinkType = new drinq::models::DrinkType{this};

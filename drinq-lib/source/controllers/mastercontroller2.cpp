@@ -16,6 +16,7 @@ namespace controllers {
 
 const QString USERNAME_KEY = "username";
 const QString USER_EMAIL_KEY = "email";
+const QString INVOLVED_USERS_KEY = "involved_users";
 
 MasterController2::MasterController2(QObject *parent,
                                      DatabaseControllerInterface *dbController,
@@ -33,7 +34,6 @@ MasterController2::MasterController2(QObject *parent,
 
     for(const auto& p : parties)
     {
-//        qDebug() << drink_type.m_name << " default amount: " << drink_type.m_default_amount_ml;
         m_parties.append(new drinq::models::Party2(p.toJson(), this));
     }
 
@@ -150,11 +150,83 @@ void MasterController2::registerUser(const QString &username, const QString &ema
         return;
     }
 
+    const auto sql = QString("INSERT OR REPLACE INTO user (id, name, email) VALUES (1, '%1', '%2');").arg(username, email);
+    bool ok = false;
+    databaseController->execQuery(sql, ok);
+
+    if(!ok)
+    {
+        return;
+    }
+
     m_settings->setValue(USERNAME_KEY, username);
     m_settings->setValue(USER_EMAIL_KEY, email);
-
+    m_settings->setValue(INVOLVED_USERS_KEY, 1);
     m_user_missing = false;
+
     emit ui_user_missing_changed();
+}
+
+QVariantList MasterController2::getUsers()
+{
+    const auto userStringList = getInvolvedUsers();
+
+    const auto sql = QString("SELECT id, name, email FROM user ORDER BY id ASC;");
+
+    QVariantList result;
+    bool ok = false;
+    const auto data = databaseController->execQuery(sql, ok);
+
+    if(!ok)
+        return {};
+
+    for(const auto& r : data)
+    {
+        auto u = new drinq::models::User(this);
+        u->id = r[0].toInt();
+        u->m_name = r[1].toString();
+        u->m_email = r[2].toString();
+
+        if(userStringList.contains(QString::number(u->id)))
+        {
+            u->m_involved = true;
+        }
+
+        result.append(QVariant::fromValue(u));
+    }
+
+    return result;
+}
+
+void MasterController2::addUser(const QString& name)
+{
+    bool ok = false;
+    const auto data = databaseController->execQuery(QString("INSERT INTO user (name) VALUES ('%1');").arg(name), ok);
+}
+
+void MasterController2::deleteUser(const int id)
+{
+    bool ok = false;
+    const auto data = databaseController->execQuery(QString("DELETE FROM user WHERE id = %1;").arg(id), ok);
+}
+
+void MasterController2::setInvolvedUsers(const QVariantList& users)
+{
+    QStringList users_list;
+    for(const auto& u : users)
+    {
+        users_list.append(QString::number(u.toInt()));
+    }
+
+    m_settings->setValue(INVOLVED_USERS_KEY, users_list.join(','));
+    qDebug() << "Setting involved to " << users_list.join(',');
+    emit ui_involved_users_changed();
+}
+
+QStringList MasterController2::getInvolvedUsers()
+{
+    const auto userStringList = m_settings->value(INVOLVED_USERS_KEY).toString().split(',');
+    return userStringList;
 }
 
 }

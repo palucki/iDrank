@@ -85,7 +85,8 @@ HEADERS += \
     source/models/clientsearch.h \
     source/models/contact.h \
     source/models/drink.h \
-    source/models/recentactivity.h
+    source/models/recentactivity.h \
+    source/models/user.h
 
 INCLUDEPATH += source
 

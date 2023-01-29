@@ -183,45 +183,43 @@ Page {
                 editable: true
             }
 
-
-            RoundButton {
-                focusPolicy: Qt.NoFocus
-                id: addButton
-                anchors.horizontalCenter: parent.horizontalCenter
-                height: 50
-                width: 200
-                Material.foreground: "white"
-                Material.background: "#ED690F"
-                radius: 10
-                text: qsTr("Add")
-                enabled: masterController.ui_party_started
-                onClicked: {
-                    drinkController.setCurrentDrinkProperties(drinkTypesList.currentIndex, amountInput.value)
-                    var toast = toastProvider.randomToast(partyController.ui_current_party_id)
-                    dialog.openDialog(toast.ui_text)
-                    partyController.addDrink(toast.id)
-                }
-            }
-
             Row {
                 anchors.horizontalCenter: parent.horizontalCenter
-                spacing: 60
+
+                RoundButton {
+                    focusPolicy: Qt.NoFocus
+                    id: addButton
+//                    anchors.horizontalCenter: parent.horizontalCenter
+                    height: 50
+                    width: 175
+                    Material.foreground: "white"
+                    Material.background: "#ED690F"
+                    radius: 10
+                    text: qsTr("Add")
+                    enabled: masterController.ui_party_started
+                    onClicked: {
+                        drinkController.setCurrentDrinkProperties(drinkTypesList.currentIndex, amountInput.value)
+                        var toast = toastProvider.randomToast(partyController.ui_current_party_id)
+                        dialog.openDialog(toast.ui_text)
+                        partyController.addDrink(toast.id, masterController.ui_involved_users)
+                    }
+                }
 
                 RoundButton {
                     focusPolicy: Qt.NoFocus
                     id: playersButton
-                    anchors.verticalCenter: parent.verticalCenter
                     height: 50
-                    width: 200
+                    width: 75
                     Material.foreground: "orange"
                     Material.background: "white"
                     radius: 10
-                    text: "1" + " player"
+                    text: masterController.ui_involved_users.length
+                    icon.source: "qrc:/users.png"
                     font.pointSize: 10
                     onClicked: {
                         console.log("Clicked on players")
-                        partyDashboardStackView.push("qrc:PlayersView.qml"//, {drinkType: drinkController.ui_drinkTypes[index]}
-                                                     )
+                        partyDashboardStackView.push("qrc:PlayersView.qml",
+                                                     {users: masterController.getUsers()})
                     }
                 }
             }
@@ -235,7 +233,7 @@ Page {
                     id: partyButton
                     anchors.verticalCenter: parent.verticalCenter
                     height: 50
-                    width: 200
+                    width: 250
                     Material.foreground: "gray"
                     Material.background: "white"
                     radius: 10

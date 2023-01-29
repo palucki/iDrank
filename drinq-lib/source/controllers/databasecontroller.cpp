@@ -240,16 +240,26 @@ bool DatabaseController::remove(data::EntityLite &e)
     return true;
 }
 
-QList<QVariantList> DatabaseController::execQuery(const QString &sql)
+QList<QVariantList> DatabaseController::execQuery(const QString &sql, bool& ok)
 {
     QSqlQuery query(implementation->database);
+
+    if(!query.prepare(sql))
+    {
+        qDebug() << "QUERY INCORRECT " << query.lastQuery();
+        ok = false;
+        return {};
+    }
+
     if(!query.exec(sql))
     {
-        qDebug() << "QUERY ERROR " << query.lastError().text();
+        qDebug() << "QUERY " << query.lastQuery() << " ERROR " << query.lastError().text();
+        ok = false;
         return {};
     }
 
     QList<QVariantList> result;
+    ok = true;
 
     while(query.next())
     {

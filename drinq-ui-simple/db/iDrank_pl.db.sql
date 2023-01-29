@@ -52,4 +52,7 @@ CREATE TABLE IF NOT EXISTS `drink` (
 	FOREIGN KEY(`drink_type_id`) REFERENCES `drink_type`(`id`) ON DELETE CASCADE,
 	FOREIGN KEY(`toast_id`) REFERENCES `toast`(`id`)
 );
+
+CREATE TABLE IF NOT EXISTS `user` ( `id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT, `email` TEXT );
+
 COMMIT;

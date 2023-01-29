@@ -8,6 +8,7 @@
 #include <drinq-lib_global.h>
 #include <controllers/databasecontrollerinterface.h>
 #include <models/drink.h>
+#include <models/user.h>
 
 #include <memory>
 
@@ -24,6 +25,7 @@ class DRINQLIB_EXPORT MasterController2 : public QObject
     Q_PROPERTY(bool ui_party_started MEMBER m_party_started NOTIFY ui_party_startedChanged)
     Q_PROPERTY(QString ui_party_title MEMBER m_party_title NOTIFY ui_party_titleChanged)
     Q_PROPERTY(bool ui_user_missing MEMBER m_user_missing NOTIFY ui_user_missing_changed)
+    Q_PROPERTY(QStringList ui_involved_users READ getInvolvedUsers NOTIFY ui_involved_users_changed)
 public:
     explicit MasterController2(QObject *parent = nullptr,
                                drinq::controllers::DatabaseControllerInterface* dbController = nullptr,
@@ -40,11 +42,19 @@ public slots:
 
     void registerUser(const QString& username, const QString& email);
 
+    QVariantList getUsers();
+    void addUser(const QString& name);
+    void deleteUser(const int id);
+
+    void setInvolvedUsers(const QVariantList& users);
+    QStringList getInvolvedUsers();
+
 signals:
     void ui_partiesChanged();
     void ui_party_startedChanged();
     void ui_party_titleChanged();
     void ui_user_missing_changed();
+    void ui_involved_users_changed();
 
 private:
     void setPartyName(const QString& name);

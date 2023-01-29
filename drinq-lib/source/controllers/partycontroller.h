@@ -42,7 +42,7 @@ public slots:
     void setPartyId(QVariant id);
     void endParty();
 
-    void addDrink(const QVariant toast_id);
+    void addDrink(const QVariant toast_id, QVariantList involved_users);
     void deleteDrink(const QVariant& id);
 
 signals:

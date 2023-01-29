@@ -79,7 +79,7 @@ void PartyController::setDrinksCount(int count)
     emit ui_drinks_countChanged(m_current_drinks_count);
 }
 
-void PartyController::addDrink(const QVariant toast_id)
+void PartyController::addDrink(const QVariant toast_id, QVariantList involved_users)
 {
     qDebug() << "Latest party id " << m_currentPartyId;
 
@@ -99,6 +99,14 @@ void PartyController::addDrink(const QVariant toast_id)
         emit ui_drinksChanged();
         setDrinksCount(m_current_drinks_count + 1);
         qDebug() << "PartyController -> drink added";
+
+        for(const auto& u : involved_users)
+        {
+            const auto sql = QString("INSERT INTO drink_user_rel (drink_id, user_id) VALUES (%1, %2);")
+                                .arg(newDrink->m_id.toInt()).arg(u.toInt());
+            bool ok = false;
+            m_db->execQuery(sql, ok);
+        }
     }
     else
     {
