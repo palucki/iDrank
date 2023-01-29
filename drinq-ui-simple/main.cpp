@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
     drinq::controllers::DatabaseController db;
     drinq::controllers::DrinkController drinkController(&app, &db, &settings);
     PartyController partyController(&app, &db, &drinkController);
-    drinq::controllers::MasterController2 masterController(&app, &db, &partyController);
+    drinq::controllers::MasterController2 masterController(&app, &db, &partyController, &settings);
     DatabaseToastProvider toastProvider(db);
     DrinkProvider drinkProvider(&db);
     PartyPlotter plotter(&app, &db);

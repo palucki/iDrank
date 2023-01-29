@@ -23,6 +23,7 @@
         <file alias="logo_yellow.svg">assets/logo_yellow.svg</file>
         <file alias="Style.qml">assets/Style.qml</file>
         <file alias="common.js">js/common.js</file>
+        <file>RegisterUserView.qml</file>
     </qresource>
     <qresource prefix="/db">
         <file alias="iDrank.db">db/iDrank_pl.db</file>

@@ -1,5 +1,7 @@
 #include "mastercontroller2.h"
 
+#include <QSettings>
+
 #include <models/drink.h>
 #include <models/clientsearch.h>
 #include <models/recentactivity.h>
@@ -12,13 +14,19 @@ using namespace drinq::models;
 namespace drinq {
 namespace controllers {
 
+const QString USERNAME_KEY = "username";
+const QString USER_EMAIL_KEY = "email";
 
 MasterController2::MasterController2(QObject *parent,
                                      DatabaseControllerInterface *dbController,
-                                     PartyController* _partyController)
+                                     PartyController* _partyController,
+                                     QSettings* settings)
     : QObject(parent),
-      databaseController(dbController), partyController(_partyController)
+      databaseController(dbController), partyController(_partyController), m_settings(settings)
 {
+    m_user_missing = m_settings->value(USERNAME_KEY).toString().isEmpty() ||
+                     m_settings->value(USER_EMAIL_KEY).toString().isEmpty();
+
     auto parties = databaseController->getAll(drinq::models::Party2{this});
 
     qDebug() << "Found " << parties.size() << " parties";
@@ -133,6 +141,20 @@ qint64 MasterController2::secondsSinceLastDrink()
     drink->update(drink->toJson());
     const qint64 diff_sec = drink->m_timestamp.secsTo(QDateTime::currentDateTime());
     return diff_sec;
+}
+
+void MasterController2::registerUser(const QString &username, const QString &email)
+{
+    if(username.isEmpty() || email.isEmpty())
+    {
+        return;
+    }
+
+    m_settings->setValue(USERNAME_KEY, username);
+    m_settings->setValue(USER_EMAIL_KEY, email);
+
+    m_user_missing = false;
+    emit ui_user_missing_changed();
 }
 
 }
