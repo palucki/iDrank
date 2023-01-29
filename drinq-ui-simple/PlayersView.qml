@@ -52,6 +52,9 @@ Item {
 
             footer:
                 Rectangle {
+
+                visible: users.length < 3
+
                 width: parent.width
                 height: 40
                 color: "transparent"

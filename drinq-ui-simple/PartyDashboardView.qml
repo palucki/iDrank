@@ -196,7 +196,7 @@ Page {
                     Material.background: "#ED690F"
                     radius: 10
                     text: qsTr("Add")
-                    enabled: masterController.ui_party_started
+                    enabled: masterController.ui_party_started && masterController.ui_involved_users.length > 0
                     onClicked: {
                         drinkController.setCurrentDrinkProperties(drinkTypesList.currentIndex, amountInput.value)
                         var toast = toastProvider.randomToast(partyController.ui_current_party_id)

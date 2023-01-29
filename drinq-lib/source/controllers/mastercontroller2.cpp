@@ -225,7 +225,10 @@ void MasterController2::setInvolvedUsers(const QVariantList& users)
 
 QStringList MasterController2::getInvolvedUsers()
 {
-    const auto userStringList = m_settings->value(INVOLVED_USERS_KEY).toString().split(',');
+    const auto userStringList = m_settings->value(INVOLVED_USERS_KEY).toString().split(',', Qt::SkipEmptyParts);
+
+//    qDebug() << "Get involved users: " << userStringList;
+
     return userStringList;
 }
 

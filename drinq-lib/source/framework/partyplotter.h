@@ -33,7 +33,10 @@ public:
     PartyPlotter(QObject* parent = nullptr, drinq::controllers::DatabaseControllerInterface *db = nullptr);
     virtual ~PartyPlotter();
 public slots:
-    void setSeries(QAbstractSeries* drinkSeries, QAbstractSeries* partyStartEndSeries);
+    void setSeries(QAbstractSeries* partyStartEndSeries,
+                   QAbstractSeries* drinkSeries1,
+                   QAbstractSeries* drinkSeries2,
+                   QAbstractSeries* drinkSeries3);
     void setAxes(QAbstractAxis* xAxis, QAbstractAxis* yAxis);
 
     void update(QVariant partyId);
@@ -42,7 +45,9 @@ private:
     DrinkProvider m_drinkProvider;
     drinq::controllers::DatabaseControllerInterface* m_database_controller{nullptr};
     QScatterSeries* mPartyStartEndSeries{nullptr};
-    QXYSeries* mDrinksSeries {nullptr};
+    QXYSeries* mDrinksSeries1 {nullptr};
+    QXYSeries* mDrinksSeries2 {nullptr};
+    QXYSeries* mDrinksSeries3 {nullptr};
     QDateTimeAxis* mDateTimeAxis{nullptr};
     QValueAxis* mValueAxis{nullptr};
 

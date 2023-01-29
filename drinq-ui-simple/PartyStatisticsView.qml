@@ -16,7 +16,7 @@ Page {
 
     Component.onCompleted: {
         console.log("Party statistics onCompleted series 0 " + chartView.series(0))
-        plotter.setSeries(chartView.series(0), chartView.series(2))
+        plotter.setSeries(chartView.series(0), chartView.series(2), chartView.series(4), chartView.series(6))
         plotter.setAxes(axisX, axisY1)
         drinks = drinkProvider.getUIDrinksList(partyId)
         plotter.update(partyId)
@@ -27,7 +27,7 @@ Page {
         function onUi_drinksChanged()
         {
             console.log("Drinks changed in party statistics view. party Id " + partyId)
-            plotter.setSeries(chartView.series(0), chartView.series(2))
+            plotter.setSeries(chartView.series(0), chartView.series(2), chartView.series(4), chartView.series(6))
             plotter.setAxes(axisX, axisY1)
             drinks = drinkProvider.getUIDrinksList(partyId)
             plotter.update(partyId)
@@ -68,24 +68,6 @@ Page {
                         format: "ddd hh:mm"
                     }
 
-                    AreaSeries {
-                        name: qsTr("Consumption (") + unit + ")"
-                        axisX: axisX
-                        axisY: axisY1
-                        upperSeries: consumption
-                        color: "#FFD580"
-                    }
-
-                    LineSeries {
-
-                        axisX: axisX
-                        axisY: axisY1
-                        id: consumption
-                        color: "#ED690F"
-                        width: 2
-
-                    }
-
                     ScatterSeries {
                         name: qsTr("Party start / end")
                         axisX: axisX
@@ -95,6 +77,56 @@ Page {
                         pointsVisible: true
                         markerSize: 20
                     }
+
+                    //CONSUMPTION 1
+                    AreaSeries {
+                        name: qsTr("Consumption (") + unit + ")"
+                        axisX: axisX
+                        axisY: axisY1
+                        upperSeries: consumption1
+                        color: "#f5a742"
+                    }
+
+                    LineSeries {
+                        axisX: axisX
+                        axisY: axisY1
+                        id: consumption1
+                        color: "#f57542"
+                        width: 2
+                    }
+                    //CONSUMPTION 2
+                    AreaSeries {
+                        name: qsTr("Consumption (") + unit + ")"
+                        axisX: axisX
+                        axisY: axisY1
+                        upperSeries: consumption2
+                        color: "#4299f5"
+                    }
+
+                    LineSeries {
+                        axisX: axisX
+                        axisY: axisY1
+                        id: consumption2
+                        color: "#057bf7"
+                        width: 2
+                    }
+                    //CONSUMPTION 3
+                    AreaSeries {
+                        name: qsTr("Consumption (") + unit + ")"
+                        axisX: axisX
+                        axisY: axisY1
+                        upperSeries: consumption3
+                        color: "#dce673"
+                    }
+
+                    LineSeries {
+                        axisX: axisX
+                        axisY: axisY1
+                        id: consumption3
+                        color: "#95a300"
+                        width: 2
+                    }
+
                 }
 
                 ListView {
