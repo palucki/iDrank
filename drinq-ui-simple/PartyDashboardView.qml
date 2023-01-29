@@ -101,10 +101,6 @@ Page {
                 }
             }
 
-            Label {
-                text: qsTr("Choose drink")
-            }
-
             ListView {
                 //                    anchors.fill: parent
                 id: drinkTypesList
@@ -201,10 +197,32 @@ Page {
                 enabled: masterController.ui_party_started
                 onClicked: {
                     drinkController.setCurrentDrinkProperties(drinkTypesList.currentIndex, amountInput.value)
-
                     var toast = toastProvider.randomToast(partyController.ui_current_party_id)
                     dialog.openDialog(toast.ui_text)
                     partyController.addDrink(toast.id)
+                }
+            }
+
+            Row {
+                anchors.horizontalCenter: parent.horizontalCenter
+                spacing: 60
+
+                RoundButton {
+                    focusPolicy: Qt.NoFocus
+                    id: playersButton
+                    anchors.verticalCenter: parent.verticalCenter
+                    height: 50
+                    width: 200
+                    Material.foreground: "orange"
+                    Material.background: "white"
+                    radius: 10
+                    text: "1" + " player"
+                    font.pointSize: 10
+                    onClicked: {
+                        console.log("Clicked on players")
+                        partyDashboardStackView.push("qrc:PlayersView.qml"//, {drinkType: drinkController.ui_drinkTypes[index]}
+                                                     )
+                    }
                 }
             }
 

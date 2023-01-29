@@ -46,9 +46,9 @@ int main(int argc, char *argv[])
     DrinkProvider drinkProvider(&db);
     PartyPlotter plotter(&app, &db);
 
-    QTranslator translator;
-    translator.load("iDrank_pl_PL.qm", ":/translations");
-    app.installTranslator(&translator);
+//    QTranslator translator;
+//    translator.load("iDrank_pl_PL.qm", ":/translations");
+//    app.installTranslator(&translator);
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("drinkController", &drinkController);
