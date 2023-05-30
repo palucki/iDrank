@@ -13,9 +13,10 @@ int main(int argc, char *argv[])
     DatabaseController database_controller;
     database_controller.init();
     
-    auto drinks = Drink::getAllDrinks();
+    auto drinks = Drink::getDrinksForParty(0);
 
     std::cout << "Found " << drinks.size() << " drinks in database\n";
+    std::cout << "Seconds since last drink " << Drink::secondsSinceLastDrink() << "\n";
 
     return 0;
 }
