@@ -33,7 +33,7 @@ public:
 
         if(!query.exec())
         {
-            qWarning() << "Drink::secondsSinceLastDrink - ERROR: " << query.lastError().text();
+            qWarning() << "Drink::secondsSinceLastDrink - ERROR: " << query.lastError().text() << " in query " << query.executedQuery();
             return {};
         }
 
@@ -59,7 +59,7 @@ public:
 
         if(!query.exec())
         {
-            qWarning() << "Drink::getDrinksForParty - ERROR: " << query.lastError().text();
+            qWarning() << "Drink::getDrinksForParty - ERROR: " << query.lastError().text() << " in query " << query.executedQuery();
         }
 
         while(query.next())
@@ -101,7 +101,6 @@ public:
         if(!query.exec())
         {
             qWarning() << "Drink::remove - ERROR:" << query.lastError().text() << " in query " << query.executedQuery();
-            return {};
         }
     }
 
