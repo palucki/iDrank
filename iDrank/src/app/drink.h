@@ -1,5 +1,6 @@
 #pragma once 
 
+#include <optional>
 #include <QObject>
 
 // Consider using one of the following alternatives to plain SQL queries:
@@ -25,7 +26,7 @@ public:
     void setTimestamp(const QDateTime& ts) { m_timestamp = ts;}
     void setToastId(const QVariant& id) { m_toast_id = id;}
 
-    static qint64 secondsSinceLastDrink()
+    static std::optional<qint64> secondsSinceLastDrink()
     {
         QSqlQuery query;
         query.prepare("SELECT COUNT(id), MAX(timestamp) FROM drink");
@@ -33,7 +34,7 @@ public:
         if(!query.exec())
         {
             qWarning() << "Drink::secondsSinceLastDrink - ERROR: " << query.lastError().text();
-            return -1;
+            return {};
         }
 
         if(query.first() && query.value(0).toInt() > 0)
@@ -44,7 +45,7 @@ public:
         else
         {
             qWarning() << "Drink::secondsSinceLastDrink - last drink not found";
-            return -1;
+            return {};
         }
     }
 
@@ -67,6 +68,28 @@ public:
         }
 
         return drinks;
+    }
+
+    static std::optional<QVariant> add(QVariant drink_type_id, QVariant party_id, QVariant timestamp, int amount_ml, QVariant toast_id)
+    {
+        QSqlQuery query;
+        query.prepare(QString("INSERT INTO drink (drink_type_id, party_id, timestamp, amount_ml, toast_id)"
+                              " VALUES (:drink_type_id, :party_id, :timestamp, :amount_ml, :toast_id)"));
+
+        query.bindValue(":drink_type_id", drink_type_id);
+        query.bindValue(":party_id", party_id);
+        query.bindValue(":timestamp", timestamp);
+        query.bindValue(":amount_ml", amount_ml);
+        query.bindValue(":toast_id", toast_id);
+
+        if(!query.exec())
+        {
+            qWarning() << "Drink::add - ERROR:" << query.lastError().text() << " in query " << query.executedQuery();
+            return {};
+        }
+
+        const auto drink_id = query.lastInsertId();
+        return drink_id;
     }
 
 public:
