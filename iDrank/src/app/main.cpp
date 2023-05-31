@@ -8,6 +8,7 @@
 #include "drink.h"
 #include "party.h"
 #include "toast.h"
+#include "drinktype.h"
 
 int main(int argc, char *argv[])
 {
@@ -45,6 +46,13 @@ int main(int argc, char *argv[])
     if(t)
     {
         std::cout << "Random toast for party 1: " << t->m_text.toStdString() << '\n';
+    }
+
+    const auto drink_types = DrinkType::getDrinkTypes();
+    std::cout << "Found " << drink_types.size() << " drink types\n";
+    for(auto* dt : drink_types)
+    {
+        std::cout << dt->m_id.toInt() << " / "<< dt->m_name.toStdString() << " / " << dt->m_default_amount_ml << "ml\n";
     }
 
     return 0;

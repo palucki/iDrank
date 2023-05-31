@@ -15,6 +15,7 @@ qt_add_executable(iDrank
     drink.h
     party.h
     toast.h
+    drinktype.h
 )
 
 qt_add_resources(iDrank dbresources

@@ -54,7 +54,7 @@ public:
         QList<Drink*> drinks;
 
         QSqlQuery query;
-        query.prepare("SELECT * FROM drink WHERE party_id = :party_id");
+        query.prepare("SELECT id, timestamp, amount_ml, toast_id FROM drink WHERE party_id = :party_id");
         query.bindValue(":party_id", party_id);
 
         if(!query.exec())
@@ -64,7 +64,13 @@ public:
 
         while(query.next())
         {
-            drinks.append(new Drink{});
+            auto* d = new Drink;
+            d->m_id = query.value(0);
+            d->m_timestamp = query.value(1).toDateTime();
+            d->m_amount_ml = query.value(2).toInt();
+            d->m_party_id = party_id;
+            d->m_toast_id = query.value(3);
+            drinks.append(d);
         }
 
         return drinks;
