@@ -9,11 +9,11 @@ find_package(Qt6 REQUIRED COMPONENTS Widgets Gui Qml Sql)
 qt_standard_project_setup()
 
 qt_add_executable(iDrank
-    # mainwindow.ui
-    # mainwindow.cpp
     main.cpp
-    databasecontroller.h #remove when .cpp is in place
-    drink.h 
+    # replace the following when .cpp is in place:
+    databasecontroller.h
+    drink.h
+    party.h
 )
 
 qt_add_resources(iDrank dbresources

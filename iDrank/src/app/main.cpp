@@ -6,6 +6,7 @@
 
 #include "databasecontroller.h"
 #include "drink.h"
+#include "party.h"
 
 int main(int argc, char *argv[])
 {
@@ -29,6 +30,15 @@ int main(int argc, char *argv[])
     drinks = Drink::getDrinksForParty(1);
     std::cout << "After: found " << drinks.size() << " drinks in database\n";
     std::cout << "Seconds since last drink: " << (seconds ? *seconds : 0)  << "\n";
+
+    if(!Party::isAnyStarted())
+    {
+        Party::start("TEST");
+    }
+
+    std::cout << "Before: any party started: " << Party::isAnyStarted() << '\n';
+    Party::end();
+    std::cout << "After: any party started: " << Party::isAnyStarted() << '\n';
 
     return 0;
 }

@@ -70,7 +70,7 @@ public:
         return drinks;
     }
 
-    static std::optional<QVariant> add(QVariant drink_type_id, QVariant party_id, QVariant timestamp, int amount_ml, QVariant toast_id)
+    static std::optional<QVariant> add(QVariant drink_type_id, QVariant party_id, QDateTime timestamp, int amount_ml, QVariant toast_id)
     {
         QSqlQuery query;
         query.prepare(QString("INSERT INTO drink (drink_type_id, party_id, timestamp, amount_ml, toast_id)"
