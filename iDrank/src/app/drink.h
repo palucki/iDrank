@@ -17,8 +17,8 @@ class Drink : public QObject
     Q_PROPERTY(QVariant ui_drink_type_id MEMBER m_drink_type_id CONSTANT)
 
 public:
-    explicit Drink(QObject* parent = nullptr) {}
-    virtual ~Drink() {}
+    explicit Drink(QObject* parent = nullptr) : QObject(parent) {}
+    virtual ~Drink() override {}
 
     void setDrinkTypeId(const QVariant& id) { m_drink_type_id = id; }
     void setPartyId(const QVariant& id) { m_party_id = id;}

@@ -14,6 +14,7 @@ qt_add_executable(iDrank
     databasecontroller.h
     drink.h
     party.h
+    toast.h
 )
 
 qt_add_resources(iDrank dbresources

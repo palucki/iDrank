@@ -7,6 +7,7 @@
 #include "databasecontroller.h"
 #include "drink.h"
 #include "party.h"
+#include "toast.h"
 
 int main(int argc, char *argv[])
 {
@@ -39,6 +40,12 @@ int main(int argc, char *argv[])
     std::cout << "Before: any party started: " << Party::isAnyStarted() << '\n';
     Party::end();
     std::cout << "After: any party started: " << Party::isAnyStarted() << '\n';
+
+    auto* t = Toast::getRandomToast(1);
+    if(t)
+    {
+        std::cout << "Random toast for party 1: " << t->m_text.toStdString() << '\n';
+    }
 
     return 0;
 }

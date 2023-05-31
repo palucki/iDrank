@@ -13,8 +13,8 @@ class Party : public QObject
     Q_PROPERTY(QDateTime ui_ended MEMBER m_ended CONSTANT)
 
 public:
-    explicit Party(QObject* parent = nullptr) {}
-    virtual ~Party() {}
+    explicit Party(QObject* parent = nullptr) : QObject(parent) {}
+    virtual ~Party() override {}
 
     void setName(const QString& name) { m_name = name; }
     void setStarted(const QDateTime& ts) { m_started = ts;}
