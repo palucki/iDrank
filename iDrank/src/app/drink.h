@@ -92,6 +92,19 @@ public:
         return drink_id;
     }
 
+    static bool remove(QVariant drink_id)
+    {
+        QSqlQuery query;
+        query.prepare(QString("DELETE FROM drink WHERE id = :id"));
+        query.bindValue(":id", drink_id);
+
+        if(!query.exec())
+        {
+            qWarning() << "Drink::remove - ERROR:" << query.lastError().text() << " in query " << query.executedQuery();
+            return {};
+        }
+    }
+
 public:
     QVariant m_id; //replace with base class like DatabaseObject
     QVariant m_drink_type_id{};
