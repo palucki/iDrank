@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include <QGuiApplication>
+#include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QSettings>
 
@@ -9,6 +10,10 @@
 #include "party.h"
 #include "toast.h"
 #include "drinktype.h"
+
+
+// #include <QtQml/qqmlextensionplugin.h>
+// Q_IMPORT_QML_PLUGIN(MyQmlPlugin)
 
 int main(int argc, char *argv[])
 {
@@ -55,5 +60,28 @@ int main(int argc, char *argv[])
         std::cout << dt->m_id.toInt() << " / "<< dt->m_name.toStdString() << " / " << dt->m_default_amount_ml << "ml\n";
     }
 
-    return 0;
+    QCoreApplication::setOrganizationName("Salka");
+    QCoreApplication::setOrganizationDomain("palucki.github.io");
+    QCoreApplication::setApplicationName("iDrank");
+
+    //qrc:/qt/qml/app/
+
+    QApplication app(argc, argv);
+    QQmlApplicationEngine engine;
+    // engine.addImportPath("qrc:/qt/qml/app/qml/");
+    // engine.addImportPath(":/");
+    
+    //for Android?
+    engine.addImportPath(":/");
+    const QUrl url(QStringLiteral("qrc:/qt/qml/MyQml/MasterView.qml"));
+
+    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated, &app, 
+        [url](QObject *obj, const QUrl &objUrl) 
+        {
+            if (!obj && url == objUrl)
+                QCoreApplication::exit(-1);
+        }, Qt::QueuedConnection);
+    engine.load(url);
+
+    return app.exec();
 }
