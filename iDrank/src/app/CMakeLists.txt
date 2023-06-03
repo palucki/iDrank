@@ -28,8 +28,16 @@ qt_add_resources(iDrank dbresources
 qt_add_resources(iDrank img
     PREFIX "/img"
     BASE assets/img/
-    FILES assets/img/logo_yellow.svg
+    FILES 
+        assets/img/logo_yellow.svg
+        assets/img/history_icon_grey.svg
+        assets/img/home.png
+        assets/img/info.png
 )
+
+# set_source_files_properties(../../../images/button-types.png PROPERTIES
+#     QT_RESOURCE_ALIAS button-types.png
+# )
 
 qt_add_resources(iDrank js
     PREFIX "/js"

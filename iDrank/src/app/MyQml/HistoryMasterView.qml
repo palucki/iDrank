@@ -5,6 +5,8 @@ import QtQuick.Controls.Material 2.12
 import QtQml 2.12
 import QtQuick.Layouts 1.12
 
+import MyQml
+
 Page {
     function goBack(event) {
         console.log("Go back function in history master view ")
@@ -46,6 +48,6 @@ Page {
         anchors.fill: parent
         clip: true
 
-        initialItem: "qrc:/qt/qml/app/qml/PartiesView.qml"
+        initialItem: PartiesView{}
     }
 }

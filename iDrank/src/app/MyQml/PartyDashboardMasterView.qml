@@ -5,7 +5,7 @@ import QtQuick.Controls.Material 2.12
 import QtQml 2.12
 import QtQuick.Layouts 1.12
 
-import "qrc:/"
+import MyQml
 
 Page {
     focus: true
@@ -34,7 +34,7 @@ Page {
             anchors.fill: parent
             clip: true
 
-            initialItem: "qrc:/PartyDashboardView.qml"
+            initialItem: PartyDashboardView.qml
         }
 
     }
