@@ -69,7 +69,7 @@ public:
 
         if(!query.exec())
         {
-            qWarning() << "Drink::remove - ERROR:" << query.lastError().text() << " in query " << query.executedQuery();
+            qWarning() << "DrinkType::remove - ERROR:" << query.lastError().text() << " in query " << query.executedQuery();
             return false;
         }
 

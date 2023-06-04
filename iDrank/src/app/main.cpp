@@ -10,10 +10,7 @@
 #include "party.h"
 #include "toast.h"
 #include "drinktype.h"
-
-
-// #include <QtQml/qqmlextensionplugin.h>
-// Q_IMPORT_QML_PLUGIN(MyQmlPlugin)
+#include "userdrink.h"
 
 int main(int argc, char *argv[])
 {
@@ -59,6 +56,9 @@ int main(int argc, char *argv[])
     {
         std::cout << dt->m_id.toInt() << " / "<< dt->m_name.toStdString() << " / " << dt->m_default_amount_ml << "ml\n";
     }
+
+    UserDrink::add(2, 2);
+    std::cout << "Number of users for drink 2: " << UserDrink::getUserDrinks(2).size() << '\n';
 
     QCoreApplication::setOrganizationName("Salka");
     QCoreApplication::setOrganizationDomain("palucki.github.io");
