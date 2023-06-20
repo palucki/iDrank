@@ -3,6 +3,9 @@
 #include <optional>
 
 #include <QObject>
+#include <QDateTime>
+#include <QSqlQuery>
+#include <QSqlError>
 
 class Party : public QObject
 {
@@ -19,6 +22,30 @@ public:
     void setName(const QString& name) { m_name = name; }
     void setStarted(const QDateTime& ts) { m_started = ts;}
     void setEnded(const QDateTime& ts) { m_ended = ts;}
+
+    static QVariantList usersInParty(QVariant party_id)
+    {
+        QSqlQuery query;
+        query.prepare(QString("SELECT DISTINCT(user_drink.user_id) FROM drink "
+                              "LEFT JOIN user_drink ON drink.id = user_drink.drink_id "
+                              "WHERE drink.party_id = :party_id"));
+
+        query.bindValue(":party_id", party_id);
+
+        if(!query.exec())
+        {
+            qWarning() << "Party::usersInParty - ERROR:" << query.lastError().text() << " in query " << query.executedQuery();
+            return {};
+        }
+
+        QVariantList user_ids;
+        while(query.next())
+        {
+            user_ids.append(query.value(0));
+        }
+
+        return user_ids;
+    }
 
     static bool isAnyStarted()
     {

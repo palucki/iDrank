@@ -51,7 +51,7 @@ ApplicationWindow {
             id: historyView
         }
 
-        AboutView {
+        ChartViewMock {
             id: aboutView
         }
     }

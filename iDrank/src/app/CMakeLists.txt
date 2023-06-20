@@ -2,7 +2,7 @@
 
 # project(iDrank VERSION 1.0.0 LANGUAGES CXX)
 
-find_package(Qt6 REQUIRED COMPONENTS Widgets Gui Qml Sql Quick)
+find_package(Qt6 REQUIRED COMPONENTS Widgets Gui Qml Sql Quick Charts)
 
 # qt_standard_project_setup(REQUIRES 6.5)
 
@@ -18,6 +18,7 @@ qt_add_executable(iDrank
     toast.h
     drinktype.h
     userdrink.h
+    partyplotter.cpp
 )
 
 qt_add_resources(iDrank dbresources
@@ -48,7 +49,7 @@ qt_add_resources(iDrank js
 
 add_subdirectory(MyQml)
 
-target_link_libraries(iDrank PRIVATE Qt6::Widgets Qt6::Gui Qt6::Qml Qt6::Sql Qt6::Quick
+target_link_libraries(iDrank PRIVATE Qt6::Widgets Qt6::Gui Qt6::Qml Qt6::Sql Qt6::Quick Qt6::Charts
                       MyQmlplugin)                   
 #   MyQml) this is if we link dynamically 
 

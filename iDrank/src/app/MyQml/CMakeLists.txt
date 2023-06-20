@@ -26,6 +26,7 @@ qt_add_qml_module(MyQml
         LabelDialog.qml
         ConfirmationDialog.qml
         PartiesView.qml
+        ChartViewMock.qml
     STATIC 
 )
 
