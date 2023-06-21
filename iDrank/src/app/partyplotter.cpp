@@ -47,6 +47,11 @@ void PartyPlotter::plot(QVariant party_id) const
 
         auto drinks = Drink::getDrinksForUserInParty(user_id, party_id);
 
+        if(drinks.isEmpty())
+        {
+            continue;
+        }
+
         qreal current_sum = 0.0;
         QVector<QPointF> drink_points;
 

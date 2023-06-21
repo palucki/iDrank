@@ -5,16 +5,11 @@ import QtQuick.Controls.Material 2.12
 import QtQml 2.12
 import QtQuick.Layouts 1.12
 import QtCharts 2.12
-// import QtGraphicalEffects 1.12
 import Qt5Compat.GraphicalEffects
 
 Page {
     property string unit : "ml"
     property int party_id : 1
-    // property int partyId: partyController.ui_current_party_id
-    // property var drinks : drinkProvider.getUIDrinksList(partyId)
-//    property date partyStarted: partyController.ui_current_party_started
-    // property date partyEnded 
     property string series_name : "line"
     property var colors : ["#ffd275", "#a57f60", "#e3a587", "#db5a42", "#e8ae68", "#f4ac32"]
     property int max_colors : colors.length

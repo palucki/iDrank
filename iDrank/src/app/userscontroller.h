@@ -1,5 +1,7 @@
 #pragma once 
 
+#include <iostream>
+
 #include <optional>
 #include <QObject>
 
@@ -8,6 +10,7 @@
 class UsersController : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(bool ui_user_missing READ isUserMissing NOTIFY ui_user_missing_changed)
     
 public:
     explicit UsersController(QObject* parent = nullptr) : QObject(parent) {}
@@ -33,6 +36,29 @@ public slots:
         m_users_map = users_map;
         return m_users_map;
     }
+
+    bool isUserMissing()
+    {
+        return getUsersNameMap().isEmpty();
+    }
+
+    void registerUser(const QString& name)
+    {
+        if(name.isEmpty())
+        {
+            std::cout << "ERROR - empty user name\n";
+            return;
+        }
+
+        if(User::add(name))
+        {
+            emit ui_user_missing_changed();
+        }
+    }
+
+signals:
+    void ui_user_missing_changed();
+
 private:
     QMap<int, QString> m_users_map;
 };

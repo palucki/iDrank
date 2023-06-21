@@ -10,36 +10,30 @@ Item {
         anchors.fill: parent
         color: "#142DC1"
 
-        Column {
-            anchors.centerIn: parent
-//            anchors.alignWhenCentered: true
-//            width: 360 * scaleFactor
-//            spacing: 14 * intScaleFactor
+        ColumnLayout {
+            anchors.fill: parent
             spacing: 30
 
             TextField {
+                Layout.margins: 50
+                Layout.fillWidth: true
+                Layout.maximumHeight: 60
                 id: usernameInput
                 color: "white"
-                onAccepted: emailInput.forceActiveFocus()
                 placeholderText: "Username"
                 placeholderTextColor: "gray"
-                KeyNavigation.tab: emailInput
-            }
-
-            TextField {
-                id: emailInput
-
-                color: "white"
-                placeholderText: "Email"
-                placeholderTextColor: "gray"
-                KeyNavigation.tab: registerButton
             }
 
             Button {
+                Layout.fillWidth: true
+                Layout.margins: 50
+                Layout.maximumHeight: 60
                 id: registerButton
                 text: "Register"
                 onClicked: {
-                    masterController.registerUser(usernameInput.text, emailInput.text)
+                    if(usernameInput.text.trim().length > 0) {
+                        users_controller.registerUser(usernameInput.text)
+                    }
                 }
 
                 KeyNavigation.tab: registerButton

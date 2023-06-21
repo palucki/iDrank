@@ -97,6 +97,7 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("party_plotter", &party_plotter);
     engine.rootContext()->setContextProperty("party_controller", &party_controller);
+    engine.rootContext()->setContextProperty("users_controller", &users_controller);
     // engine.addImportPath("qrc:/qt/qml/app/qml/");
     // engine.addImportPath(":/");
     
