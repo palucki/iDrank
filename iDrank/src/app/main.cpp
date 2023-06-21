@@ -8,6 +8,7 @@
 
 #include "databasecontroller.h"
 #include "partycontroller.h"
+#include "userscontroller.h"
 #include "drink.h"
 #include "party.h"
 #include "toast.h"
@@ -82,8 +83,9 @@ int main(int argc, char *argv[])
 
     // std::cout << "Number of users for drink 2: " << UserDrink::getUserDrinks(2).size() << '\n';
 
-    PartyPlotter party_plotter;
     PartyController party_controller;
+    UsersController users_controller;
+    PartyPlotter party_plotter(users_controller);
 
     QCoreApplication::setOrganizationName("Salka");
     QCoreApplication::setOrganizationDomain("palucki.github.io");

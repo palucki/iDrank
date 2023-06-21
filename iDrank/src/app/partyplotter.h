@@ -6,6 +6,9 @@
 #include <QtCharts/QScatterSeries>
 #include <QtCharts/QDateTimeAxis>
 #include <QtCharts/QValueAxis>
+
+#include "userscontroller.h"
+
 QT_USE_NAMESPACE
 
 /*!
@@ -22,31 +25,19 @@ class PartyPlotter : public QObject
 {
     Q_OBJECT
 public:
-    PartyPlotter(QObject* parent = nullptr);
+    PartyPlotter(UsersController& users_controller, QObject* parent = nullptr);
     virtual ~PartyPlotter();
 public slots:
     void plot(QVariant party_id) const;
-
-    // void setSeries(QAbstractSeries* partyStartEndSeries,
-    //                QAbstractSeries* drinkSeries1,
-    //                QAbstractSeries* drinkSeries2,
-    //                QAbstractSeries* drinkSeries3);
-    
     void addSeries(QAbstractSeries* series);
     void setAxes(QAbstractAxis* xAxis, QAbstractAxis* yAxis);
     void toggleVisibility(const QString& series_name);
 
-    // void update(QVariant partyId);
-
 private:
-    // DrinkProvider m_drinkProvider;
-    // drinq::controllers::DatabaseControllerInterface* m_database_controller{nullptr};
-    // QScatterSeries* mPartyStartEndSeries{nullptr};
     QMap<QString, QXYSeries*> mDrinksSeriesMap;
-    // QXYSeries* mDrinksSeries2 {nullptr};
-    // QXYSeries* mDrinksSeries3 {nullptr};
     QDateTimeAxis* mDateTimeAxis{nullptr};
     QValueAxis* mValueAxis{nullptr};
+    UsersController& m_users_controller;
 
 };
 

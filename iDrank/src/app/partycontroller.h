@@ -19,5 +19,4 @@ public slots:
         Q_UNUSED(party_id);
         return User::getUsers();
     } 
-
 };

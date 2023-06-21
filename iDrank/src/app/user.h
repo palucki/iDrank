@@ -2,6 +2,8 @@
 
 #include <optional>
 #include <QObject>
+#include <QSqlQuery>
+#include <QSqlError>
 
 class User : public QObject
 {
@@ -12,19 +14,6 @@ class User : public QObject
 public:
     explicit User(QObject* parent = nullptr) : QObject(parent) {}
     virtual ~User() override {}
-
-    static QMap<int, QString> getUsersNameMap()
-    {
-        static auto users = getUsers();
-        
-        QMap<int, QString> users_map;
-        for(auto u : users)
-        {
-            users_map[u->m_id.toInt()] = u->m_name;
-        }
-
-        return users_map;
-    }
 
     static QList<User*> getUsers() 
     {
