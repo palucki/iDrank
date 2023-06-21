@@ -82,7 +82,7 @@ void PartyPlotter::plot(QVariant party_id) const
         user_series->replace(drink_points);
     }
 
-    mDateTimeAxis->setRange(earliest_drink_ts.addSecs(-300), last_drink_ts);
+    mDateTimeAxis->setRange(earliest_drink_ts.addSecs(-300), last_drink_ts.addSecs(300));
     mValueAxis->setRange(0, highest_sum);
 }
 
