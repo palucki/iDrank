@@ -7,6 +7,7 @@
 #include <QQmlContext>
 
 #include "databasecontroller.h"
+#include "partycontroller.h"
 #include "drink.h"
 #include "party.h"
 #include "toast.h"
@@ -82,6 +83,7 @@ int main(int argc, char *argv[])
     // std::cout << "Number of users for drink 2: " << UserDrink::getUserDrinks(2).size() << '\n';
 
     PartyPlotter party_plotter;
+    PartyController party_controller;
 
     QCoreApplication::setOrganizationName("Salka");
     QCoreApplication::setOrganizationDomain("palucki.github.io");
@@ -92,6 +94,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("party_plotter", &party_plotter);
+    engine.rootContext()->setContextProperty("party_controller", &party_controller);
     // engine.addImportPath("qrc:/qt/qml/app/qml/");
     // engine.addImportPath(":/");
     

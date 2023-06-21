@@ -10,26 +10,31 @@ import Qt5Compat.GraphicalEffects
 
 Page {
     property string unit : "ml"
+    property int party_id : 1
     // property int partyId: partyController.ui_current_party_id
     // property var drinks : drinkProvider.getUIDrinksList(partyId)
 //    property date partyStarted: partyController.ui_current_party_started
     // property date partyEnded 
     property string series_name : "line"
-    property int users_count : 5
+    property var colors : ["#ffd275", "#a57f60", "#e3a587", "#db5a42", "#e8ae68", "#f4ac32"]
+    property int max_colors : colors.length
+    property var users : party_controller.getUsersForParty(party_id)
 
     Component.onCompleted: {
         party_plotter.setAxes(xAxis, yAxis)
-        for(var i = 1; i <= party_plotter.numberOfUsers(1); i++)
+        
+        for(var i = 0; i < users.length; i++)
         {
-            party_plotter.addSeries(createSerie("alko" + i))
+            party_plotter.addSeries(createSeries(users[i].ui_name, colors[i % max_colors]))
         }
-        // party_plotter.plot(1)
+        party_plotter.plot(party_id)
     }
 
-    function createSerie(name) {
+    function createSeries(name, color) {
+        console.log("adding series " + name)
         var series = chart.createSeries(ChartView.SeriesTypeLine, name, xAxis, yAxis);
         series.pointsVisible = true;
-        series.color = Qt.rgba(Math.random(), Math.random(), Math.random(), 1);
+        series.color = color //Qt.rgba(Math.random(), Math.random(), Math.random(), 1);
         var pointsCount = Math.round(Math.random() * 20);
         var x = 0.0;
         for(var j = 0; j < pointsCount; j ++) {
@@ -41,133 +46,54 @@ Page {
         return series
     }
 
-    function createSeries(names) {
-        for(var i = 0; i < names.length; i++) {
-            console.log("Adding series " + names[i])
-            createSerie(names[i])
-        }
-    }
-
-    function addLineSeries() {
-        console.log("addLineSeries")
-        var series = chart.createSeries(ChartView.SeriesTypeLine, "line", xAxis, yAxis);
-        series.pointsVisible = true;
-        series.color = Qt.rgba(Math.random(), Math.random(), Math.random(), 1);
-        series.name = series_name + chart.count
-        console.log("Series name " + series.name)
-        // series.hovered.connect(function(point, state){ console.log(point); }); // connect onHovered signal to a function
-        var pointsCount = Math.round(Math.random()* 20);
-        var x = 0.0;
-        for(var j = 0;j < pointsCount;j ++) {
-            x += (Math.random() * 2.0);
-            var y = (Math.random() * 10.0);
-            series.append(x, y);
-        }
-    }
-
-    function removeOneSeries() {
-        console.log("removeOneSeries number " + chart.count)
-        var series = chart.series(series_name + chart.count)
-        console.log(series)
-        if(series) {
-            chart.removeSeries(series)
-        }
-    }
-
-    function removeAllSeries() {
-        chart.removeAllSeries()
-    }
-
     ColumnLayout {
         id: layoutRoot
         anchors.fill: parent
 
+        RowLayout {
+            Layout.maximumHeight: 40
+
+            Repeater {
+                model: users
+                Rectangle {
+                    id: background
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    border.width: 1
+                    color: colors[index % max_colors]
+
+                    Text {
+                        text: modelData.ui_name
+                        anchors.centerIn: parent
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: { 
+                            party_plotter.toggleVisibility(modelData.ui_name)
+                            background.color = background.color == colors[index % max_colors] ? "transparent" : colors[index % max_colors]
+                        }
+                    }
+                }
+            }
+        }
+
         ChartView {
             Layout.fillWidth: true
             Layout.fillHeight: true
+            legend.visible: false
             id: chart
             axes: [
-                ValueAxis{
+                DateTimeAxis{
                     id: xAxis
-                    min: 1.0
-                    max: 10.0
+                    labelsAngle: 270
+                    format: "ddd hh:mm"
                 },
-                ValueAxis{
+
+                ValueAxis {
                     id: yAxis
-                    min: 0.0
-                    max: 10.0
                 }
             ]
         }
-
-        RowLayout {
-            Layout.maximumHeight: 50
-            Rectangle {
-                color: "darkseagreen"
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                Text {
-                    text: "Create series"
-                    anchors.centerIn: parent
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: createSeries(["Puza", "Fuki", "Kozik", "Jonasz"])
-                }
-            }
-            Rectangle {
-                color: "darkseagreen"
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                Text {
-                    text: "Add"
-                    anchors.centerIn: parent
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: addLineSeries()
-                }
-            }
-            Rectangle {
-                color: "tomato";
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-
-                Text {
-                    text: "Remove"
-                    anchors.centerIn: parent
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: removeOneSeries()
-                }
-            }
-
-            Rectangle {
-                color: "tomato";
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-
-                Text {
-                    text: "Remove All"
-                    anchors.centerIn: parent
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: removeAllSeries()
-                }
-            }
-        }
     }
-    
-    // GridLayout { 
-    //     rows: 2
-    //     columns: 2
-    //     anchors.fill: parent
-        // }
-
 }

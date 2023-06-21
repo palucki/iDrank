@@ -34,8 +34,7 @@ public slots:
     
     void addSeries(QAbstractSeries* series);
     void setAxes(QAbstractAxis* xAxis, QAbstractAxis* yAxis);
-
-    int numberOfUsers(QVariant party_id);
+    void toggleVisibility(const QString& series_name);
 
     // void update(QVariant partyId);
 
@@ -43,7 +42,7 @@ private:
     // DrinkProvider m_drinkProvider;
     // drinq::controllers::DatabaseControllerInterface* m_database_controller{nullptr};
     // QScatterSeries* mPartyStartEndSeries{nullptr};
-    // QXYSeries* mDrinksSeries1 {nullptr};
+    QMap<QString, QXYSeries*> mDrinksSeriesMap;
     // QXYSeries* mDrinksSeries2 {nullptr};
     // QXYSeries* mDrinksSeries3 {nullptr};
     QDateTimeAxis* mDateTimeAxis{nullptr};

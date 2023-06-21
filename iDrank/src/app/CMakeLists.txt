@@ -13,10 +13,12 @@ qt_add_executable(iDrank
     main.cpp
     # replace the following when .cpp is in place:
     databasecontroller.h
+    partycontroller.h
     drink.h
     party.h
     toast.h
     drinktype.h
+    user.h
     userdrink.h
     partyplotter.cpp
 )
