@@ -38,10 +38,11 @@ CREATE TABLE IF NOT EXISTS `party` (
 CREATE TABLE IF NOT EXISTS `drink_type` (
 	`id`	INTEGER PRIMARY KEY AUTOINCREMENT,
 	`name`	TEXT,
-	`default_amount_ml`	INTEGER
+	`default_amount_ml`	INTEGER,
+	`percentage` INTEGER
 );
-INSERT INTO `drink_type` VALUES (1,'wódka',25);
-INSERT INTO `drink_type` VALUES (2,'piwo',500);
+INSERT INTO `drink_type` VALUES (1,'wódka',25, 40);
+INSERT INTO `drink_type` VALUES (2,'piwo',500, 6);
 CREATE TABLE IF NOT EXISTS `drink` (
 	`id`	INTEGER PRIMARY KEY AUTOINCREMENT,
 	`drink_type_id`	INTEGER,
