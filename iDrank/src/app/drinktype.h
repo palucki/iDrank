@@ -14,15 +14,12 @@ public:
     explicit DrinkType(QObject* parent = nullptr) : QObject(parent) {}
     virtual ~DrinkType() override {}
 
-    void setName(const QString& name) { m_name = name; }
-    void setDefaultAmountMl(int amount) { m_default_amount_ml = amount;}
-
     static QList<DrinkType*> getDrinkTypes() 
     {
         QList<DrinkType*> drink_types;
 
         QSqlQuery query;
-        query.prepare("SELECT id, name, default_amount_ml FROM drink_type");
+        query.prepare("SELECT id, name, default_amount_ml, percentage FROM drink_type");
 
         if(!query.exec())
         {
@@ -36,20 +33,22 @@ public:
             dt->m_id = query.value(0);
             dt->m_name = query.value(1).toString();
             dt->m_default_amount_ml = query.value(2).toInt();
+            dt->m_percentage = query.value(3).toInt();
             drink_types.append(dt);
         }
 
         return drink_types;
     }
 
-    static std::optional<QVariant> add(const QString& name, int default_amount_ml)
+    static std::optional<QVariant> add(const QString& name, int default_amount_ml, int percentage)
     {
         QSqlQuery query;
-        query.prepare(QString("INSERT INTO drink_type (name, default_amount_ml)"
-                              " VALUES (:name, :default_amount_ml)"));
+        query.prepare(QString("INSERT INTO drink_type (name, default_amount_ml, percentage)"
+                              " VALUES (:name, :default_amount_ml, :percentage)"));
 
         query.bindValue(":name", name);
         query.bindValue(":default_amount_ml", default_amount_ml);
+        query.bindValue(":percentage", percentage);
 
         if(!query.exec())
         {
@@ -80,4 +79,5 @@ public:
     QVariant m_id; //replace with base class like DatabaseObject
     QString m_name{};
     int m_default_amount_ml{};
+    int m_percentage{}; //ABV - alcohol by volume
 };
