@@ -11,6 +11,7 @@ class UsersController : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(bool ui_user_missing READ isUserMissing NOTIFY ui_user_missing_changed)
+    Q_PROPERTY(QString ui_admin_name MEMBER m_admin_name NOTIFY ui_admin_name_changed)
     
 public:
     explicit UsersController(QObject* parent = nullptr) : QObject(parent) {}
@@ -31,6 +32,12 @@ public slots:
         for(auto u : users)
         {
             users_map[u->m_id.toInt()] = u->m_name;
+            
+            if(u->m_admin)
+            {
+                m_admin_name = u->m_name;
+                emit ui_admin_name_changed();
+            }
         }
 
         m_users_map = users_map;
@@ -56,11 +63,19 @@ public slots:
         {
             emit ui_user_missing_changed();
         }
+
+        if(is_admin)
+        {
+            m_admin_name = name;
+            emit ui_admin_name_changed();
+        }
     }
 
 signals:
     void ui_user_missing_changed();
+    void ui_admin_name_changed();
 
 private:
     QMap<int, QString> m_users_map;
+    QString m_admin_name;
 };
