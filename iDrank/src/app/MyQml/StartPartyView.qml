@@ -27,12 +27,39 @@ Page {
     }
 
     Rectangle {
+        id: background
         anchors.fill: parent
-        color: "#142DC1"
-        Column {
-            anchors.centerIn: parent
-            spacing: 30
+        color: "#2039CB"
 
+        ColumnLayout {
+            anchors.fill: parent
+
+            Text {
+                Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
+                text: qsTr("Hello ") + users_controller.ui_admin_name
+                color: "white"
+                wrapMode: Text.WordWrap
+            }
+
+            Text {
+                id: timeSinceLastDrinkTextField
+                Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
+                text: "PLACEHOLDER SECONDS SINCE LAST DRINK"
+                color: "white"
+                wrapMode: Text.WordWrap
+            }
+
+            RoundButton {
+                focusPolicy: Qt.NoFocus
+                Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
+                Layout.minimumWidth: 150
+                text: qsTr("Start")
+                Material.foreground: "white"
+                Material.background: "#ED690F"
+                radius: 10
+                onClicked: dialog.openDialog()
+            }
+            
             TextFieldDialog {
                 id: dialog
                 dialogTitle: qsTr("Starting new party...")
@@ -42,39 +69,7 @@ Page {
                     console.log("Party name " + dialogText)
                     masterController.startParty(dialogText)
                 }
-            }
-
-            Rectangle {
-                height: 50
-                width: 200
-                anchors.horizontalCenter: parent.horizontalCenter
-                color: "transparent"
-                Column {
-                    spacing: 5
-                    anchors.horizontalCenter: parent.horizontalCenter
-
-                    Text {
-                        id: timeSinceLastDrinkTextField
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        text: "PLACEHOLDER"
-                        color: "white"
-                        wrapMode: Text.WordWrap
-                        width: 200
-                    }
-                }
-            }
-
-            RoundButton {
-                focusPolicy: Qt.NoFocus
-                anchors.horizontalCenter: parent.horizontalCenter
-                height: 50
-                width: 300
-                text: qsTr("Start")
-                Material.foreground: "white"
-                Material.background: "#ED690F"
-                radius: 10
-                onClicked: dialog.openDialog()
-            }
+            } 
         }
     }
 }
