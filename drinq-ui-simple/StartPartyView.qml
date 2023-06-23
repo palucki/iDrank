@@ -6,7 +6,7 @@ import QtQml 2.12
 import QtQuick.Layouts 1.12
 
 import "qrc:/"
-import "common.js" as CommonJs
+import "qrc:/js/common.js" as CommonJs
 
 Page {
     id: root

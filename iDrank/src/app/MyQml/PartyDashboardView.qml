@@ -7,7 +7,7 @@ import QtQuick.Layouts 1.12
 import QtGraphicalEffects 1.12
 
 import "qrc:/"
-import "common.js" as CommonJs
+import "qrc:/js/common.js" as CommonJs
 
 Page {
     Timer {
