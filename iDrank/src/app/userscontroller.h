@@ -50,7 +50,9 @@ public slots:
             return;
         }
 
-        if(User::add(name))
+        const bool is_admin = isUserMissing();
+
+        if(User::add(name, is_admin))
         {
             emit ui_user_missing_changed();
         }

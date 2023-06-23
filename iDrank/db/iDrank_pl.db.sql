@@ -57,7 +57,8 @@ CREATE TABLE IF NOT EXISTS `drink` (
 
 CREATE TABLE IF NOT EXISTS `user` ( 
 	`id` INTEGER PRIMARY KEY AUTOINCREMENT, 
-	`name` TEXT, `email` TEXT 
+	`name` TEXT, `email` TEXT,
+	`admin` INTEGER
 );
 
 CREATE TABLE `user_drink` (

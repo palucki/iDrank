@@ -20,7 +20,7 @@ public:
         QList<User*> users;
 
         QSqlQuery query;
-        query.prepare("SELECT id, name FROM user");
+        query.prepare("SELECT id, name, admin FROM user");
 
         if(!query.exec())
         {
@@ -33,19 +33,21 @@ public:
             auto* ud = new User;
             ud->m_id = query.value(0);
             ud->m_name = query.value(1).toString();
+            ud->m_admin = query.value(2).toInt() > 0;
             users.append(ud);
         }
 
         return users;
     }
 
-    static std::optional<QVariant> add(const QString& name)
+    static std::optional<QVariant> add(const QString& name, bool admin)
     {
         QSqlQuery query;
-        query.prepare(QString("INSERT INTO user (name)"
-                              " VALUES (:name)"));
+        query.prepare(QString("INSERT INTO user (name, admin)"
+                              " VALUES (:name, :admin)"));
 
         query.bindValue(":name", name);
+        query.bindValue(":admin", admin ? 1 : 0);
 
         if(!query.exec())
         {
@@ -75,4 +77,5 @@ public:
 public:
     QVariant m_id; //replace with base class like DatabaseObject
     QString m_name;
+    bool m_admin;
 };
