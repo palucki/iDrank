@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `drink` (
 	`id`	INTEGER PRIMARY KEY AUTOINCREMENT,
 	`drink_type_id`	INTEGER,
 	`party_id`	INTEGER,
-	`timestamp`	DATETIME,
+	`timestamp`	TIMESTAMP,
 	`amount_ml`	INTEGER,
 	`toast_id`	INTEGER,
 	FOREIGN KEY(`party_id`) REFERENCES `party`(`id`) ON DELETE CASCADE,

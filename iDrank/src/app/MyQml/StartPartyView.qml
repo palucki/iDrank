@@ -10,7 +10,7 @@ import "qrc:/js/common.js" as CommonJs
 Page {
     id: root
     function updateTimeSinceLastDrink() {
-        var diff_secs = masterController.secondsSinceLastDrink()
+        var diff_secs = party_controller.secondsSinceLastDrink()
         timeSinceLastDrinkTextField.text = CommonJs.updateTimeSinceLastDrink(diff_secs)
     }
 

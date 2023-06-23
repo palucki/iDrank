@@ -2,6 +2,9 @@
 
 #include <optional>
 #include <QObject>
+#include <QDebug>
+
+#include <iostream>
 
 // Consider using one of the following alternatives to plain SQL queries:
 // https://github.com/dpurgin/qtorm

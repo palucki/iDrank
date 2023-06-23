@@ -2,9 +2,9 @@ function updateTimeSinceLastDrink(diff_secs) {
     const preamble = qsTr("last consumed drink: ")
     const suffix = qsTr(" ago")
 
-    if(diff_secs === -1)
+    if(diff_secs === 0)
     {
-        return ""
+        return qsTr("no consumption yet, start one ;)")
     }
     else if(diff_secs < 60)
     {
