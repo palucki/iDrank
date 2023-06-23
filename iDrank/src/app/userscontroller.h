@@ -19,6 +19,16 @@ public:
 
 public slots:
 
+    QList<User*> getUsers()
+    {
+        if(m_users.isEmpty())
+        {
+            m_users = User::getUsers();
+        }
+
+        return m_users;
+    }
+
     QMap<int, QString> getUsersNameMap()
     {
         if(!m_users_map.isEmpty())
@@ -76,6 +86,7 @@ signals:
     void ui_admin_name_changed();
 
 private:
+    QList<User*> m_users;
     QMap<int, QString> m_users_map;
     QString m_admin_name;
 };

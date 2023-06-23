@@ -14,10 +14,7 @@ class DatabaseController : public QObject
    Q_OBJECT
 
 public:
-    explicit DatabaseController(QObject* parent = 0) : QObject(parent) { }
-    virtual ~DatabaseController() {}
-
-    bool init()
+    explicit DatabaseController(QObject* parent = 0) : QObject(parent) 
     {
         QDir app_data;
         app_data.mkpath(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
@@ -45,8 +42,14 @@ public:
 
         m_database = QSqlDatabase::addDatabase("QSQLITE");
         m_database.setDatabaseName(dbPath);
-        return m_database.open();
+        if(!m_database.open())
+        {
+            qDebug() << "Error, unable to open database";
+        }
     }
+
+    virtual ~DatabaseController() {}
+
 private: 
     QSqlDatabase m_database;
 };

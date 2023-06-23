@@ -10,7 +10,7 @@
 class PartyController : public QObject
 {
     Q_PROPERTY(bool ui_party_started READ isPartyStarted NOTIFY ui_party_started_changed)
-     Q_PROPERTY(int ui_drinks_count MEMBER m_current_drinks_count NOTIFY ui_drinks_count_changed)
+    Q_PROPERTY(int ui_drinks_count MEMBER m_current_drinks_count NOTIFY ui_drinks_count_changed)
     Q_OBJECT
     
 public:
@@ -48,11 +48,11 @@ public slots:
         ui_party_started_changed();
     }
 
-
 signals:
     void ui_party_started_changed();
     void ui_drinks_count_changed();
 
 private: 
-    int m_current_drinks_count;
+    int m_current_drinks_count{0};
+    int m_current_party;
 };

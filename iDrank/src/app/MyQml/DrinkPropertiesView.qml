@@ -12,7 +12,6 @@ Page {
         if(drinkType) {
             drinkType.ui_name = drinkTypeName.text
             drinkType.ui_default_amount_ml = drinkTypeDefaultAmount.value
-            drinkType.ui_consumption_type = drinkTypeShot.checked ? DrinkType.Shot : DrinkType.Long
             drinkController.updateDrinkType(drinkType)
         }
         else {
@@ -77,24 +76,6 @@ Page {
                 to: 1000
                 editable: true
                 value: drinkType ? drinkType.ui_default_amount_ml : 50
-            }
-
-            Label {
-                text: qsTranslate("DrinkProperties", "Type")
-                width: parent.width * 0.75
-            }
-
-            RowLayout {
-                RadioButton {
-                    id: drinkTypeShot
-                    checked: drinkType ? drinkType.ui_consumption_type === DrinkType.Shot : true
-                    text: qsTranslate("DrinkProperties", "Shot")
-                }
-                RadioButton {
-                    id: drinkTypeLong
-                    checked: drinkType ? drinkType.ui_consumption_type === DrinkType.Long : false
-                    text: qsTranslate("DrinkProperties", "Drink")
-                }
             }
         }
     }

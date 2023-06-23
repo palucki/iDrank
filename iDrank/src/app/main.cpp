@@ -9,6 +9,7 @@
 #include "databasecontroller.h"
 #include "partycontroller.h"
 #include "userscontroller.h"
+#include "drinktypecontroller.h"
 #include "drink.h"
 #include "party.h"
 #include "toast.h"
@@ -21,7 +22,7 @@ int main(int argc, char *argv[])
     QSettings settings; //HKEY_CURRENT_USER\SOFTWARE\Apps\iDrank
     
     DatabaseController database_controller;
-    database_controller.init();
+    DrinkTypeController drink_type_controller;
     PartyController party_controller;
     UsersController users_controller;
     PartyPlotter party_plotter(users_controller);
@@ -39,6 +40,7 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("party_plotter", &party_plotter);
     engine.rootContext()->setContextProperty("party_controller", &party_controller);
     engine.rootContext()->setContextProperty("users_controller", &users_controller);
+    engine.rootContext()->setContextProperty("drink_type_controller", &drink_type_controller);
     // engine.addImportPath("qrc:/qt/qml/app/qml/");
     // engine.addImportPath(":/");
     

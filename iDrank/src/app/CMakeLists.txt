@@ -15,6 +15,7 @@ qt_add_executable(iDrank
     databasecontroller.h
     partycontroller.h
     userscontroller.h
+    drinktypecontroller.h
     drink.h
     party.h
     toast.h

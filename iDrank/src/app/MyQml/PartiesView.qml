@@ -54,7 +54,7 @@ Item {
                         historyCenterLabel.text = modelData.ui_name
                         console.log("Party id " + modelData.ui_id)
                         console.log("Size of drinks " + drinkProvider.getUIDrinksList(modelData.ui_id))
-                        historyStackView.push("qrc:/PartyStatisticsView.qml",
+                        historyStackView.push("PartyStatisticsView.qml",
                                               {partyId: modelData.ui_id,
                                                drinks: drinkProvider.getUIDrinksList(modelData.ui_id),
                                                partyStarted: modelData.ui_started,

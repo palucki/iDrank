@@ -110,7 +110,7 @@ Page {
                 clip: true
                 orientation: ListView.Horizontal
 
-                model: drinkController.ui_drinkTypes
+                model: drink_type_controller.ui_drink_types
 
                 delegate: drinkTypeDelegate
                 spacing: 5
@@ -156,12 +156,12 @@ Page {
                         anchors.fill: parent
                         onClicked: {
                             drinkTypesList.currentIndex = index
-                            amountInput.value = drinkController.ui_drinkTypes[index].ui_default_amount_ml
+                            amountInput.value = drink_type_controller.ui_drink_types[index].ui_default_amount_ml
                         }
                         onDoubleClicked: {
                             console.log("editing index " + index)
-                            partyDashboardStackView.push("qrc:DrinkPropertiesView.qml",
-                                                         {drinkType: drinkController.ui_drinkTypes[index]})
+                            partyDashboardStackView.push("DrinkPropertiesView.qml",
+                                                         {drinkType: drink_type_controller.ui_drink_types[index]})
                         }
                     }
                 }
@@ -217,8 +217,8 @@ Page {
                     font.pointSize: 10
                     onClicked: {
                         console.log("Clicked on players")
-                        partyDashboardStackView.push("qrc:PlayersView.qml",
-                                                     {users: masterController.getUsers()})
+                        partyDashboardStackView.push("PlayersView.qml",
+                                                     {users: users_controller.getUsers()})
                     }
                 }
             }

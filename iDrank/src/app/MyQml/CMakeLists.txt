@@ -28,6 +28,7 @@ qt_add_qml_module(MyQml
         PartiesView.qml
         PartyDashboardView.qml
         DrinkPropertiesView.qml
+        PlayersView.qml
     STATIC 
 )
 
