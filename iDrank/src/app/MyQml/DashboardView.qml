@@ -20,7 +20,7 @@ Page {
     StackLayout {
         id: stackLayout
         anchors.fill: parent
-        currentIndex: users_controller.ui_user_missing ? 2 : 0 // masterController.ui_party_started ? 1 :
+        currentIndex: users_controller.ui_user_missing ? 2 : party_controller.ui_party_started ? 1 : 0
 
         StartPartyView {
         }
