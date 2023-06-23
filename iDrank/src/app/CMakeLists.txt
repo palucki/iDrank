@@ -38,6 +38,7 @@ qt_add_resources(iDrank img
         assets/img/history_icon_grey.svg
         assets/img/home.png
         assets/img/info.png
+        assets/img/users.png
 )
 
 # set_source_files_properties(../../../images/button-types.png PROPERTIES

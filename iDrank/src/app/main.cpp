@@ -26,6 +26,8 @@ int main(int argc, char *argv[])
     UsersController users_controller;
     PartyPlotter party_plotter(users_controller);
 
+    qmlRegisterType<DrinkType>("MyQml", 1, 0, "DrinkType");
+
     QCoreApplication::setOrganizationName("Salka");
     QCoreApplication::setOrganizationDomain("palucki.github.io");
     QCoreApplication::setApplicationName("iDrank");

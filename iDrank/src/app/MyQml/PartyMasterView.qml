@@ -28,7 +28,7 @@ Page {
                     color: "#142DC1"
             }
             id: partyCenterLabel
-            text: masterController.ui_party_title
+            text:  "masterController.ui_party_title"
             color: "white"
             font.pointSize: 16
             elide: Label.ElideRight
@@ -56,7 +56,7 @@ Page {
                 text: qsTr("Party statistics")
                 Material.foreground: "white"
                 Material.accent: "white"
-                enabled: partyController.ui_drinks_count > 0
+                enabled: false //partyController.ui_drinks_count > 0
             }
         }
     }

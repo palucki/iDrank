@@ -68,7 +68,7 @@ public:
 
     static std::optional<QVariant> start(const QString& name)
     {
-        return Party::add(name, QDateTime::currentDateTime(), QDateTime{});
+        return Party::add(name, QDateTime::currentDateTime());
     }
 
     static bool end()
@@ -86,15 +86,14 @@ public:
         return true;
     }
 
-    static std::optional<QVariant> add(QString name, QDateTime started, QDateTime ended)
+    static std::optional<QVariant> add(QString name, QDateTime started)
     {
         QSqlQuery query;
-        query.prepare(QString("INSERT INTO party (name, started, ended)"
-                              " VALUES (:name, :started, :ended)"));
+        query.prepare(QString("INSERT INTO party (name, started)"
+                              " VALUES (:name, :started)"));
 
         query.bindValue(":name", name);
         query.bindValue(":started", started);
-        query.bindValue(":ended", ended);
 
         if(!query.exec())
         {

@@ -4,9 +4,8 @@ import QtQuick.Controls.Material 2.12
 
 import QtQml 2.12
 import QtQuick.Layouts 1.12
-import QtGraphicalEffects 1.12
+import Qt5Compat.GraphicalEffects
 
-import "qrc:/"
 import "qrc:/js/common.js" as CommonJs
 
 Page {
@@ -34,7 +33,7 @@ Page {
     }
 
     function updateTimeSinceLastDrink() {
-        var diff_secs = partyController.secondsSinceLastDrink()
+        var diff_secs = party_controller.secondsSinceLastDrink()
         timeSinceLastDrinkTextField.text = CommonJs.updateTimeSinceLastDrink(diff_secs)
     }
 
@@ -72,7 +71,7 @@ Page {
                     Text {
                         id: shotsCounter
                         anchors.horizontalCenter: parent.horizontalCenter
-                        text: partyController.ui_drinks_count
+                        text: party_controller.ui_drinks_count
                         font.pointSize: 50
                     }
 
@@ -94,7 +93,7 @@ Page {
                     Text {
                         id: timeSinceLastDrinkTextField
                         anchors.horizontalCenter: parent.horizontalCenter
-                        text: "PLACEHOLDER"
+                        text: "PLACEHOLDER FOR TIME SINCE LAST DRINK"
                         wrapMode: Text.WordWrap
                         width: 200
                     }
@@ -126,7 +125,7 @@ Page {
                         anchors.fill: parent
                         onClicked: {
                             console.log("Will add new drink type")
-                            partyDashboardStackView.push("qrc:DrinkPropertiesView.qml")
+                            partyDashboardStackView.push("DrinkPropertiesView.qml")
                         }
                         text: "+"
                         Material.background: "transparent"
@@ -214,7 +213,7 @@ Page {
                     Material.background: "white"
                     radius: 10
                     text: masterController.ui_involved_users.length
-                    icon.source: "qrc:/users.png"
+                    icon.source: "qrc:/img/users.png"
                     font.pointSize: 10
                     onClicked: {
                         console.log("Clicked on players")

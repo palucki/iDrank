@@ -5,8 +5,6 @@ import QtQuick.Controls.Material 2.12
 import QtQml 2.12
 import QtQuick.Layouts 1.12
 
-import MyQml
-
 Page {
     focus: true
     Keys.onPressed: {
@@ -34,7 +32,7 @@ Page {
             anchors.fill: parent
             clip: true
 
-            initialItem: PartyDashboardView.qml
+            initialItem: PartyDashboardView {}
         }
 
     }

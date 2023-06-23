@@ -67,7 +67,7 @@ Page {
 
                 onAccepted: {
                     console.log("Party name " + dialogText)
-                    masterController.startParty(dialogText)
+                    party_controller.startParty(dialogText)
                 }
             } 
         }
