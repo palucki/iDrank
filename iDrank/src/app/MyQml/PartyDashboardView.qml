@@ -20,17 +20,14 @@ Page {
     Component.onCompleted : {
         updateTimeSinceLastDrink()
 
-        console.log("Setting values from settings. Drink type " + drinkController.ui_currentDrinkTypeIndex
-                    + " amount " + drinkController.ui_currentDrinkAmountMl)
-        drinkTypesList.currentIndex = drinkController.ui_currentDrinkTypeIndex
-        amountInput.value = drinkController.ui_currentDrinkAmountMl
+        amountInput.value = drink_type_controller.ui_current_drink_amount_ml
     }
 
 
-    Connections {
-        target: partyController
-        function onUi_drinksChanged(){  updateTimeSinceLastDrink() }
-    }
+    // Connections {
+    //     target: partyController
+    //     function onUi_drinksChanged(){  updateTimeSinceLastDrink() }
+    // }
 
     function updateTimeSinceLastDrink() {
         var diff_secs = party_controller.secondsSinceLastDrink()
@@ -157,6 +154,7 @@ Page {
                         onClicked: {
                             drinkTypesList.currentIndex = index
                             amountInput.value = drink_type_controller.ui_drink_types[index].ui_default_amount_ml
+                            // current_id = modelData.ui_id
                         }
                         onDoubleClicked: {
                             console.log("editing index " + index)
@@ -197,10 +195,13 @@ Page {
                     text: qsTr("Add")
                     enabled: masterController.ui_party_started && masterController.ui_involved_users.length > 0
                     onClicked: {
-                        drinkController.setCurrentDrinkProperties(drinkTypesList.currentIndex, amountInput.value)
-                        var toast = toastProvider.randomToast(partyController.ui_current_party_id)
-                        dialog.openDialog(toast.ui_text)
-                        partyController.addDrink(toast.id, masterController.ui_involved_users)
+                        drink_type_controller.setCurrentDrinkType(drinkTypesList.currentIndex)
+                        drink_type_controller.setCurrentDrinkAmountMl(amountInput.value)
+                        
+                        // var toast = toastProvider.randomToast(partyController.ui_current_party_id)
+                        // dialog.openDialog(toast.ui_text)
+
+                        // partyController.addDrink(toast.id, masterController.ui_involved_users)
                     }
                 }
 
