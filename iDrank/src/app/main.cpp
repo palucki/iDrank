@@ -19,21 +19,20 @@
 
 int main(int argc, char *argv[])
 {
-    QSettings settings; //HKEY_CURRENT_USER\SOFTWARE\Apps\iDrank
-    
+    //need to declare it before creating settings to propagate the path correctly
+    QCoreApplication::setOrganizationName("Salka");
+    QCoreApplication::setOrganizationDomain("palucki.github.io");
+    QCoreApplication::setApplicationName("iDrank");
+
+    QSettings settings; //HKEY_CURRENT_USER\SOFTWARE\Apps\iDrank / /home/$USER/.config/Salka/iDrank.conf
+
     DatabaseController database_controller;
-    DrinkTypeController drink_type_controller;
+    DrinkTypeController drink_type_controller{settings};
     PartyController party_controller;
     UsersController users_controller;
     PartyPlotter party_plotter(users_controller);
 
     qmlRegisterType<DrinkType>("MyQml", 1, 0, "DrinkType");
-
-    QCoreApplication::setOrganizationName("Salka");
-    QCoreApplication::setOrganizationDomain("palucki.github.io");
-    QCoreApplication::setApplicationName("iDrank");
-
-    //qrc:/qt/qml/app/
 
     QApplication app(argc, argv);
     QQmlApplicationEngine engine;
