@@ -28,7 +28,7 @@ Page {
                     color: "#142DC1"
             }
             id: partyCenterLabel
-            text:  "masterController.ui_party_title"
+            text:  party_controller.ui_party_title
             color: "white"
             font.pointSize: 16
             elide: Label.ElideRight

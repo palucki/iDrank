@@ -11,6 +11,7 @@ class PartyController : public QObject
 {
     Q_PROPERTY(bool ui_party_started READ isPartyStarted NOTIFY ui_party_started_changed)
     Q_PROPERTY(int ui_drinks_count MEMBER m_current_drinks_count NOTIFY ui_drinks_count_changed)
+    Q_PROPERTY(QString ui_party_title READ currentPartyTitle NOTIFY ui_party_title_changed)
     Q_OBJECT
     
 public:
@@ -29,6 +30,16 @@ public slots:
         return Party::isAnyStarted();
     }
 
+    QString currentPartyTitle()
+    {
+        if(m_current_party_title.isEmpty())
+        {
+            m_current_party_title = Party::getCurrentPartyTitle();
+        }
+
+        return m_current_party_title;
+    }
+
     qint64 secondsSinceLastDrink()
     {
         const auto seconds_since_last_drink = Drink::secondsSinceLastDrink();
@@ -43,16 +54,22 @@ public slots:
         if(!Party::start(name))
         {
             std::cout << "ERROR: unable to start party\n";
+            return;
         }
 
+        m_current_party_title = name;
+
         ui_party_started_changed();
+        ui_party_title_changed();
     }
 
 signals:
     void ui_party_started_changed();
     void ui_drinks_count_changed();
+    void ui_party_title_changed();
 
 private: 
     int m_current_drinks_count{0};
     int m_current_party;
+    QString m_current_party_title;
 };

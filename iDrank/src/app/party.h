@@ -47,6 +47,25 @@ public:
         return user_ids;
     }
 
+    static QString getCurrentPartyTitle()
+    {
+        QSqlQuery query;
+        query.prepare("SELECT name FROM party WHERE started IS NOT NULL AND ended IS NULL ORDER BY id DESC");
+
+        if(!query.exec())
+        {
+            qWarning() << "Party::getCurrentPartyTitle - ERROR: " << query.lastError().text() << " in query " << query.executedQuery();
+            return {};
+        }
+
+        if(query.first())
+        {
+            return query.value(0).toString();
+        }
+
+        return {};
+    }
+
     static bool isAnyStarted()
     {
         QSqlQuery query;
