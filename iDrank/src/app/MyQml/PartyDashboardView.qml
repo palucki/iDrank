@@ -44,7 +44,7 @@ Page {
         ConfirmationDialog {
             id: endPartyconfirmationDialog
             standardButtons: Dialog.Ok | Dialog.Cancel
-            onAccepted: masterController.endParty()
+            onAccepted: party_controller.endParty()
         }
 
         Column {
@@ -240,15 +240,15 @@ Page {
                     Material.foreground: "gray"
                     Material.background: "white"
                     radius: 10
-                    text: masterController.ui_party_started ? qsTr("End party") : qsTr("Start party")
+                    text: party_controller.ui_party_started ? qsTr("End party") : qsTr("Start party")
                     font.pointSize: 10
                     onClicked: {
-                        if(masterController.ui_party_started) {
+                        if(party_controller.ui_party_started) {
                             console.log("PartyDashboardView::endParty()")
                             endPartyconfirmationDialog.openDialog(qsTr("Do you want to end the party?"))
                         }
                         else {
-                            masterController.startParty()
+                            party_controller.startParty()
                         }
                     }
                 }

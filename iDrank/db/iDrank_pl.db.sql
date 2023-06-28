@@ -32,8 +32,8 @@ INSERT INTO `toast` VALUES (26,'Zebraliśmy się tu po to, by sobie popić. Wypi
 CREATE TABLE IF NOT EXISTS `party` (
 	`id`	INTEGER PRIMARY KEY AUTOINCREMENT,
 	`name`	TEXT,
-	`started`	DATETIME,
-	`ended`	DATETIME
+	`started`	TIMESTAMP,
+	`ended`	TIMESTAMP
 );
 CREATE TABLE IF NOT EXISTS `drink_type` (
 	`id`	INTEGER PRIMARY KEY AUTOINCREMENT,

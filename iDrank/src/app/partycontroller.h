@@ -63,6 +63,16 @@ public slots:
         ui_party_title_changed();
     }
 
+    void endParty()
+    {
+        if(!Party::end())
+        {
+            std::cout << "ERROR: unable to end party\n";
+            return;
+        }
+        ui_party_started_changed();
+    }
+
 signals:
     void ui_party_started_changed();
     void ui_drinks_count_changed();
