@@ -28,9 +28,10 @@ public:
 
         if(m_settings.contains(DRINK_TYPES_IDS_ORDER))
         {
+            const QStringList drink_ids = m_settings.value(DRINK_TYPES_IDS_ORDER).toString().split(',');
+            
             const auto drink_types = getDrinkTypes();
             m_drink_types.clear();
-            const QStringList drink_ids = m_settings.value(DRINK_TYPES_IDS_ORDER).toString().split(',');
 
             QMap<int, DrinkType*> drink_type_by_id;
             for(auto* dt : qAsConst(drink_types))
@@ -65,6 +66,56 @@ public:
     virtual ~DrinkTypeController() override {}
 
 public slots:
+    void update(int index, int id, const QString& name, int default_amount_ml, int percentage)
+    {
+        if(!DrinkType::update(id, name, default_amount_ml, percentage))
+        {
+            std::cout << "Unable to update drink " << name.toStdString() << '\n';
+        }
+
+        const auto drink_types = DrinkType::getDrinkTypes();
+
+        if(m_settings.contains(DRINK_TYPES_IDS_ORDER))
+        {
+            const QStringList drink_ids = m_settings.value(DRINK_TYPES_IDS_ORDER).toString().split(',');
+            
+            m_drink_types.clear();
+
+            QMap<int, DrinkType*> drink_type_by_id;
+            for(auto* dt : qAsConst(drink_types))
+            {
+                drink_type_by_id[dt->m_id.toInt()] = dt;
+            }
+
+            for(const auto& dti : drink_ids)
+            {
+                if(!drink_type_by_id.contains(dti.toInt()))
+                {
+                    qDebug() << "ERROR while loading drink types from settings";
+                    continue;
+                }
+
+                m_drink_types.append(drink_type_by_id[dti.toInt()]);
+            }
+
+            // those were not in the ordered list from settings
+            for(auto* dt : qAsConst(drink_types))
+            {
+                if(!m_drink_types.contains(dt))
+                {
+                    m_drink_types.append(dt);
+                }
+            }
+        }
+        else
+        {
+            m_drink_types = drink_types;
+        }
+
+        // emits signal dirnk types changed and saves to settings
+        setCurrentDrinkType(index);
+    }
+
     QList<DrinkType*> getDrinkTypes()
     {
         if(m_drink_types.isEmpty())

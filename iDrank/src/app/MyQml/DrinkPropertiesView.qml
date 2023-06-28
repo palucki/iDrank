@@ -7,12 +7,11 @@ import QtQuick.Layouts 1.12
 
 Page {
     property DrinkType drinkType;
+    property int drink_index;
 
     function saveDrinkType() {
         if(drinkType) {
-            drinkType.ui_name = drinkTypeName.text
-            drinkType.ui_default_amount_ml = drinkTypeDefaultAmount.value
-            drinkController.updateDrinkType(drinkType)
+            drink_type_controller.update(drink_index, drinkType.ui_id, drinkTypeName.text, drinkTypeDefaultAmount.value, "12")
         }
         else {
             drinkController.addDrinkType(drinkTypeName.text, drinkTypeDefaultAmount.value,

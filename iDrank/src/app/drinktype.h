@@ -75,6 +75,27 @@ public:
         return true;
     }
 
+    static bool update(QVariant id, QString name, int default_amount_ml, int percentage)
+    {
+        QSqlQuery query;
+        query.prepare(QString("UPDATE drink_type SET "
+                              "name = :name, default_amount_ml = :default_amount_ml, percentage = :percentage "
+                              "WHERE id = :id"));
+
+        query.bindValue(":id", id);
+        query.bindValue(":name", name);
+        query.bindValue(":default_amount_ml", default_amount_ml);
+        query.bindValue(":percentage", percentage);
+
+        if(!query.exec())
+        {
+            qWarning() << "DrinkType::update - ERROR:" << query.lastError().text() << " in query " << query.executedQuery();
+            return false;
+        }
+
+        return true;
+    }
+
 public:
     QVariant m_id; //replace with base class like DatabaseObject
     QString m_name{};

@@ -23,7 +23,6 @@ Page {
         amountInput.value = drink_type_controller.ui_current_drink_amount_ml
     }
 
-
     // Connections {
     //     target: partyController
     //     function onUi_drinksChanged(){  updateTimeSinceLastDrink() }
@@ -112,6 +111,10 @@ Page {
                 delegate: drinkTypeDelegate
                 spacing: 5
 
+                onCurrentIndexChanged: {
+                    amountInput.value = drink_type_controller.ui_drink_types[currentIndex].ui_default_amount_ml
+                }
+
                 footer:
                     Rectangle {
                     width: 40 //drinkTypesList.width
@@ -153,13 +156,12 @@ Page {
                         anchors.fill: parent
                         onClicked: {
                             drinkTypesList.currentIndex = index
-                            amountInput.value = drink_type_controller.ui_drink_types[index].ui_default_amount_ml
-                            // current_id = modelData.ui_id
                         }
                         onDoubleClicked: {
                             console.log("editing index " + index)
                             partyDashboardStackView.push("DrinkPropertiesView.qml",
-                                                         {drinkType: drink_type_controller.ui_drink_types[index]})
+                                                         {drinkType: drink_type_controller.ui_drink_types[index],
+                                                          drink_index: index})
                         }
                     }
                 }
