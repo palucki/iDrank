@@ -112,8 +112,30 @@ public slots:
             m_drink_types = drink_types;
         }
 
-        // emits signal dirnk types changed and saves to settings
+        // emits signal drink types changed and saves to settings
         setCurrentDrinkType(index);
+    }
+
+    void add(const QString& name, int default_amount_ml, int percentage)
+    {
+        const auto id = DrinkType::add(name, default_amount_ml, percentage);
+
+        if(!id)
+        {
+            std::cout << "ERROR unable to add drink type\n";
+            return;
+        }
+
+        const auto new_drink = new DrinkType;
+        new_drink->m_id = id->toInt();
+        new_drink->m_name = name;
+        new_drink->m_default_amount_ml = default_amount_ml;
+        new_drink->m_percentage = percentage;
+
+        m_drink_types.prepend(new_drink);
+
+        // handle settings + prepend
+        emit ui_drink_types_changed();
     }
 
     QList<DrinkType*> getDrinkTypes()

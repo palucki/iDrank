@@ -150,6 +150,7 @@ Page {
                         text: modelData.ui_name
                         wrapMode: Text.WordWrap
                         width: parent.width
+                        clip: true
                     }
 
                     MouseArea {

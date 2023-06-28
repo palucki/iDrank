@@ -11,11 +11,10 @@ Page {
 
     function saveDrinkType() {
         if(drinkType) {
-            drink_type_controller.update(drink_index, drinkType.ui_id, drinkTypeName.text, drinkTypeDefaultAmount.value, "12")
+            drink_type_controller.update(drink_index, drinkType.ui_id, drinkTypeName.text, drinkTypeDefaultAmount.value, 12)
         }
         else {
-            drinkController.addDrinkType(drinkTypeName.text, drinkTypeDefaultAmount.value,
-                                         drinkTypeShot.checked ? DrinkType.Shot : DrinkType.Long)
+            drink_type_controller.add(drinkTypeName.text, drinkTypeDefaultAmount.value, 11)
         }
     }
 
