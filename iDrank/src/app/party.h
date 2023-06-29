@@ -139,6 +139,32 @@ public:
         return true;
     }
 
+    static QList<Party*> getAll()
+    {
+        QList<Party*> parties;
+
+        QSqlQuery query;
+        query.prepare("SELECT id, name, started, ended FROM party");
+
+        if(!query.exec())
+        {
+            qWarning() << "DrinkType::getDrinkTypes - ERROR: " << query.lastError().text() << " in query " << query.executedQuery();
+            return {};
+        }
+
+        while(query.next())
+        {
+            auto* p = new Party;
+            p->m_id = query.value(0);
+            p->m_name = query.value(1).toString();
+            p->m_started = query.value(2).toDateTime();
+            p->m_ended = query.value(3).toDateTime();
+            parties.append(p);
+        }
+
+        return parties;
+    }
+
 public:
     QVariant m_id; //replace with base class like DatabaseObject
     QString m_name{};

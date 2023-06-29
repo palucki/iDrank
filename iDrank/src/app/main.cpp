@@ -33,6 +33,7 @@ int main(int argc, char *argv[])
     PartyPlotter party_plotter(users_controller);
 
     qmlRegisterType<DrinkType>("MyQml", 1, 0, "DrinkType");
+    qmlRegisterType<Party>("MyQml", 1, 0, "Party");
 
     QApplication app(argc, argv);
     QQmlApplicationEngine engine;

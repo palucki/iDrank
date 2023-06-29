@@ -12,6 +12,8 @@ class PartyController : public QObject
     Q_PROPERTY(bool ui_party_started READ isPartyStarted NOTIFY ui_party_started_changed)
     Q_PROPERTY(int ui_drinks_count MEMBER m_current_drinks_count NOTIFY ui_drinks_count_changed)
     Q_PROPERTY(QString ui_party_title READ currentPartyTitle NOTIFY ui_party_title_changed)
+    Q_PROPERTY(QList<Party*> ui_parties READ getParties NOTIFY ui_parties_changed)
+
     Q_OBJECT
     
 public:
@@ -24,6 +26,11 @@ public slots:
         Q_UNUSED(party_id);
         return User::getUsers();
     } 
+
+    QList<Party*> getParties()
+    {
+        return Party::getAll();
+    }
 
     bool isPartyStarted()
     {
@@ -73,10 +80,26 @@ public slots:
         ui_party_started_changed();
     }
 
+    void addDrink(int toast_id, QStringList involved_users)
+    {
+        // add(QVariant drink_type_id, QVariant party_id, QDateTime timestamp, int amount_ml, QVariant toast_id)
+        
+        // if(!Drink::add(drink_type_id, party_id, QDateTime::currentDateTime(), amount_ml, toast_id))
+        // {
+
+        // }
+
+        // for(auto user : involved_users)
+        // {
+
+        // }
+    }
+
 signals:
     void ui_party_started_changed();
     void ui_drinks_count_changed();
     void ui_party_title_changed();
+    void ui_parties_changed();
 
 private: 
     int m_current_drinks_count{0};

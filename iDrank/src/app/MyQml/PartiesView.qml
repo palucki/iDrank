@@ -16,7 +16,7 @@ Item {
             anchors.margins: 20
 
             clip: true
-            model: masterController.ui_parties
+            model: party_controller.ui_parties
 
             delegate: partyPreviewDelegate
             spacing: 5
@@ -32,18 +32,18 @@ Item {
                 height: 40
                 border.color: Qt.lighter(color, 1.1)
 
-                function partyDecoration(partyId, currentPartyId) {
-                    if(currentPartyId === partyId)
-                        return ">>> "
+                // function partyDecoration(partyId, currentPartyId) {
+                //     if(currentPartyId === partyId)
+                //         return ">>> "
 
-                    return ""
-                }
+                //     return ""
+                // }
 
                 Text {
                     anchors.centerIn: parent
                     font.pixelSize: 10
-                    text: partyDecoration(modelData.ui_id, partyController.ui_current_party_id)
-                    + modelData.ui_name + " (start:" + modelData.ui_started + ")"
+                    // text: partyDecoration(modelData.ui_id, partyController.ui_current_party_id)
+                    text:modelData.ui_name + " (start:" + modelData.ui_started + ")"
                 }
 
                 MouseArea {
