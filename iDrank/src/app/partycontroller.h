@@ -6,6 +6,7 @@
 #include "user.h"
 #include "party.h"
 #include "drink.h"
+#include "userdrink.h"
 
 class PartyController : public QObject
 {
@@ -99,7 +100,8 @@ public slots:
 
     void addDrink(QVariant toast_id, QVariant drink_type_id, int amount_ml, QStringList involved_users)
     {
-        if(!Drink::add(drink_type_id, m_current_party_id, QDateTime::currentDateTime(), amount_ml, toast_id))
+        auto drink_id = Drink::add(drink_type_id, m_current_party_id, QDateTime::currentDateTime(), amount_ml, toast_id);
+        if(!drink_id)
         {
             qDebug() << "ERROR unable to add drink";
         }
@@ -109,6 +111,10 @@ public slots:
 
         for(auto user : involved_users)
         {
+            if(!UserDrink::add(user.trimmed(), *drink_id))
+            {
+                qDebug() << "ERROR unable to add user-drink";
+            }
         }
     }
 
