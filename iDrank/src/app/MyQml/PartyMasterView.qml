@@ -56,7 +56,7 @@ Page {
                 text: qsTr("Party statistics")
                 Material.foreground: "white"
                 Material.accent: "white"
-                enabled: false //partyController.ui_drinks_count > 0
+                enabled: party_controller.ui_drinks_count > 0
             }
         }
     }

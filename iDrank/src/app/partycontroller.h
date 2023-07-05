@@ -17,7 +17,18 @@ class PartyController : public QObject
     Q_OBJECT
     
 public:
-    explicit PartyController(QObject* parent = nullptr) : QObject(parent) {}
+    explicit PartyController(QObject* parent = nullptr) : QObject(parent) 
+    {
+        auto party_data = Party::getCurrentParty();
+        m_current_party_title = party_data.second;
+        m_current_party_id = party_data.first;
+
+        auto drinks = Drink::getDrinksForParty(m_current_party_id);
+        m_current_drinks_count = drinks.size();
+
+        emit ui_party_title_changed();
+        emit ui_drinks_count_changed();
+    }
     virtual ~PartyController() override {}
 
 public slots:
@@ -69,9 +80,11 @@ public slots:
 
         m_current_party_title = name;
         m_current_party_id = (*party_id).toInt();
+        m_current_drinks_count = 0;
 
-        ui_party_started_changed();
-        ui_party_title_changed();
+        emit ui_party_started_changed();
+        emit ui_party_title_changed();
+        emit ui_drinks_count_changed();
     }
 
     void endParty()
@@ -81,7 +94,7 @@ public slots:
             std::cout << "ERROR: unable to end party\n";
             return;
         }
-        ui_party_started_changed();
+        emit ui_party_started_changed();
     }
 
     void addDrink(QVariant toast_id, QVariant drink_type_id, int amount_ml, QStringList involved_users)
@@ -90,6 +103,9 @@ public slots:
         {
             qDebug() << "ERROR unable to add drink";
         }
+
+        m_current_drinks_count++;
+        emit ui_drinks_count_changed();
 
         for(auto user : involved_users)
         {
