@@ -37,8 +37,7 @@ public:
 public slots:
     QList<User*> getUsersForParty(const QVariant& party_id)
     {
-        Q_UNUSED(party_id);
-        return User::getUsers();
+        return User::getUsersForParty(party_id);
     }
 
     QList<Party*> getParties()

@@ -22,6 +22,38 @@ public:
         emit ui_involved_changed();
     }
 
+    static QList<User*> getUsersForParty(QVariant party_id)
+    {
+        qDebug() << "Getting users for party " << party_id;
+
+        QList<User*> users;
+
+        QSqlQuery query;
+        query.prepare("SELECT DISTINCT user.id, user.name, user.admin "
+                      "FROM user_drink "
+                      "LEFT JOIN drink ON drink.id = drink_id "
+                      "LEFT JOIN user ON user.id = user_id "
+                      "WHERE drink.party_id = :party_id AND user.id IS NOT NULL");
+        query.bindValue(":party_id", party_id);
+
+        if(!query.exec())
+        {
+            qWarning() << "User::getUsersForParty - ERROR: " << query.lastError().text() << " in query " << query.executedQuery();
+            return {};
+        }
+
+        while(query.next())
+        {
+            auto* ud = new User;
+            ud->m_id = query.value(0);
+            ud->m_name = query.value(1).toString();
+            ud->m_admin = query.value(2).toInt() > 0;
+            users.append(ud);
+        }
+
+        return users;
+    }
+
     static QList<User*> getUsers() 
     {
         QList<User*> users;
