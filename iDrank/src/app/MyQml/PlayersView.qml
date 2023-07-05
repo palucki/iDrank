@@ -10,6 +10,20 @@ import "qrc:/"
 Item {
     property var users;
 
+    function updateInvolvedUsers() {
+        var involved = []
+        for(var i = 0; i < users.length; ++i)
+        {
+            if(users[i].ui_involved)
+            {
+                console.log("Id: " + users[i].ui_id + " involved")
+                involved.push(users[i].ui_id)
+            }
+        }
+
+        users_controller.setInvolvedUsers(involved)
+    }
+
     TextFieldDialog {
         id: dialog
         dialogTitle: qsTr("Adding new player...")
@@ -71,21 +85,6 @@ Item {
         }
     }
 
-    Component.onDestruction: {
-        console.log("Destorying");
-        var involved = []
-        for(var i = 0; i < users.length; ++i)
-        {
-            if(users[i].ui_involved)
-            {
-                console.log("Id: " + users[i].ui_id + " involved")
-                involved.push(users[i].ui_id)
-            }
-        }
-
-        users_controller.setInvolvedUsers(involved)
-    }
-
     Component {
         id: playerDelegate
 
@@ -99,6 +98,8 @@ Item {
                 onToggled: {
                     modelData.ui_involved = checked
                     console.log("Toggling for " + modelData.ui_id + " " + modelData.ui_involved)
+
+                    updateInvolvedUsers()
                 }
             }
 
