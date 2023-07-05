@@ -19,9 +19,9 @@ public:
 
 public slots:
 
-    QList<User*> getUsers()
+    QList<User*> getUsers(bool force_fetch = false)
     {
-        if(m_users.isEmpty())
+        if(m_users.isEmpty() || force_fetch)
         {
             m_users = User::getUsers();
         }
@@ -79,6 +79,11 @@ public slots:
             m_admin_name = name;
             emit ui_admin_name_changed();
         }
+    }
+
+    void deleteUser(QVariant id)
+    {
+        User::remove(id);
     }
 
 signals:

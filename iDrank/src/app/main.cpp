@@ -8,6 +8,7 @@
 
 #include "databasecontroller.h"
 #include "partycontroller.h"
+#include "involveduserscontroller.h"
 #include "userscontroller.h"
 #include "drinktypecontroller.h"
 #include "drink.h"
@@ -27,6 +28,7 @@ int main(int argc, char *argv[])
     QSettings settings; //HKEY_CURRENT_USER\SOFTWARE\Apps\iDrank / /home/$USER/.config/Salka/iDrank.conf
 
     DatabaseController database_controller;
+    InvolvedUsersController involved_users_controller{settings};
     DrinkTypeController drink_type_controller{settings};
     PartyController party_controller;
     UsersController users_controller;
@@ -39,6 +41,7 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("party_plotter", &party_plotter);
     engine.rootContext()->setContextProperty("party_controller", &party_controller);
+    engine.rootContext()->setContextProperty("involved_users_controller", &involved_users_controller);
     engine.rootContext()->setContextProperty("users_controller", &users_controller);
     engine.rootContext()->setContextProperty("drink_type_controller", &drink_type_controller);
     // engine.addImportPath("qrc:/qt/qml/app/qml/");

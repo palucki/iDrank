@@ -77,7 +77,7 @@ public slots:
 
         if(m_settings.contains(DRINK_TYPES_IDS_ORDER))
         {
-            const QStringList drink_ids = m_settings.value(DRINK_TYPES_IDS_ORDER).toString().split(',');
+            const QStringList drink_ids = m_settings.value(DRINK_TYPES_IDS_ORDER).toString().split(',', Qt::SkipEmptyParts);
             
             m_drink_types.clear();
 

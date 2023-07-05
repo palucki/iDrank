@@ -9,6 +9,7 @@ import "qrc:/"
 
 Item {
     property var users;
+    property var involved_users : involved_users_controller.ui_involved_users
 
     TextFieldDialog {
         id: dialog
@@ -30,13 +31,13 @@ Item {
                 return;
             }
 
-            masterController.addUser(dialogText)
-            users = masterController.getUsers()
+            users_controller.registerUser(dialogText)
+            users = users_controller.getUsers(true)
         }
     }
 
     ConfirmationDialog {
-        id: deleteDrinkConfirmationDialog
+        id: deleteUserConfirmationDialog
         standardButtons: Dialog.Ok | Dialog.Cancel
     }
 
@@ -118,11 +119,11 @@ Item {
                 anchors.right: parent.right
                 text: "X"
                 onClicked: {
-                    deleteDrinkConfirmationDialog.openDialog(qsTr("Delete the user?"))
-                    deleteDrinkConfirmationDialog.accepted.connect(function(){
+                    deleteUserConfirmationDialog.openDialog(qsTr("Delete the user?"))
+                    deleteUserConfirmationDialog.accepted.connect(function(){
                         console.log("DELETE user")
-                        masterController.deleteUser(modelData.ui_id)
-                        users = masterController.getUsers()
+                        users_controller.deleteUser(modelData.ui_id)
+                        users = users_controller.getUsers(true)
                     })
                 }
             }
