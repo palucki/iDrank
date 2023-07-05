@@ -47,20 +47,20 @@ public:
         return user_ids;
     }
 
-    static QString getCurrentPartyTitle()
+    static QPair<int, QString> getCurrentParty()
     {
         QSqlQuery query;
-        query.prepare("SELECT name FROM party WHERE started IS NOT NULL AND ended IS NULL ORDER BY id DESC");
+        query.prepare("SELECT id, name FROM party WHERE started IS NOT NULL AND ended IS NULL ORDER BY id DESC");
 
         if(!query.exec())
         {
-            qWarning() << "Party::getCurrentPartyTitle - ERROR: " << query.lastError().text() << " in query " << query.executedQuery();
+            qWarning() << "Party::getCurrentParty - ERROR: " << query.lastError().text() << " in query " << query.executedQuery();
             return {};
         }
 
         if(query.first())
         {
-            return query.value(0).toString();
+            return {query.value(0).toInt(), query.value(1).toString()};
         }
 
         return {};

@@ -204,7 +204,10 @@ Page {
                         // var toast = toastProvider.randomToast(partyController.ui_current_party_id)
                         // dialog.openDialog(toast.ui_text)
 
-                        party_controller.addDrink(/*toast.id*/1, users_controller.ui_involved_users)
+                        party_controller.addDrink(/*toast.id*/1, 
+                                                  drink_type_controller.ui_drink_types[0].ui_id, 
+                                                  amountInput.value, 
+                                                  users_controller.ui_involved_users)
                     }
                 }
 

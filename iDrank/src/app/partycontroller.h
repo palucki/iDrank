@@ -41,7 +41,9 @@ public slots:
     {
         if(m_current_party_title.isEmpty())
         {
-            m_current_party_title = Party::getCurrentPartyTitle();
+            auto party_data = Party::getCurrentParty();
+            m_current_party_title = party_data.second;
+            m_current_party_id = party_data.first;
         }
 
         return m_current_party_title;
@@ -58,13 +60,15 @@ public slots:
 
     void startParty(const QString& name)
     {
-        if(!Party::start(name))
+        const auto party_id = Party::start(name);
+        if(!party_id)
         {
             std::cout << "ERROR: unable to start party\n";
             return;
         }
 
         m_current_party_title = name;
+        m_current_party_id = (*party_id).toInt();
 
         ui_party_started_changed();
         ui_party_title_changed();
@@ -80,20 +84,16 @@ public slots:
         ui_party_started_changed();
     }
 
-    void addDrink(int toast_id, QStringList involved_users)
+    void addDrink(QVariant toast_id, QVariant drink_type_id, int amount_ml, QStringList involved_users)
     {
-        // add(QVariant drink_type_id, QVariant party_id, QDateTime timestamp, int amount_ml, QVariant toast_id)
-        
-        // if(!Drink::add(drink_type_id, party_id, QDateTime::currentDateTime(), amount_ml, toast_id))
-        // {
+        if(!Drink::add(drink_type_id, m_current_party_id, QDateTime::currentDateTime(), amount_ml, toast_id))
+        {
+            qDebug() << "ERROR unable to add drink";
+        }
 
-        // }
-
-        // for(auto user : involved_users)
-        // {
-
-        // }
-        qDebug() << "PartyController::addDrink involved users " << involved_users.join(',');
+        for(auto user : involved_users)
+        {
+        }
     }
 
 signals:
@@ -104,6 +104,6 @@ signals:
 
 private: 
     int m_current_drinks_count{0};
-    int m_current_party;
+    int m_current_party_id;
     QString m_current_party_title;
 };
