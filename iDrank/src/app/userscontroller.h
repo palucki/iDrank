@@ -60,9 +60,9 @@ public slots:
         return m_users;
     }
 
-    QMap<int, QString> getUsersNameMap()
+    QMap<int, QString> getUsersNameMap(bool force_fetch = false)
     {
-        if(!m_users_map.isEmpty())
+        if(!m_users_map.isEmpty() && !force_fetch)
         {
             return m_users_map;
         }
@@ -110,11 +110,15 @@ public slots:
             m_admin_name = name;
             emit ui_admin_name_changed();
         }
+
+        emit users_changed();
     }
 
     void deleteUser(QVariant id)
     {
         User::remove(id);
+
+        emit users_changed();
     }
 
     void setInvolvedUsers(const QVariantList& users)
@@ -133,6 +137,7 @@ signals:
     void ui_user_missing_changed();
     void ui_admin_name_changed();
     void ui_involved_users_changed();
+    void users_changed();
 
 private:
     QList<User*> m_users;

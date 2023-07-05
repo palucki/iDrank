@@ -32,7 +32,7 @@ void PartyPlotter::plot(QVariant party_id) const
 {
     // std::cout << "plot using axis" << mDateTimeAxis << " " << mValueAxis << " party " << party_id.toString().toStdString() << '\n';
 
-    const auto users_name_map = m_users_controller.getUsersNameMap();
+    const auto users_name_map = m_users_controller.getUsersNameMap(true);
 
     int highest_sum = 0;
     QDateTime earliest_drink_ts{QDateTime::currentDateTime()};
@@ -127,8 +127,6 @@ void PartyPlotter::toggleVisibility(const QString& series_name)
         std::cout << "ERROR: series name: " << series_name.toStdString() << " is null\n";
         return;
     }
-
-    std::cout << "OK TOGGLING VISIBILTY\n";
 
     mDrinksSeriesMap[series_name]->setVisible(!mDrinksSeriesMap[series_name]->isVisible());
 }

@@ -31,10 +31,9 @@ Page {
         return series
     }
 
-    Component.onCompleted: {
-        console.log("party statistics for party id " + party_id + " users " + users.length)
-        // chart.removeAllSeries()
+    function updatePlot() {
         // party_plotter.reset()
+        chart.removeAllSeries()
         party_plotter.setAxes(xAxis, yAxis)
         for(var i = 0; i < users.length; i++)
         {
@@ -43,14 +42,33 @@ Page {
         party_plotter.plot(party_id)
     }
 
+    Component.onCompleted: {
+        console.log("party statistics for party id " + party_id + " users " + users.length)
+        updatePlot()
+    }
+
     Connections {
         target: party_controller
         function onUi_drinks_countChanged()
         {
+            // this function is called only in case of current party - drink added / removed
+            // that's why we need to fetch users if any was added 
+            users = users_controller.getUsers()
+            
             console.log("Drinks changed in party statistics view. party Id " + party_id)
-            party_plotter.plot(party_id)
+            console.log("Removing all series")
+            updatePlot()
         }
-}
+    }
+
+    Connections {
+        target: users_controller
+        function onUsers_changed() {
+            users = users_controller.getUsers(true)
+            console.log("party statitsics view users changed now size: " << users.length)
+            updatePlot()
+        }
+    }
 
     ColumnLayout {
         id: layoutRoot

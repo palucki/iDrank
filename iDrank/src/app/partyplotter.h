@@ -39,6 +39,5 @@ private:
     QDateTimeAxis* mDateTimeAxis{nullptr};
     QValueAxis* mValueAxis{nullptr};
     UsersController& m_users_controller;
-
 };
 
