@@ -30,7 +30,7 @@ PartyPlotter::~PartyPlotter()
 
 void PartyPlotter::plot(QVariant party_id) const
 {
-    std::cout << "plot using axis" << mDateTimeAxis << " " << mValueAxis << " party " << party_id.toString().toStdString() << '\n';
+    // std::cout << "plot using axis" << mDateTimeAxis << " " << mValueAxis << " party " << party_id.toString().toStdString() << '\n';
 
     const auto users_name_map = m_users_controller.getUsersNameMap();
 
@@ -47,7 +47,7 @@ void PartyPlotter::plot(QVariant party_id) const
         const auto user_id = it.key();
         const auto name = it.value();
 
-        std::cout << "user id: " << user_id << " name " << name.toStdString() << '\n';
+        // std::cout << "user id: " << user_id << " name " << name.toStdString() << '\n';
 
         auto drinks = Drink::getDrinksForUserInParty(user_id, party_id);
 
@@ -61,7 +61,7 @@ void PartyPlotter::plot(QVariant party_id) const
 
         for(auto d : drinks)
         {
-            std::cout << "drink id " << d->m_id.toInt() << " amount " << d->m_amount_ml << '\n';
+            // std::cout << "drink id " << d->m_id.toInt() << " amount " << d->m_amount_ml << '\n';
             current_sum += d->m_amount_ml;
             drink_points.append({static_cast<qreal>(d->m_timestamp.toMSecsSinceEpoch()), static_cast<qreal>(current_sum)});
         }
@@ -112,11 +112,23 @@ void PartyPlotter::addSeries(QAbstractSeries* series)
 
 void PartyPlotter::toggleVisibility(const QString& series_name)
 {
+    //TODO: segfault. Go to history -> go to current -> toggle visibility
+    //      it is caused by incorrect series in partyplotter when new statistics are pushed
+    //      should be resolved when we always push the statistics view instead of adding it to swipe view / pushing to stack view
+
     if(!mDrinksSeriesMap.contains(series_name))
     {
         std::cout << "ERROR: no such series name: " << series_name.toStdString() << '\n';
         return;
     }
+
+    if(mDrinksSeriesMap[series_name] == nullptr)
+    {
+        std::cout << "ERROR: series name: " << series_name.toStdString() << " is null\n";
+        return;
+    }
+
+    std::cout << "OK TOGGLING VISIBILTY\n";
 
     mDrinksSeriesMap[series_name]->setVisible(!mDrinksSeriesMap[series_name]->isVisible());
 }
@@ -134,4 +146,11 @@ void PartyPlotter::setAxes(QAbstractAxis *xAxis, QAbstractAxis *yAxis)
         QValueAxis* valueAxis = static_cast<QValueAxis*>(yAxis);
         mValueAxis = valueAxis;
     }
+}
+
+void PartyPlotter::reset()
+{
+    mDrinksSeriesMap.clear();
+    mDateTimeAxis = nullptr;
+    mValueAxis = nullptr;
 }

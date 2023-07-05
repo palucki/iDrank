@@ -53,12 +53,10 @@ Item {
 //                        partiesList.currentIndex = index
                         historyCenterLabel.text = modelData.ui_name
                         console.log("Party id " + modelData.ui_id)
-                        console.log("Size of drinks " + drinkProvider.getUIDrinksList(modelData.ui_id))
+                        // console.log("Size of drinks " + drinkProvider.getUIDrinksList(modelData.ui_id))
                         historyStackView.push("PartyStatisticsView.qml",
-                                              {partyId: modelData.ui_id,
-                                               drinks: drinkProvider.getUIDrinksList(modelData.ui_id),
-                                               partyStarted: modelData.ui_started,
-                                               partyEnded: modelData.ui_ended})
+                        { party_id: modelData.ui_id,
+                          users: party_controller.getUsersForParty(modelData.ui_id)})
                     }
                 }
             }

@@ -33,6 +33,8 @@ Page {
 
     Component.onCompleted: {
         console.log("party statistics for party id " + party_id + " users " + users.length)
+        // chart.removeAllSeries()
+        // party_plotter.reset()
         party_plotter.setAxes(xAxis, yAxis)
         for(var i = 0; i < users.length; i++)
         {

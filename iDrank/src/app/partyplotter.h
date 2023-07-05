@@ -28,6 +28,7 @@ public:
     PartyPlotter(UsersController& users_controller, QObject* parent = nullptr);
     virtual ~PartyPlotter();
 public slots:
+    void reset();
     void plot(QVariant party_id) const;
     void addSeries(QAbstractSeries* series);
     void setAxes(QAbstractAxis* xAxis, QAbstractAxis* yAxis);
