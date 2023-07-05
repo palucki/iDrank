@@ -196,7 +196,7 @@ Page {
                     Material.background: "#ED690F"
                     radius: 10
                     text: qsTr("Add")
-                    enabled: party_controller.ui_party_started && involved_users_controller.ui_involved_users.length > 0
+                    enabled: party_controller.ui_party_started && users_controller.ui_involved_users.length > 0
                     onClicked: {
                         drink_type_controller.setCurrentDrinkType(drinkTypesList.currentIndex)
                         drink_type_controller.setCurrentDrinkAmountMl(amountInput.value)
@@ -204,7 +204,7 @@ Page {
                         // var toast = toastProvider.randomToast(partyController.ui_current_party_id)
                         // dialog.openDialog(toast.ui_text)
 
-                        party_controller.addDrink(toast.id, involved_users_controller.ui_involved_users)
+                        party_controller.addDrink(/*toast.id*/1, users_controller.ui_involved_users)
                     }
                 }
 
@@ -216,7 +216,7 @@ Page {
                     Material.foreground: "orange"
                     Material.background: "white"
                     radius: 10
-                    text: involved_users_controller.ui_involved_users.length
+                    text: users_controller.ui_involved_users.length
                     icon.source: "qrc:/img/users.png"
                     font.pointSize: 10
                     onClicked: {

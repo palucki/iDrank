@@ -14,7 +14,6 @@ qt_add_executable(iDrank
     # replace the following when .cpp is in place:
     databasecontroller.h
     partycontroller.h
-    involveduserscontroller.h
     userscontroller.h
     drinktypecontroller.h
     drink.h

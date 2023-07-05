@@ -10,10 +10,17 @@ class User : public QObject
     Q_OBJECT
     Q_PROPERTY(QVariant ui_id MEMBER m_id CONSTANT)
     Q_PROPERTY(QString ui_name MEMBER m_name CONSTANT)
+    Q_PROPERTY(bool ui_involved MEMBER m_involved WRITE setInvolved NOTIFY ui_involved_changed)
     
 public:
     explicit User(QObject* parent = nullptr) : QObject(parent) {}
     virtual ~User() override {}
+
+    void setInvolved(bool involved)
+    {
+        m_involved = involved;
+        emit ui_involved_changed();
+    }
 
     static QList<User*> getUsers() 
     {
@@ -74,8 +81,12 @@ public:
         return true;
     }
 
+signals:
+    void ui_involved_changed();
+
 public:
     QVariant m_id; //replace with base class like DatabaseObject
     QString m_name;
     bool m_admin;
+    bool m_involved{false};
 };

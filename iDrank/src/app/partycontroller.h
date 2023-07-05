@@ -93,6 +93,7 @@ public slots:
         // {
 
         // }
+        qDebug() << "PartyController::addDrink involved users " << involved_users.join(',');
     }
 
 signals:

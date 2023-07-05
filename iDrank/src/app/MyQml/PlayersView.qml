@@ -9,7 +9,6 @@ import "qrc:/"
 
 Item {
     property var users;
-    property var involved_users : involved_users_controller.ui_involved_users
 
     TextFieldDialog {
         id: dialog
@@ -86,7 +85,7 @@ Item {
             }
         }
 
-        masterController.setInvolvedUsers(involved)
+        users_controller.setInvolvedUsers(involved)
     }
 
     Component {

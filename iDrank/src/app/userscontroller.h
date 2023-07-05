@@ -4,17 +4,32 @@
 
 #include <optional>
 #include <QObject>
+#include <QSettings>
 
 #include "user.h"
+
+const QString INVOLVED_USERS_KEY = "involved_users";
 
 class UsersController : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(bool ui_user_missing READ isUserMissing NOTIFY ui_user_missing_changed)
     Q_PROPERTY(QString ui_admin_name MEMBER m_admin_name NOTIFY ui_admin_name_changed)
+    Q_PROPERTY(QStringList ui_involved_users MEMBER m_involved_users NOTIFY ui_involved_users_changed)
     
 public:
-    explicit UsersController(QObject* parent = nullptr) : QObject(parent) {}
+    explicit UsersController(QSettings& settings, QObject* parent = nullptr) 
+        : QObject(parent) 
+        , m_settings(settings)
+    {
+        if(m_settings.contains(INVOLVED_USERS_KEY))
+        {
+            m_involved_users = m_settings.value(INVOLVED_USERS_KEY).toString().split(',', Qt::SkipEmptyParts);
+            qDebug() << "Involved users " << m_involved_users.size();
+            emit ui_involved_users_changed();
+        }
+    }
+
     virtual ~UsersController() override {}
 
 public slots:
@@ -24,6 +39,22 @@ public slots:
         if(m_users.isEmpty() || force_fetch)
         {
             m_users = User::getUsers();
+        }
+
+        if(m_settings.contains(INVOLVED_USERS_KEY))
+        {
+            m_involved_users = m_settings.value(INVOLVED_USERS_KEY).toString().split(',', Qt::SkipEmptyParts);
+            qDebug() << "Involved users " << m_involved_users.size();
+
+            for(auto* user : m_users)
+            {
+                if(m_involved_users.contains(user->m_id.toString()))
+                {
+                    user->setInvolved(true);
+                }
+            }
+
+            emit ui_involved_users_changed();
         }
 
         return m_users;
@@ -86,12 +117,28 @@ public slots:
         User::remove(id);
     }
 
+    void setInvolvedUsers(const QVariantList& users)
+    {
+        m_involved_users.clear();
+        for(const auto& u : users)
+        {
+            m_involved_users.append(QString::number(u.toInt()));
+        }
+        m_settings.setValue(INVOLVED_USERS_KEY, m_involved_users.join(','));
+        qDebug() << "Setting involved to " << m_involved_users;
+        emit ui_involved_users_changed();
+    }
+
 signals:
     void ui_user_missing_changed();
     void ui_admin_name_changed();
+    void ui_involved_users_changed();
 
 private:
     QList<User*> m_users;
     QMap<int, QString> m_users_map;
     QString m_admin_name;
+
+    QSettings& m_settings;
+    QStringList m_involved_users;
 };
