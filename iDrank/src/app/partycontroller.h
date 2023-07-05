@@ -14,6 +14,7 @@ class PartyController : public QObject
     Q_PROPERTY(int ui_drinks_count MEMBER m_current_drinks_count NOTIFY ui_drinks_count_changed)
     Q_PROPERTY(QString ui_party_title READ currentPartyTitle NOTIFY ui_party_title_changed)
     Q_PROPERTY(QList<Party*> ui_parties READ getParties NOTIFY ui_parties_changed)
+    Q_PROPERTY(int ui_party_id MEMBER m_current_party_id NOTIFY ui_party_id_changed)
 
     Q_OBJECT
     
@@ -29,6 +30,7 @@ public:
 
         emit ui_party_title_changed();
         emit ui_drinks_count_changed();
+        emit ui_party_id_changed();
     }
     virtual ~PartyController() override {}
 
@@ -37,7 +39,7 @@ public slots:
     {
         Q_UNUSED(party_id);
         return User::getUsers();
-    } 
+    }
 
     QList<Party*> getParties()
     {
@@ -86,6 +88,7 @@ public slots:
         emit ui_party_started_changed();
         emit ui_party_title_changed();
         emit ui_drinks_count_changed();
+        emit ui_party_id_changed();
     }
 
     void endParty()
@@ -105,10 +108,7 @@ public slots:
         {
             qDebug() << "ERROR unable to add drink";
         }
-
-        m_current_drinks_count++;
-        emit ui_drinks_count_changed();
-
+        
         for(auto user : involved_users)
         {
             if(!UserDrink::add(user.trimmed(), *drink_id))
@@ -116,6 +116,9 @@ public slots:
                 qDebug() << "ERROR unable to add user-drink";
             }
         }
+
+        m_current_drinks_count++;
+        emit ui_drinks_count_changed();
     }
 
 signals:
@@ -123,6 +126,7 @@ signals:
     void ui_drinks_count_changed();
     void ui_party_title_changed();
     void ui_parties_changed();
+    void ui_party_id_changed();
 
 private: 
     int m_current_drinks_count{0};

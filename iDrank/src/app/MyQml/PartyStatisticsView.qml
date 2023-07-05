@@ -9,21 +9,11 @@ import Qt5Compat.GraphicalEffects
 
 Page {
     property string unit : "ml"
-    property int party_id : 1
     property string series_name : "line"
     property var colors : ["#ffd275", "#a57f60", "#e3a587", "#db5a42", "#e8ae68", "#f4ac32"]
     property int max_colors : colors.length
-    property var users : party_controller.getUsersForParty(party_id)
-
-    Component.onCompleted: {
-        party_plotter.setAxes(xAxis, yAxis)
-        
-        for(var i = 0; i < users.length; i++)
-        {
-            party_plotter.addSeries(createSeries(users[i].ui_name, colors[i % max_colors]))
-        }
-        party_plotter.plot(party_id)
-    }
+    property var users;
+    property var party_id;
 
     function createSeries(name, color) {
         console.log("adding series " + name)
@@ -40,6 +30,25 @@ Page {
 
         return series
     }
+
+    Component.onCompleted: {
+        console.log("party statistics for party id " + party_id + " users " + users.length)
+        party_plotter.setAxes(xAxis, yAxis)
+        for(var i = 0; i < users.length; i++)
+        {
+            party_plotter.addSeries(createSeries(users[i].ui_name, colors[i % max_colors]))
+        }
+        party_plotter.plot(party_id)
+    }
+
+    Connections {
+        target: party_controller
+        function onUi_drinks_countChanged()
+        {
+            console.log("Drinks changed in party statistics view. party Id " + party_id)
+            party_plotter.plot(party_id)
+        }
+}
 
     ColumnLayout {
         id: layoutRoot

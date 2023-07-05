@@ -38,6 +38,10 @@ void PartyPlotter::plot(QVariant party_id) const
     QDateTime earliest_drink_ts{QDateTime::currentDateTime()};
     QDateTime last_drink_ts;
 
+    //TODO: add first point at 0,0
+    //TODO: set axisX->setTickCount(10); - consider fixed ticks? always 5? and distirbute them accordingly
+    //TODO: axisX->setLabelFormat("%.2f");
+
     for(auto it = users_name_map.begin(); it != users_name_map.end(); ++it)
     {
         const auto user_id = it.key();
@@ -88,7 +92,8 @@ void PartyPlotter::plot(QVariant party_id) const
     }
 
     mDateTimeAxis->setRange(earliest_drink_ts.addSecs(-300), last_drink_ts.addSecs(300));
-    mValueAxis->setRange(0, highest_sum);
+    mValueAxis->setRange(0, highest_sum * 1.1);
+    mValueAxis->setTickCount(5);
 }
 
 void PartyPlotter::addSeries(QAbstractSeries* series) 

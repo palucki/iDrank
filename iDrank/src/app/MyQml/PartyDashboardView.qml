@@ -201,6 +201,7 @@ Page {
                         drink_type_controller.setCurrentDrinkType(drinkTypesList.currentIndex)
                         drink_type_controller.setCurrentDrinkAmountMl(amountInput.value)
                         
+                        //TODO: implement toasts
                         // var toast = toastProvider.randomToast(partyController.ui_current_party_id)
                         // dialog.openDialog(toast.ui_text)
 

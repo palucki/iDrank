@@ -72,6 +72,8 @@ Page {
         }
 
         PartyStatisticsView {
+            party_id: party_controller.ui_party_id
+            users: party_controller.getUsersForParty(party_controller.ui_party_id)
         }
     }
 }
