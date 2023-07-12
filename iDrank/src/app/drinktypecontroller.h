@@ -145,6 +145,7 @@ public slots:
         new_drink->m_percentage = percentage;
 
         m_drink_types.prepend(new_drink);
+        m_drink_types_by_id[id->toInt()] = new_drink;
 
         // handle settings + prepend
         emit ui_drink_types_changed();
