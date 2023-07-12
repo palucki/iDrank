@@ -59,6 +59,7 @@ public:
                 }
             }
 
+            m_drink_types_by_id = drink_type_by_id;
             emit ui_drink_types_changed();
         }
     }
@@ -66,6 +67,17 @@ public:
     virtual ~DrinkTypeController() override {}
 
 public slots:
+    QString type(QVariant drink_type_id)
+    {
+        if(!m_drink_types_by_id.contains(drink_type_id.toInt()))
+        {
+            qDebug() << "Drink type " << drink_type_id.toInt() << " not found";
+            return "Drink";
+        }
+
+        return m_drink_types_by_id[drink_type_id.toInt()]->m_name;
+    }
+
     void update(int index, int id, const QString& name, int default_amount_ml, int percentage)
     {
         if(!DrinkType::update(id, name, default_amount_ml, percentage))
@@ -184,5 +196,6 @@ signals:
 private:
     QSettings& m_settings;
     QList<DrinkType*> m_drink_types;
+    QMap<int, DrinkType*> m_drink_types_by_id;
     int m_current_drink_amount_ml{0};
 };

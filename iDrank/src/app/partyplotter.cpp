@@ -38,7 +38,7 @@ void PartyPlotter::plot(QVariant party_id) const
     QDateTime earliest_drink_ts{QDateTime::currentDateTime()};
     QDateTime last_drink_ts;
 
-    //TODO: add first point at 0,0
+    //TODO: add first point at partyStarted,0
     //TODO: set axisX->setTickCount(10); - consider fixed ticks? always 5? and distirbute them accordingly
     //TODO: axisX->setLabelFormat("%.2f");
 
@@ -58,7 +58,7 @@ void PartyPlotter::plot(QVariant party_id) const
 
         qreal current_sum = 0.0;
         QVector<QPointF> drink_points;
-
+        
         for(auto d : drinks)
         {
             // std::cout << "drink id " << d->m_id.toInt() << " amount " << d->m_amount_ml << '\n';

@@ -45,6 +45,17 @@ public slots:
         return Party::getAll();
     }
 
+    QList<Drink*> getDrinksForParty(QVariant party_id)
+    {
+        qDebug() << "Drinks for party " << party_id;
+        return Drink::getDrinksForParty(party_id);
+    }
+
+    bool isCurrentParty(QVariant party_id)
+    {
+        return m_current_party_id == party_id.toInt();
+    }
+
     bool isPartyStarted()
     {
         return Party::isAnyStarted();
@@ -97,6 +108,11 @@ public slots:
             std::cout << "ERROR: unable to end party\n";
             return;
         }
+
+        m_current_party_id = 0;
+        m_current_party_title = "";
+        m_current_drinks_count = 0;
+        
         emit ui_party_started_changed();
     }
 
@@ -117,6 +133,17 @@ public slots:
         }
 
         m_current_drinks_count++;
+        emit ui_drinks_count_changed();
+    }
+
+    void removeDrink(const QVariant drink_id)
+    {
+        if(!Drink::remove(drink_id))
+        {
+            qDebug() << "ERROR unable to remove drink " << drink_id;
+        }
+        
+        m_current_drinks_count--;
         emit ui_drinks_count_changed();
     }
 

@@ -58,7 +58,7 @@ public:
         QList<Drink*> drinks;
 
         QSqlQuery query;
-        query.prepare("SELECT drink.id, drink.timestamp, drink.amount_ml, drink.toast_id, GROUP_CONCAT(user_drink.user_id) FROM drink "
+        query.prepare("SELECT drink.id, drink.timestamp, drink.amount_ml, drink.toast_id, GROUP_CONCAT(user_drink.user_id), drink.drink_type_id FROM drink "
                       "LEFT JOIN user_drink ON drink.id = user_drink.drink_id "
                       "WHERE party_id = :party_id GROUP BY drink.id");
         query.bindValue(":party_id", party_id);
@@ -68,6 +68,8 @@ public:
             qWarning() << "Drink::getDrinksForParty - ERROR: " << query.lastError().text() << " in query " << query.executedQuery();
         }
 
+        qDebug() << "Query: " << query.lastQuery();
+
         while(query.next())
         {
             auto* d = new Drink;
@@ -76,7 +78,9 @@ public:
             d->m_amount_ml = query.value(2).toInt();
             d->m_party_id = party_id;
             d->m_toast_id = query.value(3);
+            d->m_drink_type_id = query.value(5);
 
+            qDebug() << "getDrinksForParty - found " << d->m_id << " amount " << d->m_amount_ml;
             QVariantList user_ids;
             for(const auto& id : query.value(4).toString().split(','))
             {
@@ -95,7 +99,7 @@ public:
         QList<Drink*> drinks;
 
         QSqlQuery query;
-        query.prepare("SELECT drink.id, drink.timestamp, drink.amount_ml, drink.toast_id FROM drink "
+        query.prepare("SELECT drink.id, drink.timestamp, drink.amount_ml, drink.toast_id, drink.drink_type_id FROM drink "
                       "LEFT JOIN user_drink ON drink.id = user_drink.drink_id "
                       "WHERE drink.party_id = :party_id AND user_drink.user_id = :user_id");
         query.bindValue(":party_id", party_id);
@@ -114,6 +118,7 @@ public:
             d->m_amount_ml = query.value(2).toInt();
             d->m_party_id = party_id;
             d->m_toast_id = query.value(3);
+            d->m_drink_type_id = query.value(4);
             QVariantList user_ids {user_id};
             d->m_user_ids = user_ids;
             drinks.append(d);
