@@ -151,6 +151,19 @@ public slots:
         emit ui_drink_types_changed();
     }
 
+    void remove(int drink_index, QVariant drink_id)
+    {
+        if(!DrinkType::remove(drink_id))
+        {
+            qDebug() << "ERROR: Unable to remove drink type " << drink_id;
+        }
+
+        m_drink_types.removeAt(drink_index);
+        m_drink_types_by_id.remove(drink_id.toInt());
+        // handle settings + prepend
+        emit ui_drink_types_changed();
+    }
+
     QList<DrinkType*> getDrinkTypes()
     {
         if(m_drink_types.isEmpty())

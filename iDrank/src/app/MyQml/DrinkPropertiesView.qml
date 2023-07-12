@@ -18,6 +18,12 @@ Page {
         }
     }
 
+    function removeDrinkType() {
+        if(drinkType) {
+            drink_type_controller.remove(drink_index, drinkType.ui_id)
+        }
+    }
+
     header: Rectangle {
         RowLayout {
             anchors.fill: parent
@@ -36,6 +42,15 @@ Page {
                 text: qsTranslate("DrinkProperties", "Save")
                 onClicked: {
                     saveDrinkType()
+                    partyDashboardStackView.pop()
+                }
+            }
+
+            ToolButton {
+                visible: drinkType
+                text: qsTranslate("DrinkProperties", "Remove")
+                onClicked: {
+                    removeDrinkType()
                     partyDashboardStackView.pop()
                 }
             }
