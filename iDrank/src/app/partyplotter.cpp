@@ -35,10 +35,9 @@ void PartyPlotter::plot(QVariant party_id) const
     const auto users_name_map = m_users_controller.getUsersNameMap(true);
 
     int highest_sum = 0;
-    QDateTime earliest_drink_ts{QDateTime::currentDateTime()};
+    QDateTime party_start_ts = Party::getStartedTime(party_id);
     QDateTime last_drink_ts;
 
-    //TODO: add first point at partyStarted,0
     //TODO: set axisX->setTickCount(10); - consider fixed ticks? always 5? and distirbute them accordingly
     //TODO: axisX->setLabelFormat("%.2f");
 
@@ -58,6 +57,7 @@ void PartyPlotter::plot(QVariant party_id) const
 
         qreal current_sum = 0.0;
         QVector<QPointF> drink_points;
+        drink_points.append({static_cast<qreal>(party_start_ts.toMSecsSinceEpoch()), static_cast<qreal>(current_sum)});
         
         for(auto d : drinks)
         {
@@ -78,11 +78,6 @@ void PartyPlotter::plot(QVariant party_id) const
             highest_sum = current_sum;
         }
 
-        if(earliest_drink_ts > drinks.first()->m_timestamp)
-        {
-            earliest_drink_ts = drinks.first()->m_timestamp;
-        }
-
         if(last_drink_ts < drinks.last()->m_timestamp)
         {
             last_drink_ts = drinks.last()->m_timestamp;
@@ -91,7 +86,7 @@ void PartyPlotter::plot(QVariant party_id) const
         user_series->replace(drink_points);
     }
 
-    mDateTimeAxis->setRange(earliest_drink_ts.addSecs(-300), last_drink_ts.addSecs(300));
+    mDateTimeAxis->setRange(party_start_ts, last_drink_ts.addSecs(300));
     mValueAxis->setRange(0, highest_sum * 1.1);
     mValueAxis->setTickCount(5);
 }

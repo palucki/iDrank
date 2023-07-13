@@ -47,6 +47,21 @@ public:
         return user_ids;
     }
 
+    static QDateTime getStartedTime(QVariant party_id)
+    {
+        QSqlQuery query;
+        query.prepare("SELECT started FROM party WHERE id = :party_id");
+        query.bindValue(":party_id", party_id);
+
+        if(!query.exec() || !query.first())
+        {
+            qWarning() << "Party::getStartedTime - ERROR: " << query.lastError().text() << " in query " << query.executedQuery();
+            return {};
+        }
+
+        return query.value(0).toDateTime();
+    }
+
     static QPair<int, QString> getCurrentParty()
     {
         QSqlQuery query;
