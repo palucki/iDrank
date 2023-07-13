@@ -33,6 +33,7 @@ int main(int argc, char *argv[])
     PartyController party_controller;
     UsersController users_controller{settings};
     PartyPlotter party_plotter(users_controller);
+    PartyPlotter history_plotter(users_controller);
 
     qmlRegisterType<DrinkType>("MyQml", 1, 0, "DrinkType");
     qmlRegisterType<Party>("MyQml", 1, 0, "Party");
@@ -40,6 +41,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("party_plotter", &party_plotter);
+    engine.rootContext()->setContextProperty("history_plotter", &history_plotter);
     engine.rootContext()->setContextProperty("party_controller", &party_controller);
     // engine.rootContext()->setContextProperty("involved_users_controller", &involved_users_controller);
     engine.rootContext()->setContextProperty("users_controller", &users_controller);

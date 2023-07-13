@@ -112,10 +112,6 @@ void PartyPlotter::addSeries(QAbstractSeries* series)
 
 void PartyPlotter::toggleVisibility(const QString& series_name)
 {
-    //TODO: segfault. Go to history -> go to current -> toggle visibility
-    //      it is caused by incorrect series in partyplotter when new statistics are pushed
-    //      should be resolved when we always push the statistics view instead of adding it to swipe view / pushing to stack view
-
     if(!mDrinksSeriesMap.contains(series_name))
     {
         std::cout << "ERROR: no such series name: " << series_name.toStdString() << '\n';

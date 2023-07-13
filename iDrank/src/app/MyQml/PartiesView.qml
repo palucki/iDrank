@@ -55,7 +55,8 @@ Item {
                         console.log("Party id " + modelData.ui_id)
                         // console.log("Size of drinks " + drinkProvider.getUIDrinksList(modelData.ui_id))
                         historyStackView.push("PartyStatisticsView.qml",
-                        { party_id: modelData.ui_id,
+                        { plotter: history_plotter,
+                          party_id: modelData.ui_id,
                           users: party_controller.getUsersForParty(modelData.ui_id)})
                     }
                 }

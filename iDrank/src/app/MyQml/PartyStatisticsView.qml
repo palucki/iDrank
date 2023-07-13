@@ -14,6 +14,7 @@ Page {
     property int max_colors : colors.length
     property var users;
     property var party_id;
+    property var plotter;
 
     function createSeries(name, color) {
         console.log("adding series " + name)
@@ -32,14 +33,14 @@ Page {
     }
 
     function updatePlot() {
-        // party_plotter.reset()
+        // plotter.reset()
         chart.removeAllSeries()
-        party_plotter.setAxes(xAxis, yAxis)
+        plotter.setAxes(xAxis, yAxis)
         for(var i = 0; i < users.length; i++)
         {
-            party_plotter.addSeries(createSeries(users[i].ui_name, colors[i % max_colors]))
+            plotter.addSeries(createSeries(users[i].ui_name, colors[i % max_colors]))
         }
-        party_plotter.plot(party_id)
+        plotter.plot(party_id)
     }
 
     Component.onCompleted: {
@@ -95,7 +96,7 @@ Page {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: { 
-                            party_plotter.toggleVisibility(modelData.ui_name)
+                            plotter.toggleVisibility(modelData.ui_name)
                             background.color = background.color == colors[index % max_colors] ? "transparent" : colors[index % max_colors]
                         }
                     }

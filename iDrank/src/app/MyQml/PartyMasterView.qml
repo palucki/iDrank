@@ -72,6 +72,7 @@ Page {
         }
 
         PartyStatisticsView {
+            plotter: party_plotter
             party_id: party_controller.ui_party_id
             //TODO: when proper handling of updates in party statistics is done, we can use here getUsersForParty
             //otherwise, it will not see all users if added during app working
