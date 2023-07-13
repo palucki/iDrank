@@ -78,7 +78,7 @@ public slots:
         return m_drink_types_by_id[drink_type_id.toInt()]->m_name;
     }
 
-    void update(int index, int id, const QString& name, int default_amount_ml, int percentage)
+    void update(int index, int id, const QString& name, int default_amount_ml, double percentage)
     {
         if(!DrinkType::update(id, name, default_amount_ml, percentage))
         {
@@ -128,7 +128,7 @@ public slots:
         setCurrentDrinkType(index);
     }
 
-    void add(const QString& name, int default_amount_ml, int percentage)
+    void add(const QString& name, int default_amount_ml, double percentage)
     {
         const auto id = DrinkType::add(name, default_amount_ml, percentage);
 

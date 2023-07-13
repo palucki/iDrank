@@ -11,10 +11,10 @@ Page {
 
     function saveDrinkType() {
         if(drinkType) {
-            drink_type_controller.update(drink_index, drinkType.ui_id, drinkTypeName.text, drinkTypeDefaultAmount.value, 12)
+            drink_type_controller.update(drink_index, drinkType.ui_id, drinkTypeName.text, drinkTypeDefaultAmount.value, drinkTypePercentage.value)
         }
         else {
-            drink_type_controller.add(drinkTypeName.text, drinkTypeDefaultAmount.value, 11)
+            drink_type_controller.add(drinkTypeName.text, drinkTypeDefaultAmount.value, drinkTypePercentage.value)
         }
     }
 
@@ -89,6 +89,21 @@ Page {
                 to: 1000
                 editable: true
                 value: drinkType ? drinkType.ui_default_amount_ml : 50
+            }
+
+            Label {
+                text: qsTranslate("DrinkProperties", "Alcohol percentage %")
+                width: parent.width * 0.75
+            }
+
+            SpinBox {
+                id: drinkTypePercentage
+                width: parent.width * 0.75
+                stepSize: 1
+                from: 0
+                to: 100
+                editable: true
+                value: drinkType ? drinkType.ui_percentage : 40
             }
         }
     }

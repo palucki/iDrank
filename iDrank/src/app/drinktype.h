@@ -9,6 +9,7 @@ class DrinkType : public QObject
     Q_PROPERTY(QVariant ui_id MEMBER m_id CONSTANT)
     Q_PROPERTY(QString ui_name MEMBER m_name CONSTANT)
     Q_PROPERTY(int ui_default_amount_ml MEMBER m_default_amount_ml CONSTANT)
+    Q_PROPERTY(double ui_percentage MEMBER m_percentage CONSTANT)
 
 public:
     explicit DrinkType(QObject* parent = nullptr) : QObject(parent) {}
@@ -33,14 +34,14 @@ public:
             dt->m_id = query.value(0);
             dt->m_name = query.value(1).toString();
             dt->m_default_amount_ml = query.value(2).toInt();
-            dt->m_percentage = query.value(3).toInt();
+            dt->m_percentage = query.value(3).toDouble();
             drink_types.append(dt);
         }
 
         return drink_types;
     }
 
-    static std::optional<QVariant> add(const QString& name, int default_amount_ml, int percentage)
+    static std::optional<QVariant> add(const QString& name, int default_amount_ml, double percentage)
     {
         QSqlQuery query;
         query.prepare(QString("INSERT INTO drink_type (name, default_amount_ml, percentage)"
@@ -75,7 +76,7 @@ public:
         return true;
     }
 
-    static bool update(QVariant id, QString name, int default_amount_ml, int percentage)
+    static bool update(QVariant id, QString name, int default_amount_ml, double percentage)
     {
         QSqlQuery query;
         query.prepare(QString("UPDATE drink_type SET "
@@ -100,5 +101,5 @@ public:
     QVariant m_id; //replace with base class like DatabaseObject
     QString m_name{};
     int m_default_amount_ml{};
-    int m_percentage{}; //ABV - alcohol by volume
+    double m_percentage{}; //ABV - alcohol by volume
 };
